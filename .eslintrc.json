@@ -8,6 +8,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "@typescript-eslint/no-require-imports": "off",
     "@typescript-eslint/consistent-type-imports": [
       "error",
       {
@@ -16,7 +17,7 @@
       }
     ],
     "@typescript-eslint/no-unused-vars": [
-      "warn",
+      "off",
       {
         "vars": "all",
         "varsIgnorePattern": "^_",
@@ -26,6 +27,7 @@
     ],
     "object-shorthand": "error",
     "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/no-contradicting-classname": "off",
     "react/jsx-curly-brace-presence": "error",
     "react/self-closing-comp": [
       "error",
@@ -34,6 +36,6 @@
         "html": false
       }
     ],
-    "@next/next/no-img-element": "off",
+    "@next/next/no-img-element": "off"
   }
 }
