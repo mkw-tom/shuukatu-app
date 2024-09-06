@@ -40,7 +40,7 @@ const DarkModeButton = () => {
   return (
     <div>
       <div
-        onClick={() => setOpenButtons(!openButtons)}
+        onClick={() => setOpenButtons(true)}
         className="border-2p-1  cursor-pointer rounded-full p-1 text-blue-500 dark:bg-blue-500 dark:text-white"
       >
         {theme === 'light' ? <LightMode /> : <DarkMode />}

@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* デフォルトはライトモードのスタイル */
 .light body {
-  @apply bg-white text-black; /* デフォルトはライトモードのスタイル */
+  @apply bg-white text-black;
 }
 
 /* ダークモード用のスタイル */
 .dark body {
-  @apply bg-gray-900 text-white;
+  @apply bg-gray-900 text-blue-400;
 }

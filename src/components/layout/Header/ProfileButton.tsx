@@ -14,7 +14,8 @@ const ProfileButton = () => {
   return (
     <>
       <button
-        className="cursor-pointer rounded-full border-2 border-blue-500"
+        className="block cursor-pointer rounded-full border-2 border-blue-500"
+        style={{ width: '30px', height: '30px' }}
         onClick={openProfToggle}
       >
         <Image
@@ -49,7 +50,7 @@ const ProfileButton = () => {
             className="mt-10 border-2 border-blue-500 font-bold text-blue-600 dark:bg-blue-500  dark:text-white "
             endIcon={<Logout />}
           >
-            Login
+            ログアウト
           </Button>
         </CardContent>
       </Card>
