@@ -1,7 +1,6 @@
 'use client'
 import useDarkMode from '@/lib/darkmode/useDarkMode'
 import { DarkMode, LightMode } from '@mui/icons-material'
-import { Button, ButtonGroup } from '@mui/material'
 import { useState } from 'react'
 
 const DarkModeButton = () => {
@@ -19,40 +18,38 @@ const DarkModeButton = () => {
   }
 
   const buttons = [
-    <Button
+    <button
       key="light"
-      startIcon={<LightMode />}
       onClick={handleLight}
-      className="dark:bg-blue-500 dark:text-white"
+      className="w-full rounded-t-xl py-2 text-primary duration-200 hover:bg-primary hover:text-gray-200 dark:text-gray-200"
     >
-      Light
-    </Button>,
-    <Button
+      <LightMode />
+      <span>Light</span>
+    </button>,
+    <button
       key="dark"
-      startIcon={<DarkMode />}
       onClick={handleDark}
-      className="dark:bg-blue-500 dark:text-white"
+      className="w-full rounded-b-xl py-2 text-primary duration-200 hover:bg-primary hover:text-gray-200 dark:text-gray-200"
     >
-      Dark
-    </Button>,
+      <DarkMode />
+      <span>Dark</span>
+    </button>,
   ]
 
   return (
     <div>
       <div
         onClick={() => setOpenButtons(true)}
-        className="border-2p-1  cursor-pointer rounded-full p-1 text-blue-500 dark:bg-blue-500 dark:text-white"
+        className="z-50 cursor-pointer rounded-full p-1 text-primary dark:bg-primary dark:text-white"
       >
         {theme === 'light' ? <LightMode /> : <DarkMode />}
       </div>
-      <ButtonGroup
-        orientation="vertical"
-        aria-label="Vertical button group"
-        variant={theme === 'light' ? 'outlined' : 'contained'}
-        className={`${openButtons ? 'flex' : 'hidden'} absolute right-8 top-20 flex-col shadow-md`}
+
+      <div
+        className={`card w-40 border-2 bg-white ${openButtons ? 'flex' : 'hidden'} absolute right-8 top-20 z-50 flex-col items-start shadow-md dark:border-gray-500 dark:bg-gray-500 `}
       >
         {buttons}
-      </ButtonGroup>
+      </div>
     </div>
   )
 }

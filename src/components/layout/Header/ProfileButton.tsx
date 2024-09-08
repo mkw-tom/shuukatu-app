@@ -1,6 +1,5 @@
 'use client'
 import { Logout } from '@mui/icons-material'
-import { Button, Card, CardContent } from '@mui/material'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -12,9 +11,9 @@ const ProfileButton = () => {
   }
 
   return (
-    <>
+    <div>
       <button
-        className="block cursor-pointer rounded-full border-2 border-blue-500"
+        className="block cursor-pointer rounded-full border-2 border-primary"
         style={{ width: '30px', height: '30px' }}
         onClick={openProfToggle}
       >
@@ -26,10 +25,12 @@ const ProfileButton = () => {
           className="rounded-full"
         />
       </button>
-      <Card className={`absolute right-5 top-16 h-auto w-72 py-3 ${openProf ? 'block' : 'hidden'}`}>
-        <CardContent className="mx-auto flex w-11/12 flex-col items-center">
+      <div
+        className={`card absolute right-5 top-16 h-auto w-72 py-3 ${openProf ? 'block' : 'hidden'} z-50 dark:bg-gray-700`}
+      >
+        <div className="mx-auto flex w-11/12 flex-col items-center opacity-100">
           <div
-            className="mx-auto cursor-pointer rounded-full border-2 border-blue-500"
+            className="mx-auto cursor-pointer rounded-full border-2 border-primary"
             style={{ width: '70px', height: '70px' }}
           >
             <Image
@@ -45,16 +46,13 @@ const ProfileButton = () => {
             <li>内定・参加確定済み：２社</li>
             <li>全ての企業：12社</li>
           </ul>
-          <Button
-            variant="outlined"
-            className="mt-10 border-2 border-blue-500 font-bold text-blue-600 dark:bg-blue-500  dark:text-white "
-            endIcon={<Logout />}
-          >
-            ログアウト
-          </Button>
-        </CardContent>
-      </Card>
-    </>
+          <button className="itmes-center btn btn-outline btn-primary mt-10 border-2 font-bold  dark:btn-active">
+            <span>ログアウト</span>
+            <Logout />
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 
