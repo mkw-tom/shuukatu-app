@@ -1,5 +1,4 @@
 import { Addchart, Business, MenuBook } from '@mui/icons-material'
-import Button from '@mui/material/Button'
 import Image from 'next/image'
 import Link from 'next/link'
 import SideBar from '../SIdebar/SideBar'
@@ -8,7 +7,7 @@ import ProfileButton from './ProfileButton'
 
 const Header = () => {
   return (
-    <div className="h-16 w-full border-b-2 border-t-4 border-t-blue-600 dark:border-b-gray-500">
+    <div className="h-16 w-full border-b-2 border-t-4 border-t-primary dark:border-b-gray-500">
       <div className="mx-5 flex h-16 items-center justify-between">
         <SideBar />
         <h1 className="flex items-center">
@@ -18,21 +17,24 @@ const Header = () => {
           </p>
         </h1>
         <div className="flex items-center gap-16">
-          <nav className="hidden gap-5 md:flex ">
-            <Link href="/">
-              <Button className="font-bold " startIcon={<Business />}>
-                企業管理
-              </Button>
+          <nav className="hidden gap-7 md:flex ">
+            <Link href="/company_page">
+              <button className="flex items-center gap-1 font-bold text-primary transition-opacity duration-300 hover:opacity-70 dark:text-gray-200">
+                <Business />
+                <span>企業管理</span>
+              </button>
             </Link>
             <Link href="/">
-              <Button className="font-bold " startIcon={<MenuBook />}>
-                ES管理
-              </Button>
+              <button className="flex items-center gap-1 font-bold text-primary transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
+                <MenuBook />
+                <span>ES管理</span>
+              </button>
             </Link>
             <Link href="/">
-              <Button className="font-bold " startIcon={<Addchart />}>
-                チャート
-              </Button>
+              <button className="flex items-center gap-1 font-bold text-primary transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
+                <Addchart />
+                <span>チャート</span>
+              </button>
             </Link>
           </nav>
           <div className="flex items-center gap-5 border-l-2 pl-5 dark:border-l-gray-500">

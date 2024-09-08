@@ -10,13 +10,7 @@ const config: Config = {
   ],
   theme: {
     theme: {
-      colors: {
-        blue: '#1d4ed8',
-        green: '#22c55e',
-        orange: '#f97316',
-        gray: '#a1a1aa',
-        red: '#dc2626',
-      },
+      colors: {},
     },
     extend: {
       backgroundImage: {
@@ -25,6 +19,10 @@ const config: Config = {
       },
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/container-queries')],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/container-queries'),
+    require('daisyui'),
+  ],
 }
 export default config
