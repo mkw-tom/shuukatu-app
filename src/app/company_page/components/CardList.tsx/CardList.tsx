@@ -17,7 +17,7 @@ const CardList = () => {
       <ul className="flex flex-col gap-3">
         {dummy.map((d, index) => (
           <button key={index} className="w-full ">
-            <div className="card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-primary  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-primary">
+            <div className="card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info">
               <div className="flex flex-col gap-1">
                 {/* <input type="radio" className="w-3 h-3" /> */}
                 <h1 className="pl-4 text-start text-xl tracking-wider ">株式会社test</h1>

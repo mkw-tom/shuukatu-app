@@ -13,7 +13,7 @@ const ProfileButton = () => {
   return (
     <div>
       <button
-        className="block cursor-pointer rounded-full border-2 border-primary"
+        className="block cursor-pointer rounded-full border-2 border-info"
         style={{ width: '30px', height: '30px' }}
         onClick={openProfToggle}
       >
@@ -30,7 +30,7 @@ const ProfileButton = () => {
       >
         <div className="mx-auto flex w-11/12 flex-col items-center opacity-100">
           <div
-            className="mx-auto cursor-pointer rounded-full border-2 border-primary"
+            className="mx-auto cursor-pointer rounded-full border-2 border-info"
             style={{ width: '70px', height: '70px' }}
           >
             <Image
@@ -46,7 +46,7 @@ const ProfileButton = () => {
             <li>内定・参加確定済み：２社</li>
             <li>全ての企業：12社</li>
           </ul>
-          <button className="itmes-center btn btn-outline btn-primary mt-10 border-2 font-bold  dark:btn-active">
+          <button className="itmes-center btn btn-outline btn-info mt-10 border-2 font-bold  dark:btn-active">
             <span>ログアウト</span>
             <Logout />
           </button>
