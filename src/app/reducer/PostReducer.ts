@@ -67,6 +67,8 @@ interface SetCompanyAction {
   type: 'SET_COMPANY'
   payload: {
     userId: string
+    startDate: string
+    endDate: string
     name: string
     value: string
   }
@@ -143,6 +145,8 @@ export const PostReducer = (
         ...postState,
         customId: uuidv4(),
         userId: action.payload.userId,
+        startDate: action.payload.startDate,
+        endDate: action.payload.endDate,
         [action.payload.name]: action.payload.value,
       }
     case 'SET_MYPAGE':
