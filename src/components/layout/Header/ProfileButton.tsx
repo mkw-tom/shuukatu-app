@@ -26,7 +26,7 @@ const ProfileButton = () => {
         />
       </button>
       <div
-        className={`card absolute right-5 top-16 h-auto w-72 py-3 ${openProf ? 'block' : 'hidden'} z-50 dark:bg-gray-700`}
+        className={`card absolute right-5 top-16 h-auto w-72 border-2 py-3 ${openProf ? 'block' : 'hidden'} z-50 bg-white dark:bg-gray-700`}
       >
         <div className="mx-auto flex w-11/12 flex-col items-center opacity-100">
           <div

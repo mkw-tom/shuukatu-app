@@ -20,7 +20,7 @@ const config: Config = {
     },
   },
   plugins: [
-    require('@tailwindcss/forms'),
+    // require('@tailwindcss/forms'),
     require('@tailwindcss/container-queries'),
     require('daisyui'),
   ],
