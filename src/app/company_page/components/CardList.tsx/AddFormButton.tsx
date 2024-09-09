@@ -9,7 +9,7 @@ const AddFormButton = () => {
     <>
       <PostForm open={open} setOpen={setOpen} title="企業を追加" />
       <button
-        className="btn btn-outline btn-primary flex flex-1 gap-3 dark:btn-active dark:text-gray-200"
+        className="btn flex w-4/12 flex-1 gap-3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
         onClick={() => setOpen(true)}
       >
         <AddCircle />

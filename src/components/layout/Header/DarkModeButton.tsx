@@ -21,7 +21,7 @@ const DarkModeButton = () => {
     <button
       key="light"
       onClick={handleLight}
-      className="w-full rounded-t-xl py-2 text-primary duration-200 hover:bg-primary hover:text-gray-200 dark:text-gray-200"
+      className="w-full rounded-t-xl py-2 text-info duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200"
     >
       <LightMode />
       <span>Light</span>
@@ -29,7 +29,7 @@ const DarkModeButton = () => {
     <button
       key="dark"
       onClick={handleDark}
-      className="w-full rounded-b-xl py-2 text-primary duration-200 hover:bg-primary hover:text-gray-200 dark:text-gray-200"
+      className="w-full rounded-b-xl py-2 text-info duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200"
     >
       <DarkMode />
       <span>Dark</span>
@@ -40,7 +40,7 @@ const DarkModeButton = () => {
     <div>
       <div
         onClick={() => setOpenButtons(true)}
-        className="z-50 cursor-pointer rounded-full p-1 text-primary dark:bg-primary dark:text-white"
+        className="z-50 cursor-pointer rounded-full p-1 text-info dark:bg-info dark:text-white"
       >
         {theme === 'light' ? <LightMode /> : <DarkMode />}
       </div>
