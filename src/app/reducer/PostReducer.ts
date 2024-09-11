@@ -1,33 +1,4 @@
 import { v4 as uuidv4 } from 'uuid'
-interface PostStateType {
-  customId: string
-  userId: string
-  name: string
-  event: string
-  region: string
-  startDate: string
-  endDate: string
-  completed: boolean
-  mypage: {
-    url: string
-    id: string
-    password: string
-  }
-  // taskFlow: [
-  //   {
-  //     customId: string
-  //     task: string
-  //     situation: string
-  //     testFormat: string
-  //     date: string
-  //     limitDate: string
-  //     current: boolean
-  //     next: boolean
-  //     finished: boolean
-  //     edit: boolean
-  //   },
-  // ]
-}
 
 export const PostState: PostStateType = {
   customId: '',
@@ -43,51 +14,20 @@ export const PostState: PostStateType = {
     id: '',
     password: '',
   },
-  // taskFlow: [
-  //   {
-  //     customId: '',
-  //     task: '',
-  //     situation: '',
-  //     testFormat: '',
-  //     date: '',
-  //     limitDate: '',
-  //     current: false,
-  //     next: false,
-  //     finished: false,
-  //     edit: false,
-  //   },
-  // ],
-}
-
-interface ClearAction {
-  type: 'CLEAR'
-}
-
-interface SetCompanyAction {
-  type: 'SET_COMPANY'
-  payload: {
-    userId: string
-    startDate: string
-    endDate: string
-    name: string
-    value: string
-  }
-}
-
-interface SetMypageAction {
-  type: 'SET_MYPAGE'
-  payload: {
-    name: string
-    value: string
-  }
-}
-
-interface UpdateCompanyAction {
-  type: 'UPDATE_COMPANY'
-  payload: {
-    name: string
-    value: string
-  }
+  taskFlow: [
+    {
+      customId: '',
+      task: '',
+      situation: '',
+      testFormat: '',
+      date: '',
+      limitDate: '',
+      current: false,
+      next: false,
+      finished: false,
+      edit: false,
+    },
+  ],
 }
 
 // interface SetTaskAction {
@@ -121,11 +61,17 @@ interface UpdateCompanyAction {
 
 export const PostReducer = (
   postState: PostStateType,
-  action: SetCompanyAction | SetMypageAction | UpdateCompanyAction | ClearAction,
+  action:
+    | SetCompanyAction
+    | SetMypageAction
+    | UpdateCompanyAction
+    | ClearAction
+    | UpdateMypageAction,
 ): PostStateType => {
   switch (action.type) {
     case 'CLEAR':
       return {
+        ...postState,
         customId: '',
         userId: '',
         name: '',
@@ -157,11 +103,24 @@ export const PostReducer = (
           [action.payload.name]: action.payload.value,
         },
       }
+
     case 'UPDATE_COMPANY':
       return {
         ...postState,
+        customId: action.payload.costomId,
         [action.payload.name]: action.payload.value,
       }
+
+    case 'UPDATE_MYPAGE':
+      return {
+        ...postState,
+        customId: action.payload.customId,
+        mypage: {
+          ...postState.mypage,
+          [action.payload.name]: action.payload.value,
+        },
+      }
+
     default:
       return postState
   }

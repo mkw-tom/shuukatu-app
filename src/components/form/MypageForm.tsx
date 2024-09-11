@@ -1,7 +1,7 @@
-import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useReducer, useState } from 'react'
 
 const MypageForm = ({
   setOpen,
@@ -12,10 +12,8 @@ const MypageForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  const [state, dispatch] = useReducer(PostReducer, PostState)
-  const [startDate, setStartDate] = useState<string>('')
-  const [endDate, setEndDate] = useState<string>('')
-
+  // const [state, dispatch] = useReducer(PostReducer, PostState)
+  const { state, dispatch } = usePost()
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
     dispatch({ type: 'SET_MYPAGE', payload: { name, value } })
@@ -23,6 +21,8 @@ const MypageForm = ({
 
   const handleCancel = () => {
     setOpen(false)
+    dispatch({ type: 'CLEAR' })
+    setFormSlide('-translate-x-none')
   }
 
   const handleAdd = async () => {
@@ -39,8 +39,9 @@ const MypageForm = ({
     // })
 
     // const data = await res.json() // サーバーからのレスポンスを取得
-    // dispatch({ type: 'CLEAR' })
-    setFormSlide('1000px')
+    console.log(state)
+    setFormSlide('-translate-x-[1000px] ')
+    dispatch({ type: 'CLEAR' })
   }
 
   return (
@@ -63,11 +64,11 @@ const MypageForm = ({
           />
         </label>
 
-        <label htmlFor="region">
+        <label htmlFor="id">
           <span className="inline-block w-[120px] text-center text-info">ID</span>
           <input
-            id="region"
-            name="region"
+            id="id"
+            name="id"
             type="text"
             placeholder="ID："
             className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
@@ -76,11 +77,11 @@ const MypageForm = ({
           />
         </label>
 
-        <label htmlFor="region">
+        <label htmlFor="password">
           <span className="inline-block w-[120px] text-center text-info">Password</span>
           <input
-            id="region"
-            name="region"
+            id="password"
+            name="password"
             type="text"
             placeholder="開催地："
             className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
@@ -95,14 +96,14 @@ const MypageForm = ({
             type="button"
             onClick={() => handleCancel()}
           >
-            <span>キャンセル</span>
+            <span>スキップ</span>
           </button>
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
             onClick={() => handleAdd()}
           >
-            <span>追加</span>
+            <span>次へ</span>
           </button>
         </div>
       </form>
