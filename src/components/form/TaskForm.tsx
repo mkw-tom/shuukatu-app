@@ -1,7 +1,8 @@
-import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 
 const TaskForm = ({
   setOpen,
@@ -12,7 +13,8 @@ const TaskForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  const [state, dispatch] = useReducer(PostReducer, PostState)
+  // const [state, dispatch] = useReducer(PostReducer, PostState)
+  const { state, dispatch } = usePost()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
 
@@ -23,6 +25,8 @@ const TaskForm = ({
   }
 
   const handleCancel = () => {
+    setFormSlide('-translate-x-none')
+    dispatch({ type: 'CLEAR' })
     setOpen(false)
   }
 
@@ -44,9 +48,10 @@ const TaskForm = ({
     // })
 
     // const data = await res.json()
-    // dispatch({ type: 'CLEAR' })
-    setFormSlide('0')
+    console.log(state)
+    setFormSlide('-translate-x-none')
     setOpen(false)
+    dispatch({ type: 'CLEAR' })
   }
 
   return (
@@ -116,14 +121,14 @@ const TaskForm = ({
             type="button"
             onClick={() => handleCancel()}
           >
-            <span>キャンセル</span>
+            <span>スキップ</span>
           </button>
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
             onClick={() => handleAdd()}
           >
-            <span>追加</span>
+            <span>完了</span>
           </button>
         </div>
       </form>

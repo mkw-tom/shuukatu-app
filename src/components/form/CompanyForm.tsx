@@ -1,7 +1,8 @@
-import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 
 const CompanyForm = ({
   setOpen,
@@ -12,7 +13,8 @@ const CompanyForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  const [state, dispatch] = useReducer(PostReducer, PostState)
+  // const [state, dispatch] = useReducer(PostReducer, PostState)
+  const { state, dispatch } = usePost()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
 
@@ -24,6 +26,8 @@ const CompanyForm = ({
 
   const handleCancel = () => {
     // e.preventDefault()
+    dispatch({ type: 'CLEAR' })
+    setFormSlide('-translate-x-none')
     setOpen(false)
   }
 
@@ -46,8 +50,8 @@ const CompanyForm = ({
     // })
 
     // const data = await res.json()
-    // dispatch({ type: 'CLEAR' })
-    setFormSlide('500px')
+    console.log(state)
+    setFormSlide('-translate-x-[500px]')
   }
 
   return (
@@ -122,9 +126,9 @@ const CompanyForm = ({
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
-            onClick={() => handleAdd()}
+            onClick={handleAdd}
           >
-            <span>追加</span>
+            <span>登録</span>
           </button>
         </div>
       </form>
