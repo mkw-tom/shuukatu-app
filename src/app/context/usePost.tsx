@@ -1,32 +1,27 @@
 'use client'
-import type { Dispatch, ReactNode } from 'react'
-import { createContext, useContext, useReducer } from 'react'
-import { PostReducer, PostState } from '../reducer/PostReducer'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 interface PostContextType {
-  state: PostStateType
-  dispatch: Dispatch<
-    SetCompanyAction | SetMypageAction | UpdateCompanyAction | ClearAction | UpdateMypageAction
-  >
+  post: PostType[]
+  setPost: Dispatch<SetStateAction<PostType[]>>
 }
-
 const postContext = createContext<PostContextType | undefined>(undefined)
 
 export const usePost = () => {
   const context = useContext(postContext)
   if (!context) {
-    throw new Error('undefined context')
+    throw new Error('context is undefined')
   }
   return context
 }
 
-export const PostContextProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(PostReducer, PostState)
+export const PostContexgtProvider = ({ children }: { children: ReactNode }) => {
+  const [post, setPost] = useState<PostType[]>([])
 
   const value = {
-    state,
-    dispatch,
+    post,
+    setPost,
   }
-
   return <postContext.Provider value={value}>{children}</postContext.Provider>
 }

@@ -1,8 +1,8 @@
-// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
-import { usePost } from '@/app/context/usePost'
+import { usePostReducer } from '@/app/context/usePostReducer'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 const TaskForm = ({
   setOpen,
@@ -13,45 +13,41 @@ const TaskForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  // const [state, dispatch] = useReducer(PostReducer, PostState)
-  const { state, dispatch } = usePost()
-  const [startDate, setStartDate] = useState<string>('')
-  const [endDate, setEndDate] = useState<string>('')
+  const [date, setDate] = useState<string>('')
+  const [limitDate, setLimitDate] = useState<string>('')
+  const { state, dispatch } = usePostReducer()
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const userId = 'aiueo'
+    const customId = uuidv4()
     const { name, value } = e.target
-    dispatch({ type: 'SET_COMPANY', payload: { userId, startDate, endDate, name, value } })
+    dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate } })
   }
 
   const handleCancel = () => {
     setFormSlide('-translate-x-none')
-    dispatch({ type: 'CLEAR' })
+    // dispatch({ type: 'CLEAR' })
     setOpen(false)
   }
 
   const handleAdd = async () => {
-    // const res = await fetch('http://localhost:3000/api/posts', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json', // JSONデータを送ることを明示
-    //   },
-    //   body: JSON.stringify({
-    //     customId: state.customId,
-    //     userId: state.userId,
-    //     name: state.name,
-    //     event: state.event,
-    //     startDate: state.startDate,
-    //     endDate: state.endDate,
-    //     region: state.region,
-    //   }),
-    // })
+    const res = await fetch('http://localhost:3000/api/posts/task', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json', // JSONデータを送ることを明示
+      },
+      body: JSON.stringify({
+        customId: state.customId,
+        taskFlow: state.taskFlow,
+      }),
+    })
 
-    // const data = await res.json()
+    if (!res.ok) {
+      console.log('failed to fetch')
+    }
     console.log(state)
     setFormSlide('-translate-x-none')
     setOpen(false)
-    dispatch({ type: 'CLEAR' })
+    // dispatch({ type: 'CLEAR' })
   }
 
   return (
@@ -61,57 +57,62 @@ const TaskForm = ({
         <span>{title}</span>
       </h2>
       <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
-        <label htmlFor="name" className="">
-          <span className="inline-block w-[120px] text-center text-info">企業名</span>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="企業名："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400"
-            value={state.name}
-            onChange={(e) => handleStateChange(e)}
-          />
-        </label>
-        <label htmlFor="event">
-          <span className="inline-block w-[120px] text-center text-info">イベント</span>
+        <label htmlFor="task">
+          <span className="inline-block w-[120px] text-center text-info">タスク</span>
           <select
-            id="event"
-            name="event"
+            id="task"
+            name="task"
             className="select select-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400"
-            value={state.event}
+            value={state.taskFlow.task}
             onChange={(e) => handleStateChange(e)}
           >
-            <option>短期インターン</option>
-            <option>長期インターン</option>
+            <option>説明会</option>
+            <option>ES・履歴書提出</option>
+            <option>適性検査</option>
+            <option>コーディングテスト</option>
+            <option>カジュアル面談</option>
+            <option>グループ面接</option>
+            <option>グループディスカッション</option>
+            <option>一次面接</option>
+            <option>二次面接</option>
+            <option>三次面接</option>
+            <option>最終面接</option>
           </select>
         </label>
-        <div className="flex w-full items-center">
-          <span className="inline-block w-[120px] text-center text-info">開催日時</span>
-          <div className="flex w-[250px] flex-col items-center gap-2">
-            <input
-              type="datetime-local"
-              className="input  input-bordered w-full bg-gray-200 text-gray-700 dark:bg-gray-400"
-              onChange={(e) => setStartDate(e.target.value)}
-            />
-            <p>から</p>
-            <input
-              type="datetime-local"
-              className="input input-bordered w-full  bg-gray-200 text-gray-700 dark:bg-gray-400"
-              onChange={(e) => setEndDate(e.target.value)}
-            />
-          </div>
-        </div>
 
-        <label htmlFor="region">
-          <span className="inline-block w-[120px] text-center text-info">開催地</span>
+        <label htmlFor="date">
+          <span className="inline-block w-[120px] text-center text-info">実践日時</span>
           <input
-            id="region"
-            name="region"
+            name="date"
+            id="date"
+            type="datetime-local"
+            className="input  input-bordered w-[250px]   bg-gray-200 text-gray-700 dark:bg-gray-400"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
+        </label>
+
+        <label htmlFor="limitDate">
+          <span className="inline-block w-[120px] text-center text-info">期限</span>
+          <input
+            name="limitDate"
+            id="limitDate"
+            type="datetime-local"
+            className="input input-bordered w-[250px]  bg-gray-200 text-gray-700 dark:bg-gray-400"
+            value={limitDate}
+            onChange={(e) => setLimitDate(e.target.value)}
+          />
+        </label>
+
+        <label htmlFor="testFormat">
+          <span className="inline-block w-[120px] text-center text-info">テスト形式</span>
+          <input
+            id="testFormat"
+            name="testFormat"
             type="text"
-            placeholder="開催地："
+            placeholder="例：SPI3"
             className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
-            value={state.region}
+            value={state.taskFlow.testFormat}
             onChange={(e) => handleStateChange(e)}
           />
         </label>

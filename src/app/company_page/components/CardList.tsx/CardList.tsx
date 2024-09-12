@@ -1,4 +1,6 @@
+'use client'
 import { Verified } from '@mui/icons-material'
+import { useEffect } from 'react'
 import AddFormButton from './AddFormButton'
 import SearchArea from './SearchArea'
 
@@ -8,6 +10,22 @@ const dummy = [
   { name: 'test', event: 'インターン' },
 ]
 const CardList = () => {
+  useEffect(() => {
+    const fetchAPI = async () => {
+      const res = await fetch(`http://localhost:3000/api/posts?userId=aiueo`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+        },
+      })
+      if (res.ok) {
+        console.log('success')
+      } else {
+        console.log('faild fetch')
+      }
+    }
+    fetchAPI()
+  })
   return (
     <div className="flex w-5/12 flex-col">
       <div className="mb-3 flex items-center justify-between gap-5">
