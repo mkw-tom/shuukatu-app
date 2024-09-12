@@ -1,4 +1,4 @@
-interface PostStateType {
+interface PostType extends Document {
   customId: string
   userId: string
   name: string
@@ -26,46 +26,6 @@ interface PostStateType {
       edit: boolean
     },
   ]
-}
-
-//------- type of reudcer ---------
-interface ClearAction {
-  type: 'CLEAR'
-}
-
-interface SetCompanyAction {
-  type: 'SET_COMPANY'
-  payload: {
-    userId: string
-    startDate: string
-    endDate: string
-    name: string
-    value: string
-  }
-}
-
-interface SetMypageAction {
-  type: 'SET_MYPAGE'
-  payload: {
-    name: string
-    value: string
-  }
-}
-
-interface UpdateCompanyAction {
-  type: 'UPDATE_COMPANY'
-  payload: {
-    costomId: string
-    name: string
-    value: string
-  }
-}
-
-interface UpdateMypageAction {
-  type: 'UPDATE_MYPAGE'
-  payload: {
-    customId: string
-    name: string
-    value: string
-  }
+  createdAt: Date
+  updatedAt: Date
 }

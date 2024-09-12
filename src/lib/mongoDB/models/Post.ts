@@ -1,38 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-interface IPost extends Document {
-  customId: string
-  userId: string
-  name: string
-  event: string
-  region: string
-  startDate: string
-  endDate: string
-  completed: boolean
-  mypage: {
-    url: string
-    id: string
-    password: string
-  }
-  taskFlow: [
-    {
-      customId: string
-      task: string
-      situation: string
-      testFormat: string
-      date: string
-      limitDate: string
-      current: boolean
-      next: boolean
-      finished: boolean
-      edit: boolean
-    },
-  ]
-  createdAt: Date
-  updatedAt: Date
-}
-
-const PostSchema = new Schema<IPost>(
+const PostSchema = new Schema<PostType>(
   {
     customId: { type: String, required: true, unique: true },
     userId: {
@@ -90,4 +58,4 @@ const PostSchema = new Schema<IPost>(
   },
 )
 
-export const PostModel = mongoose.model('Post', PostSchema)
+export const PostModel = mongoose.models.Post || mongoose.model('Post', PostSchema)

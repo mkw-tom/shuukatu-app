@@ -1,6 +1,7 @@
 import { PostModel } from '@/lib/mongoDB/models/Post'
 import connectDB from '@/lib/mongoDB/mongodb'
 
+//データの追加
 export async function POST(req: Request) {
   await connectDB()
   const body = await req.json()
@@ -16,30 +17,88 @@ export async function POST(req: Request) {
       region: body.region,
     })
 
+    if (!newPost) {
+      return new Response(JSON.stringify({ error: 'Post not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
     await newPost.save()
-    return new Response('Success: Data added successfully', { status: 200 })
+
+    return new Response(JSON.stringify({ message: 'Post updated successfully', newPost }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
   } catch (error) {
-    console.error('Error saving data:', error)
-    return new Response('Error: Failed to add data', { status: 500 })
+    console.error('Error updating post:', error)
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 }
 
+///特定のデータを編集
 export async function PUT(req: Request) {
   await connectDB()
   const body = await req.json()
 
   try {
-    const updatedPost = await PostModel.findOneAndUpdate(
+    const res = await PostModel.findOneAndUpdate(
       {
         customId: body.customId,
       },
       {
         $set: body,
       },
+      { new: true },
     )
-    return new Response('Success: Data added successfully', { status: 200 })
+
+    if (!res) {
+      return new Response(JSON.stringify({ error: 'Post not found' }), {
+        status: 404,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
+    return new Response(JSON.stringify({ message: 'Post updated successfully', res }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
   } catch (error) {
-    console.error('Error saving data:', error)
-    return new Response('Error: Failed to add data', { status: 500 })
+    console.error('Error updating post:', error)
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+}
+
+//ユーザーの登録データを全件取得
+export async function GET(req: Request) {
+  await connectDB()
+
+  // URLクエリパラメータからuserIdを取得
+  const url = new URL(req.url)
+  const userId = url.searchParams.get('userId')
+
+  if (!userId) {
+    return new Response('Error: Missing userId', { status: 400 })
+  }
+
+  try {
+    // eslint-disable-next-line object-shorthand
+    const posts = await PostModel.find({ userId: userId })
+    return new Response(JSON.stringify(posts), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (error) {
+    console.error('Error updating post:', error)
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
   }
 }

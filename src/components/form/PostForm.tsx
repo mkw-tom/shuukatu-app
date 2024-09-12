@@ -1,6 +1,6 @@
 /* eslint-disable tailwindcss/classnames-order */
 'use client'
-import { PostContextProvider } from '@/app/context/usePost'
+import { PostReducerContextProvider } from '@/app/context/usePostReducer'
 import { useState } from 'react'
 import CompanyForm from './CompanyForm'
 import MypageForm from './MypageForm'
@@ -18,8 +18,7 @@ const PostForm = ({
   const [formSlide, setFormSlide] = useState<string>('-translate-x-none')
 
   return (
-    // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
-    <PostContextProvider>
+    <PostReducerContextProvider>
       <div className={`${open ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-90 `}>
         <div className="card mx-auto mt-20 h-auto w-[500px] overflow-hidden bg-white">
           <div className={`flex flex-row ${formSlide}`} style={{ width: 'calc(100% * 3)' }}>
@@ -29,7 +28,7 @@ const PostForm = ({
           </div>
         </div>
       </div>
-    </PostContextProvider>
+    </PostReducerContextProvider>
   )
 }
 

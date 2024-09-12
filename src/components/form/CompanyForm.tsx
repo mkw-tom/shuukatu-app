@@ -1,8 +1,8 @@
-// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
-import { usePost } from '@/app/context/usePost'
+import { usePostReducer } from '@/app/context/usePostReducer'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 
 const CompanyForm = ({
   setOpen,
@@ -14,14 +14,18 @@ const CompanyForm = ({
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
   // const [state, dispatch] = useReducer(PostReducer, PostState)
-  const { state, dispatch } = usePost()
+  const { state, dispatch } = usePostReducer()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const customId = uuidv4()
     const userId = 'aiueo'
     const { name, value } = e.target
-    dispatch({ type: 'SET_COMPANY', payload: { userId, startDate, endDate, name, value } })
+    dispatch({
+      type: 'SET_COMPANY',
+      payload: { customId, userId, startDate, endDate, name, value },
+    })
   }
 
   const handleCancel = () => {
@@ -32,24 +36,22 @@ const CompanyForm = ({
   }
 
   const handleAdd = async () => {
-    // e.preventDefault()
-    // const res = await fetch('http://localhost:3000/api/posts', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json', // JSONデータを送ることを明示
-    //   },
-    //   body: JSON.stringify({
-    //     customId: state.customId,
-    //     userId: state.userId,
-    //     name: state.name,
-    //     event: state.event,
-    //     startDate: state.startDate,
-    //     endDate: state.endDate,
-    //     region: state.region,
-    //   }),
-    // })
+    const res = await fetch('http://localhost:3000/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // JSONデータを送ることを明示
+      },
+      body: JSON.stringify({
+        customId: state.customId,
+        userId: state.userId,
+        name: state.name,
+        event: state.event,
+        startDate: state.startDate,
+        endDate: state.endDate,
+        region: state.region,
+      }),
+    })
 
-    // const data = await res.json()
     console.log(state)
     setFormSlide('-translate-x-[500px]')
   }
@@ -110,7 +112,7 @@ const CompanyForm = ({
             name="region"
             type="text"
             placeholder="開催地："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
             value={state.region}
             onChange={(e) => handleStateChange(e)}
           />
