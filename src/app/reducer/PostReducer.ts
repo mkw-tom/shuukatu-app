@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 export const PostState: PostStateType = {
   customId: '',
   userId: '',
@@ -14,50 +12,19 @@ export const PostState: PostStateType = {
     id: '',
     password: '',
   },
-  taskFlow: [
-    {
-      customId: '',
-      task: '',
-      situation: '',
-      testFormat: '',
-      date: '',
-      limitDate: '',
-      current: false,
-      next: false,
-      finished: false,
-      edit: false,
-    },
-  ],
+  taskFlow: {
+    customId: '',
+    task: '',
+    situation: '',
+    testFormat: '',
+    date: '',
+    limitDate: '',
+    current: false,
+    next: false,
+    finished: false,
+    edit: false,
+  },
 }
-
-// interface SetTaskAction {
-//   type: 'SET_TASK'
-//   payload: {
-//     customId: string
-//     name: string
-//     value: string
-//     order: string
-//     orderValue: boolean
-//   }
-// }
-
-// interface UpdateTaskAction {
-//   type: 'UPDATE_TASK',
-//   payload: {
-//     index: number
-//     name: string
-//     value: string
-//     order: string
-//     orderValue: boolean
-//   }
-// }
-
-// interface FinishedTaskAction {
-//   type: 'FINISHED_TASK',
-//   payload: {
-//     index: number
-//   }
-// }
 
 export const PostReducer = (
   postState: PostStateType,
@@ -66,9 +33,16 @@ export const PostReducer = (
     | SetMypageAction
     | UpdateCompanyAction
     | ClearAction
-    | UpdateMypageAction,
+    | UpdateMypageAction
+    | InitalizePostAction
+    | InitalizeTaskAction
+    | ClearAction
+    | SetTaskAction,
 ): PostStateType => {
   switch (action.type) {
+    case 'INITIALIZE':
+      return action.payload
+
     case 'CLEAR':
       return {
         ...postState,
@@ -85,11 +59,24 @@ export const PostReducer = (
           id: '',
           password: '',
         },
+        taskFlow: {
+          customId: '',
+          task: '',
+          situation: '未完了',
+          testFormat: '',
+          date: '',
+          limitDate: '',
+          current: false,
+          next: false,
+          finished: false,
+          edit: false,
+        },
       }
+
     case 'SET_COMPANY':
       return {
         ...postState,
-        customId: uuidv4(),
+        customId: action.payload.customId,
         userId: action.payload.userId,
         startDate: action.payload.startDate,
         endDate: action.payload.endDate,
@@ -107,7 +94,7 @@ export const PostReducer = (
     case 'UPDATE_COMPANY':
       return {
         ...postState,
-        customId: action.payload.costomId,
+        customId: action.payload.customId,
         [action.payload.name]: action.payload.value,
       }
 
@@ -120,43 +107,22 @@ export const PostReducer = (
           [action.payload.name]: action.payload.value,
         },
       }
+    case 'INITIALIZE':
+      return action.payload
+
+    case 'SET_TASK':
+      return {
+        ...postState,
+        taskFlow: {
+          ...PostState.taskFlow,
+          customId: action.payload.customId,
+          [action.payload.name]: action.payload.value,
+          date: action.payload.date,
+          limitDate: action.payload.limitDate,
+        },
+      }
 
     default:
       return postState
   }
 }
-// case 'SET_TASK':
-//   return {
-//     ...postState,
-//     taskFlow: [
-//       ...postState.taskFlow,
-//       {
-//         [action.payload.name]: action.payload.value,
-//         [action.payload.order]: action.payload.orderValue,
-//       },
-//     ],
-//   }
-
-// case 'UPDATE_TASK':
-//   return {
-//     ...postState,
-//     taskFlow: [
-//       ...postState.taskFlow,
-//       {
-//         ...postState.taskFlow[action.payload.index],
-//         [action.payload.name]: action.payload.value,
-//         [action.payload.order]: action.payload.orderValue,
-//       },
-//     ],
-//   }
-// case 'FINISHED_TASK':
-//   return {
-//     ...postState,
-//     taskFlow: [
-//       ...postState.taskFlow,
-//       {
-//         ...postState.taskFlow[action.payload.index],
-//         finised: true,
-//       },
-//     ],
-//   }
