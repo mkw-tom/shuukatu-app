@@ -3,9 +3,11 @@ import ShowCard from './components/ShowCard/ShowCard'
 
 const page = () => {
   return (
-    <main className="h-screen">
-      <div className="mx-10 mt-20  flex items-start justify-between">
-        <ShowCard />
+    <main className="h-screen ">
+      <div className="mx-10 mt-10 items-start justify-between lg:flex">
+        <div className="hidden  w-5/12 lg:block">
+          <ShowCard />
+        </div>
         <CardList />
       </div>
     </main>
