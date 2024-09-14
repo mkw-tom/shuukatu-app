@@ -39,19 +39,24 @@ const MypageForm = ({
 
     const data = await res.json() // サーバーからのレスポンスを取得
     console.log(state)
-    setFormSlide('-translate-x-[1000px] ')
-    // dispatch({ type: 'CLEAR' })
+    if (title === '編集') {
+      setFormSlide('-translate-x-none ')
+      setOpen(false)
+      dispatch({ type: 'CLEAR' })
+    } else {
+      setFormSlide('-translate-x-[1000px] ')
+    }
   }
 
   return (
     <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
-        <span>{title}</span>
+        <span>マイページの{title}</span>
       </h2>
       <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
         <label htmlFor="url" className="">
-          <span className="inline-block w-[120px] text-center text-info">マイページURL</span>
+          <span className="inline-block w-[100px] text-center text-info">マイページURL</span>
           <input
             type="text"
             id="url"
@@ -64,7 +69,7 @@ const MypageForm = ({
         </label>
 
         <label htmlFor="id">
-          <span className="inline-block w-[120px] text-center text-info">ID</span>
+          <span className="inline-block w-[100px] text-center text-info">ID</span>
           <input
             id="id"
             name="id"
@@ -77,7 +82,7 @@ const MypageForm = ({
         </label>
 
         <label htmlFor="password">
-          <span className="inline-block w-[120px] text-center text-info">Password</span>
+          <span className="w-[100px]text-center inline-block text-info">Password</span>
           <input
             id="password"
             name="password"
@@ -102,7 +107,7 @@ const MypageForm = ({
             type="button"
             onClick={() => handleAdd()}
           >
-            <span>次へ</span>
+            <span>{title}</span>
           </button>
         </div>
       </form>

@@ -9,9 +9,9 @@ const SideBar = () => {
   const [theme] = useDarkMode()
 
   const sidebarItems = [
-    { icon: <Business className="mr-auto" />, text: '企業管理', link: '/company_page' },
-    { icon: <MenuBook className="mr-auto" />, text: 'ES管理', link: '/ES_page' },
-    { icon: <Addchart className="mr-auto" />, text: 'チャート', link: '/chart_page' },
+    { icon: <Business className="mr-auto text-info" />, text: '企業管理', link: '/company_page' },
+    { icon: <MenuBook className="mr-auto text-info" />, text: 'ES管理', link: '/ES_page' },
+    { icon: <Addchart className="mr-auto text-info" />, text: 'チャート', link: '/chart_page' },
   ]
 
   return (
@@ -49,7 +49,7 @@ const SideBar = () => {
             <Link key={index} href={item.link} className="w-full">
               <button className="btn btn-ghost flex w-full items-center">
                 {item.icon}
-                <span className="mr-auto">{item.text}</span>
+                <span className="mr-auto text-info">{item.text}</span>
               </button>
             </Link>
           ))}
