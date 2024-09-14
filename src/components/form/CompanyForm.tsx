@@ -60,11 +60,11 @@ const CompanyForm = ({
     <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
-        <span>{title}</span>
+        <span>企業の{title}</span>
       </h2>
       <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
         <label htmlFor="name" className="">
-          <span className="inline-block w-[120px] text-center text-info">企業名</span>
+          <span className="inline-block w-[100px] text-center text-info">企業名</span>
           <input
             type="text"
             id="name"
@@ -76,7 +76,7 @@ const CompanyForm = ({
           />
         </label>
         <label htmlFor="event">
-          <span className="inline-block w-[120px] text-center text-info">イベント</span>
+          <span className="inline-block w-[100px] text-center text-info">イベント</span>
           <select
             id="event"
             name="event"
@@ -89,7 +89,7 @@ const CompanyForm = ({
           </select>
         </label>
         <div className="flex w-full items-center">
-          <span className="inline-block w-[120px] text-center text-info">開催日時</span>
+          <span className="inline-block w-[100px] text-center text-info">開催日時</span>
           <div className="flex w-[250px] flex-col items-center gap-2">
             <input
               type="datetime-local"
@@ -106,7 +106,7 @@ const CompanyForm = ({
         </div>
 
         <label htmlFor="region">
-          <span className="inline-block w-[120px] text-center text-info">開催地</span>
+          <span className="inline-block w-[100px] text-center text-info">開催地</span>
           <input
             id="region"
             name="region"
@@ -130,7 +130,7 @@ const CompanyForm = ({
             type="button"
             onClick={handleAdd}
           >
-            <span>登録</span>
+            <span>{title}</span>
           </button>
         </div>
       </form>
