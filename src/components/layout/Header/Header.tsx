@@ -18,7 +18,7 @@ const Header = () => {
             className="mr-2 rounded-md"
           />
           <p className="mr-1 bg-gradient-to-r from-info to-orange-400 bg-clip-text text-2xl font-bold  tracking-widest text-transparent">
-            Entrily
+            Entrix
           </p>
         </h1>
         <div className="flex items-center gap-16">
@@ -27,13 +27,6 @@ const Header = () => {
             <DarkModeButton />
             <ProfileButton />
           </div>
-          {/* <Button
-            variant='outlined'
-            className='text-blue-600 font-bold border-2 border-blue-500   dark:bg-blue-500 '
-            endIcon={<Login />}
-          >
-            Login
-          </Button> */}
         </div>
       </div>
     </div>

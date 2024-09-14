@@ -24,5 +24,8 @@ const config: Config = {
     require('@tailwindcss/container-queries'),
     require('daisyui'),
   ],
+  daisyui: {
+    darkTheme: false,
+  },
 }
 export default config

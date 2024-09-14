@@ -1,4 +1,5 @@
 'use client'
+import PostForm from '@/components/form/PostForm'
 import {
   AssignmentInd,
   Celebration,
@@ -144,18 +145,12 @@ const TaskFLow = () => {
 
   return (
     <div className="mt-5 flex w-full flex-col">
+      <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={true} />
       <div className="mb-1 flex justify-between">
         <h2 className="block h-6 border-l-2 border-l-info pl-2">選考フロー</h2>
       </div>
-      {/* <button
-        className="flex h-auto w-full border-y-2 py-2 dark:border-gray-400 dark:text-gray-400"
-        onClick={toggle}
-      >
-        {open ? <ArrowDropDown /> : <ArrowRight />}
-        選考フロー
-      </button> */}
       <div className="h-auto max-h-[300px] w-full overflow-x-scroll">
-        <ul className="timeline timeline-vertical -ml-56 mb-5 flex lg:timeline-horizontal lg:ml-0">
+        <ul className="timeline timeline-horizontal mb-5 flex lg:ml-0">
           {dummyTaskFlow.map((task, index) => (
             <li key={index}>
               <hr className={`${task.finished ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`} />
@@ -188,14 +183,17 @@ const TaskFLow = () => {
           </li>
         </ul>
       </div>
-      <div className="flex w-full flex-col gap-1 rounded-md border-2 p-2">
+      <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
         <div className="flex justify-between">
           <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
-            {judgeIcon(selectTask?.task as string)}
-            <span>{selectTask?.task as string}</span>
+            <span className="text-info">{judgeIcon(selectTask?.task as string)}</span>
+            <span className="text-info">{selectTask?.task as string}</span>
           </h3>
           <nav className="flex items-center">
-            <button className="btn  btn-link btn-sm text-gray-400 hover:text-info">
+            <button
+              className="btn  btn-link btn-sm text-gray-400 hover:text-info"
+              onClick={() => setOpen(true)}
+            >
               <Edit style={{ fontSize: '20px' }} />
               編集
             </button>
@@ -209,20 +207,6 @@ const TaskFLow = () => {
         <p className="border-l-2 border-l-info pl-2">実践日時：{selectTask?.date}</p>
         <p className="border-l-2 border-l-info pl-2">期限：{selectTask?.limitDate}</p>
       </div>
-
-      {/* <ul className="h-auto max-h-96 overflow-y-auto" style={{ display: open ? 'block' : 'none' }}>
-        {selectPostTasks?.map((task, index) => <Task key={index} task={task} />)}
-      </ul>
-
-      <div
-        className=" flex h-12 flex-col gap-1 border-b-2 p-1 hover:bg-green-100 md:ml-1"
-        style={{ display: open ? 'block' : 'none' }}
-      >
-        <button className="flex size-full items-center justify-center  gap-2 border-2 border-dashed  font-bold ">
-          タスクの追加
-          <AddCircle />
-        </button>
-      </div> */}
     </div>
   )
 }

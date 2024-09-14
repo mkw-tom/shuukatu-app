@@ -54,11 +54,11 @@ const TaskForm = ({
     <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
-        <span>{title}</span>
+        <span>タスクの{title}</span>
       </h2>
       <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
         <label htmlFor="task">
-          <span className="inline-block w-[120px] text-center text-info">タスク</span>
+          <span className="inline-block w-[100px] text-center text-info">タスク</span>
           <select
             id="task"
             name="task"
@@ -81,7 +81,7 @@ const TaskForm = ({
         </label>
 
         <label htmlFor="date">
-          <span className="inline-block w-[120px] text-center text-info">実践日時</span>
+          <span className="inline-block w-[100px] text-center text-info">実践日時</span>
           <input
             name="date"
             id="date"
@@ -93,7 +93,7 @@ const TaskForm = ({
         </label>
 
         <label htmlFor="limitDate">
-          <span className="inline-block w-[120px] text-center text-info">期限</span>
+          <span className="inline-block w-[100px] text-center text-info">期限</span>
           <input
             name="limitDate"
             id="limitDate"
@@ -105,7 +105,7 @@ const TaskForm = ({
         </label>
 
         <label htmlFor="testFormat">
-          <span className="inline-block w-[120px] text-center text-info">テスト形式</span>
+          <span className="inline-block w-[100px] text-center text-info">テスト形式</span>
           <input
             id="testFormat"
             name="testFormat"
@@ -129,7 +129,7 @@ const TaskForm = ({
             type="button"
             onClick={() => handleAdd()}
           >
-            <span>完了</span>
+            <span>{title}</span>
           </button>
         </div>
       </form>
