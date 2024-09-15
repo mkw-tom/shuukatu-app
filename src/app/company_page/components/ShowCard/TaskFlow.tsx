@@ -1,4 +1,5 @@
 'use client'
+import { usePost } from '@/app/context/usePost'
 import PostForm from '@/components/form/PostForm'
 import {
   AssignmentInd,
@@ -21,90 +22,10 @@ const judgeIcon = (taskname: string) => {
     case 'グループ面接':
       return <Group />
   }
-
-  // const selectPostTasks = [
-  //   { task: 'グループ面接', unfinishIcon: <Group className="text-gray-400"/>, doIcon: <Group className="animate-pulse text-info"/>, finishedIcon: <Check className="text-info"/> },
-  //   { task: '面接', unfinishIcon: <Person className="text-gray-400"/>, doIcon: <Person className="animate-pulse text-info"/>, finishedIcon: <Check className="text-info"/> },
-  //   { task: 'ES・履歴書提出', unfinishIcon: <AssignmentInd className="text-gray-400"/>,  doIcon: <AssignmentInd className="animate-pulse text-info"/>, finishedIcon: <Check className="text-info"/>  },
-  // ]
 }
 
-const dummyTaskFlow = [
-  {
-    customId: 'aaiueo',
-    task: 'グループ面接',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: true,
-    current: false,
-    next: false,
-    edit: false,
-  },
-  {
-    customId: 'aaiueo',
-    task: 'グループ面接',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: false,
-    next: false,
-    current: true,
-    edit: false,
-  },
-  {
-    customId: 'aaiueo',
-    task: '面接',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: false,
-    current: false,
-    next: true,
-    edit: false,
-  },
-  {
-    customId: 'aaiueo',
-    task: 'ES・履歴書提出',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: false,
-    current: false,
-    next: false,
-    edit: false,
-  },
-  {
-    customId: 'aaiueo',
-    task: 'グループ面接',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: false,
-    current: false,
-    next: false,
-    edit: false,
-  },
-  {
-    customId: 'aaiueo',
-    task: 'グループ面接',
-    date: '10:00',
-    limitDate: '11;00',
-    testFormat: 'spi',
-    situation: '未完了',
-    finished: false,
-    current: false,
-    next: false,
-    edit: false,
-  },
-]
-
 const TaskFLow = () => {
+  const { selectPost } = usePost()
   const [open, setOpen] = useState<boolean>(false)
   const [selectTask, setSelectTask] = useState<TaskStateType | null>(null)
 
@@ -135,13 +56,16 @@ const TaskFLow = () => {
   const toggle = () => {
     setOpen(!open)
   }
+
   useEffect(() => {
-    setSelectTask(dummyTaskFlow[0])
-  }, [])
+    const current = selectPost?.taskFlow?.filter((task) => task.finished === false)[0]
+    setSelectTask(current as TaskStateType)
+  }, [selectPost])
 
   const handleSelectTask = (task: TaskStateType) => {
     setSelectTask(task)
   }
+  console.log(selectTask)
 
   return (
     <div className="mt-5 flex w-full flex-col">
@@ -151,9 +75,11 @@ const TaskFLow = () => {
       </div>
       <div className="h-auto max-h-[300px] w-full overflow-x-scroll">
         <ul className="timeline timeline-horizontal mb-5 flex lg:ml-0">
-          {dummyTaskFlow.map((task, index) => (
+          {selectPost?.taskFlow?.map((task, index) => (
             <li key={index}>
-              <hr className={`${task.finished ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`} />
+              <hr
+                className={`${task?.finished || task.current ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`}
+              />
               <div className="timeline-middle">
                 <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
               </div>
@@ -183,6 +109,7 @@ const TaskFLow = () => {
           </li>
         </ul>
       </div>
+
       <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
         <div className="flex justify-between">
           <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
@@ -203,9 +130,15 @@ const TaskFLow = () => {
             </button>
           </nav>
         </div>
-        <p className="border-l-2 border-l-info pl-2">テスト形式：{selectTask?.testFormat}</p>
-        <p className="border-l-2 border-l-info pl-2">実践日時：{selectTask?.date}</p>
-        <p className="border-l-2 border-l-info pl-2">期限：{selectTask?.limitDate}</p>
+        <p className={`${selectTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          テスト形式：{selectTask?.testFormat}
+        </p>
+        <p className={`${selectTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          実践日時：{selectTask?.date}
+        </p>
+        <p className={`${selectTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          期限：{selectTask?.limitDate}
+        </p>
       </div>
     </div>
   )

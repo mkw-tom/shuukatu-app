@@ -130,7 +130,6 @@ const WindowMock = () => {
               <li className="w-full ">
                 <div className="shadow-md: card card-side relative flex items-center justify-between border-2 border-l-4 p-2 dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200">
                   <div className="flex flex-col gap-1">
-                    {/* <input type="radio" className="w-3 h-3" /> */}
                     <h1 className="border-l-2 border-l-info pl-2 text-start text-sm tracking-wider ">
                       株式会社××××
                     </h1>

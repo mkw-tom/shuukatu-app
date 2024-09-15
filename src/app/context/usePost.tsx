@@ -3,8 +3,10 @@ import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import { createContext, useContext, useState } from 'react'
 
 interface PostContextType {
-  post: PostType[]
-  setPost: Dispatch<SetStateAction<PostType[]>>
+  posts: PostType[]
+  setPosts: Dispatch<SetStateAction<PostType[]>>
+  selectPost: PostType | null
+  setSelectPost: Dispatch<SetStateAction<PostType | null>>
 }
 const postContext = createContext<PostContextType | undefined>(undefined)
 
@@ -16,12 +18,15 @@ export const usePost = () => {
   return context
 }
 
-export const PostContexgtProvider = ({ children }: { children: ReactNode }) => {
-  const [post, setPost] = useState<PostType[]>([])
+export const PostContextProvider = ({ children }: { children: ReactNode }) => {
+  const [posts, setPosts] = useState<PostType[]>([])
+  const [selectPost, setSelectPost] = useState<PostType | null>(null)
 
   const value = {
-    post,
-    setPost,
+    posts,
+    setPosts,
+    selectPost,
+    setSelectPost,
   }
   return <postContext.Provider value={value}>{children}</postContext.Provider>
 }
