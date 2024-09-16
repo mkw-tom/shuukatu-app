@@ -1,5 +1,4 @@
-// import { PostReducer, PostState } from '@/app/reducer/PostReducer'
-import { usePostReducer } from '@/app/context/usePostReducer'
+import { usePostReducer } from '@/app/context/useFormInputReducer'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 

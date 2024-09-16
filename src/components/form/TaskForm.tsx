@@ -1,7 +1,9 @@
-import { usePostReducer } from '@/app/context/usePostReducer'
+import { usePostReducer } from '@/app/context/useFormInputReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
+import { useRouter } from 'next/navigation'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 const TaskForm = ({
@@ -13,30 +15,43 @@ const TaskForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
+  const { state, dispatch } = usePostReducer()
+  const { setPosts, posts, selectPost, selectTask, postsDispatch } = usePost()
   const [date, setDate] = useState<string>('')
   const [limitDate, setLimitDate] = useState<string>('')
-  const { state, dispatch } = usePostReducer()
+  const router = useRouter()
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const customId = uuidv4()
+    const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
+
     const { name, value } = e.target
     dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate } })
+    console.log(state)
   }
+
+  useEffect(() => {
+    if (title === '編集') {
+      setDate(state.taskFlow.date)
+      setLimitDate(state.taskFlow.limitDate)
+    }
+  }, [state.taskFlow.date, state.taskFlow.limitDate, title])
 
   const handleCancel = () => {
     setFormSlide('-translate-x-none')
-    // dispatch({ type: 'CLEAR' })
+    dispatch({ type: 'CLEAR' })
     setOpen(false)
   }
 
-  const handleAdd = async () => {
-    const res = await fetch('http://localhost:3000/api/posts/task', {
+  // --------------タスク追加ーーーーーーーーーーー-
+  const handleAddTask = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+    const res = await fetch(`${url}/api/posts/task`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json', // JSONデータを送ることを明示
       },
       body: JSON.stringify({
-        customId: state.customId,
+        customId: state.customId || selectPost?.customId,
         taskFlow: state.taskFlow,
       }),
     })
@@ -44,10 +59,73 @@ const TaskForm = ({
     if (!res.ok) {
       console.log('failed to fetch')
     }
-    console.log(state)
+
     setFormSlide('-translate-x-none')
     setOpen(false)
-    // dispatch({ type: 'CLEAR' })
+
+    postsDispatch({
+      type: 'ADD_TASK',
+      postId: selectPost?.customId as string,
+      newTask: state.taskFlow,
+    })
+
+    router.refresh()
+    dispatch({ type: 'CLEAR' })
+  }
+
+  ///ーーーーーーーーーーーータスク編集ーーーーーーーーーーーーーーーーーーー
+  const hadleEditTask = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+    try {
+      const res = await fetch(`${url}/api/posts/task/update`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json', // JSONデータを送ることを明示
+        },
+        body: JSON.stringify({
+          postId: selectPost?.customId,
+          taskId: selectTask?.customId,
+          updateData: {
+            ...state.taskFlow,
+            date,
+            limitDate,
+          },
+        }),
+      })
+
+      if (res.ok!) {
+        console.log('failed fetch')
+      }
+
+      setFormSlide('-translate-x-none')
+      setOpen(false)
+
+      postsDispatch({
+        type: 'UPDATE_TASK',
+        postId: selectTask?.customId as string,
+        taskId: selectTask?.customId as string,
+        updateTask: {
+          ...state.taskFlow,
+          date,
+          limitDate,
+        },
+      })
+
+      dispatch({ type: 'CLEAR' })
+      setOpen(false)
+
+      router.refresh()
+    } catch (error) {
+      alert(`faild fetch : ${error}`)
+    }
+  }
+
+  const updateTask = () => {
+    if (title === '編集') {
+      return hadleEditTask()
+    }
+
+    return handleAddTask()
   }
 
   return (
@@ -56,7 +134,7 @@ const TaskForm = ({
         <AddCircle />
         <span>タスクの{title}</span>
       </h2>
-      <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
+      <form className="flex w-full flex-col items-start gap-8 px-5">
         <label htmlFor="task">
           <span className="inline-block w-[100px] text-center text-info">タスク</span>
           <select
@@ -87,7 +165,7 @@ const TaskForm = ({
             id="date"
             type="datetime-local"
             className="input  input-bordered w-[250px]   bg-gray-200 text-gray-700 dark:bg-gray-400"
-            value={date}
+            value={date || state.taskFlow.date}
             onChange={(e) => setDate(e.target.value)}
           />
         </label>
@@ -99,7 +177,7 @@ const TaskForm = ({
             id="limitDate"
             type="datetime-local"
             className="input input-bordered w-[250px]  bg-gray-200 text-gray-700 dark:bg-gray-400"
-            value={limitDate}
+            value={limitDate || state.taskFlow.limitDate}
             onChange={(e) => setLimitDate(e.target.value)}
           />
         </label>
@@ -127,7 +205,7 @@ const TaskForm = ({
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
-            onClick={() => handleAdd()}
+            onClick={() => updateTask()}
           >
             <span>{title}</span>
           </button>
