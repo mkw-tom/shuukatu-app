@@ -9,12 +9,13 @@ export async function PUT(req: Request) {
   try {
     const res = await PostModel.findOneAndUpdate(
       {
-        customId: body.customId,
-        'taskFlow.customId': body.taskFlow.customId,
+        customId: body.postId,
+        'taskFlow.customId': body.taskId,
       },
       {
-        $set: { 'taskFlow.$': body.taskFlow },
+        $set: { 'taskFlow.$': body.updateData },
       },
+      { new: true },
     )
 
     if (!res) {

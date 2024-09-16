@@ -17,6 +17,7 @@ export async function PUT(req: Request) {
           taskFlow: body.taskFlow,
         },
       },
+      { new: true },
     )
 
     return new Response('Success: Data added successfully', { status: 200 })
@@ -29,18 +30,20 @@ export async function PUT(req: Request) {
 //特定のタスクの削除
 export async function DELETE(req: Request) {
   await connectDB()
-  const query = await req.json()
+  const url = new URL(req.url)
+  const postId = url.searchParams.get('postId')
+  const taskId = url.searchParams.get('taskId')
+
+  // postIdまたはtaskIdがnullの場合にエラーメッセージを返す
+  if (!postId || !taskId) {
+    return new Response('Error: Missing property', { status: 400 })
+  }
 
   try {
     const res = await PostModel.findOneAndUpdate(
-      {
-        customId: query.postId,
-      },
-      {
-        $pull: {
-          taskFlow: { customId: query.taskId },
-        },
-      },
+      { customId: postId },
+      { $pull: { taskFlow: { customId: taskId } } },
+      { new: true }, // 変更後のデータを返すオプション
     )
 
     if (!res) {
@@ -50,9 +53,9 @@ export async function DELETE(req: Request) {
       })
     }
 
-    return new Response('Success: Data added successfully', { status: 200 })
+    return new Response('Success: Task deleted successfully', { status: 200 })
   } catch (error) {
-    console.error('Error saving data:', error)
-    return new Response('Error: Failed to add data', { status: 500 })
+    console.error('Error deleting task:', error)
+    return new Response('Error: Failed to delete task', { status: 500 })
   }
 }

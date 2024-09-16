@@ -1,10 +1,10 @@
 'use client'
 import type { Dispatch, ReactNode } from 'react'
 import { createContext, useContext, useReducer } from 'react'
-import { PostReducer, PostState } from '../reducer/PostReducer'
+import { FormInputReducer, FormInputState } from '../reducer/FormInputReducer'
 
 interface PostContextType {
-  state: PostStateType
+  state: FormInputPostType
   dispatch: Dispatch<
     | SetCompanyAction
     | SetMypageAction
@@ -17,18 +17,18 @@ interface PostContextType {
   currentPostId: string
 }
 
-const postReducerContext = createContext<PostContextType | undefined>(undefined)
+const formInputReducerContext = createContext<PostContextType | undefined>(undefined)
 
 export const usePostReducer = () => {
-  const context = useContext(postReducerContext)
+  const context = useContext(formInputReducerContext)
   if (!context) {
     throw new Error('undefined context')
   }
   return context
 }
 
-export const PostReducerContextProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(PostReducer, PostState)
+export const FormInputReducerContextProvider = ({ children }: { children: ReactNode }) => {
+  const [state, dispatch] = useReducer(FormInputReducer, FormInputState)
   const currentPostId = state.customId as string
   const value = {
     state,
@@ -36,5 +36,7 @@ export const PostReducerContextProvider = ({ children }: { children: ReactNode }
     currentPostId,
   }
 
-  return <postReducerContext.Provider value={value}>{children}</postReducerContext.Provider>
+  return (
+    <formInputReducerContext.Provider value={value}>{children}</formInputReducerContext.Provider>
+  )
 }

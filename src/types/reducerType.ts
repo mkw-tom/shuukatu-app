@@ -1,4 +1,4 @@
-interface PostStateType {
+interface FormInputPostType {
   customId: string
   userId: string
   name: string
@@ -26,7 +26,7 @@ interface PostStateType {
   }
 }
 
-interface TaskStateType {
+interface FormInputTaskType {
   customId: string
   task: string
   situation: string
@@ -39,7 +39,7 @@ interface TaskStateType {
   edit: boolean
 }
 
-//------- type of reudcer ---------
+//------- FormInputReducer ---------
 interface ClearAction {
   type: 'CLEAR'
 }
@@ -58,7 +58,7 @@ interface SetCompanyAction {
 
 interface InitalizePostAction {
   type: 'INITIALIZE'
-  payload: PostStateType
+  payload: FormInputPostType
 }
 
 interface SetMypageAction {
@@ -89,7 +89,7 @@ interface UpdateMypageAction {
 
 interface InitalizeTaskAction {
   type: 'INITIALIZE_TASK'
-  payload: TaskStateType
+  payload: FormInputTaskType
 }
 
 interface ClearAction {
@@ -106,3 +106,14 @@ interface SetTaskAction {
     limitDate: string
   }
 }
+
+///-----------  PostReducer -------------
+
+type Action =
+  | { type: 'INITIALIZE'; posts: PostType[] }
+  | { type: 'ADD_POST'; post: PostType }
+  | { type: 'UPDATE_POST'; postId: string; updatedPost: Partial<PostType> }
+  | { type: 'DELETE_POST'; postId: string }
+  | { type: 'ADD_TASK'; postId: string; newTask: TaskType }
+  | { type: 'UPDATE_TASK'; postId: string; taskId: string; updateTask: TaskType }
+  | { type: 'DELETE_TASK'; postId: string; taskId: string }

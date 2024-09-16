@@ -1,7 +1,8 @@
-import { usePostReducer } from '@/app/context/usePostReducer'
+import { usePostReducer } from '@/app/context/useFormInputReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 const CompanyForm = ({
@@ -14,13 +15,22 @@ const CompanyForm = ({
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
   // const [state, dispatch] = useReducer(PostReducer, PostState)
+  const { selectPost } = usePost()
   const { state, dispatch } = usePostReducer()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
 
+  useEffect(() => {
+    if (title === '編集') {
+      setStartDate(state.startDate)
+      setEndDate(state.endDate)
+    }
+  }, [state.startDate, state.endDate, title])
+
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = uuidv4()
     const userId = 'aiueo'
+
     const { name, value } = e.target
     dispatch({
       type: 'SET_COMPANY',
@@ -29,6 +39,7 @@ const CompanyForm = ({
   }
 
   const handleCancel = () => {
+    const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
     // e.preventDefault()
     dispatch({ type: 'CLEAR' })
     setFormSlide('-translate-x-none')
@@ -36,14 +47,16 @@ const CompanyForm = ({
   }
 
   const handleAdd = async () => {
-    const res = await fetch('http://localhost:3000/api/posts', {
+    const userId = '66b80f4baa71df7091ecaaa3'
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+    const res = await fetch(`${url}/api/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json', // JSONデータを送ることを明示
       },
       body: JSON.stringify({
         customId: state.customId,
-        userId: state.userId,
+        userId,
         name: state.name,
         event: state.event,
         startDate: state.startDate,

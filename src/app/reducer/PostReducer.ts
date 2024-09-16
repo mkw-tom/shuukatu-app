@@ -1,128 +1,60 @@
-export const PostState: PostStateType = {
-  customId: '',
-  userId: '',
-  name: '',
-  event: '',
-  startDate: '',
-  endDate: '',
-  region: '',
-  completed: false,
-  mypage: {
-    url: '',
-    id: '',
-    password: '',
-  },
-  taskFlow: {
-    customId: '',
-    task: '',
-    situation: '',
-    testFormat: '',
-    date: '',
-    limitDate: '',
-    current: false,
-    next: false,
-    finished: false,
-    edit: false,
-  },
-}
-
-export const PostReducer = (
-  postState: PostStateType,
-  action:
-    | SetCompanyAction
-    | SetMypageAction
-    | UpdateCompanyAction
-    | ClearAction
-    | UpdateMypageAction
-    | InitalizePostAction
-    | InitalizeTaskAction
-    | ClearAction
-    | SetTaskAction,
-): PostStateType => {
+export const postReducer = (state: PostType[], action: Action): PostType[] => {
   switch (action.type) {
     case 'INITIALIZE':
-      return action.payload
+      return action.posts
 
-    case 'CLEAR':
-      return {
-        ...postState,
-        customId: '',
-        userId: '',
-        name: '',
-        event: '',
-        startDate: '',
-        endDate: '',
-        region: '',
-        completed: false,
-        mypage: {
-          url: '',
-          id: '',
-          password: '',
-        },
-        taskFlow: {
-          customId: '',
-          task: '',
-          situation: '未完了',
-          testFormat: '',
-          date: '',
-          limitDate: '',
-          current: false,
-          next: false,
-          finished: false,
-          edit: false,
-        },
-      }
+    case 'ADD_POST':
+      return [...state, action.post]
 
-    case 'SET_COMPANY':
-      return {
-        ...postState,
-        customId: action.payload.customId,
-        userId: action.payload.userId,
-        startDate: action.payload.startDate,
-        endDate: action.payload.endDate,
-        [action.payload.name]: action.payload.value,
-      }
-    case 'SET_MYPAGE':
-      return {
-        ...postState,
-        mypage: {
-          ...postState.mypage,
-          [action.payload.name]: action.payload.value,
-        },
-      }
+    case 'UPDATE_POST':
+      return state.map((post) =>
+        post.customId === action.postId ? { ...post, ...action.updatedPost } : post,
+      )
 
-    case 'UPDATE_COMPANY':
-      return {
-        ...postState,
-        customId: action.payload.customId,
-        [action.payload.name]: action.payload.value,
-      }
+    case 'DELETE_POST':
+      return state.filter((post) => post.customId !== action.postId)
 
-    case 'UPDATE_MYPAGE':
-      return {
-        ...postState,
-        customId: action.payload.customId,
-        mypage: {
-          ...postState.mypage,
-          [action.payload.name]: action.payload.value,
-        },
-      }
-    case 'INITIALIZE':
-      return action.payload
+    case 'ADD_TASK':
+      return state.map((post) => {
+        if (post.customId === action.postId) {
+          return {
+            ...post,
+            taskFlow: [...post.taskFlow, action.newTask], // 不変性を保ちながら新しいタスクを追加
+          }
+        }
+        return post
+      })
 
-    case 'SET_TASK':
-      return {
-        ...postState,
-        taskFlow: {
-          ...PostState.taskFlow,
-          customId: action.payload.customId,
-          [action.payload.name]: action.payload.value,
-          date: action.payload.date,
-          limitDate: action.payload.limitDate,
-        },
-      }
+    case 'UPDATE_TASK':
+      return state.map((post) => {
+        if (post.customId === action.postId) {
+          console.log('Updating task for post:', post) // デバッグ用
+          return {
+            ...post,
+            taskFlow: post.taskFlow.map((task) => {
+              if (task.customId === action.taskId) {
+                console.log('Updating task:', task) // デバッグ用
+                return { ...task, ...action.updateTask }
+              }
+              return task
+            }),
+          }
+        }
+        return post
+      })
+
+    case 'DELETE_TASK':
+      return state.map((post) => {
+        if (post.customId === action.postId) {
+          return {
+            ...post,
+            taskFlow: post.taskFlow.filter((task) => task.customId !== action.taskId),
+          }
+        }
+        return post
+      })
 
     default:
-      return postState
+      return state
   }
 }

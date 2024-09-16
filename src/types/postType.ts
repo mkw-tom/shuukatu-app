@@ -12,20 +12,20 @@ interface PostType extends Document {
     id: string
     password: string
   }
-  taskFlow: [
-    {
-      customId: string
-      task: string
-      situation: string
-      testFormat: string
-      date: string
-      limitDate: string
-      current: boolean
-      next: boolean
-      finished: boolean
-      edit: boolean
-    },
-  ]
+  taskFlow: TaskType[]
   createdAt: Date
   updatedAt: Date
+}
+
+interface TaskType {
+  customId: string
+  task: string
+  situation: string
+  testFormat: string
+  date: string
+  limitDate: string
+  current: boolean
+  next: boolean
+  finished: boolean
+  edit: boolean
 }
