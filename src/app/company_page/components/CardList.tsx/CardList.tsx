@@ -8,25 +8,27 @@ import Filter from './Filter'
 import SearchArea from './SearchArea'
 
 const CardList = ({ postsData }: { postsData: PostType[] }) => {
-  const { posts, setPosts, selectPost, setSelectPost } = usePost()
-  useEffect(() => {
-    setPosts(postsData)
+  const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
+    usePost()
 
-    setSelectPost(posts[0])
-  }, [posts, postsData, setPosts, setSelectPost])
+  useEffect(() => {
+    if (postsData) {
+      setPosts(postsData)
+      setSelectPost(postsData[0]) // postsData[0]が存在することを確認
+      postsDispatch({ type: 'INITIALIZE', posts: postsData })
+    }
+  }, [postsData, postsDispatch, setPosts, setSelectPost])
 
   const handleSelect = (post: PostType) => {
-    setSelectPost(post)
+    if (post) {
+      setSelectPost(post)
+    }
   }
 
-  const currentTask = (taskFlow: TaskStateType[]) => {
+  const currentTask = (taskFlow: TaskType[]) => {
+    if (!taskFlow) return 'なし'
     const current = taskFlow.filter((task) => task.finished === false)[0]
-
-    if (!current) {
-      return 'なし'
-    }
-
-    return current.task
+    return current ? current.task : 'なし'
   }
 
   return (
@@ -37,7 +39,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
         <Filter />
       </div>
       <ul className="flex h-[580px] flex-col gap-5 overflow-y-scroll">
-        {posts.map((post, index) => (
+        {postsState?.map((post, index) => (
           <button key={index} className="w-full" onClick={() => handleSelect(post)}>
             <div
               className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost === post ? 'border-info dark:border-info' : ''}`}

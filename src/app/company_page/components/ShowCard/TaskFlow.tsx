@@ -1,7 +1,9 @@
 'use client'
+import { usePostReducer } from '@/app/context/useFormInputReducer'
 import { usePost } from '@/app/context/usePost'
 import PostForm from '@/components/form/PostForm'
 import {
+  AddCircle,
   AssignmentInd,
   Celebration,
   CheckCircle,
@@ -11,6 +13,7 @@ import {
   Person,
   Verified,
 } from '@mui/icons-material'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const judgeIcon = (taskname: string) => {
@@ -25,54 +28,79 @@ const judgeIcon = (taskname: string) => {
 }
 
 const TaskFLow = () => {
-  const { selectPost } = usePost()
+  const { selectPost, setSelectTask, selectTask, postsState, postsDispatch } = usePost()
   const [open, setOpen] = useState<boolean>(false)
-  const [selectTask, setSelectTask] = useState<TaskStateType | null>(null)
+  const [formTitle, setFormTitle] = useState<string>('')
+  const { state, dispatch } = usePostReducer()
+  const router = useRouter()
 
-  const TaskDelete = async (taskId: string) => {
-    const postId = 'test111'
-    const res = fetch(`http://localhost:3000/api/posts/task?postId=${postId}&taskId=${taskId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json', // JSONデータを送ることを明示
-      },
-    })
+  const TaskDelete = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+    const postId = selectPost?.customId
+    const taskId = selectTask?.customId
+
+    try {
+      const res = await fetch(`${url}/api/posts/task?postId=${postId}&taskId=${taskId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json', // JSONデータを送ることを明示
+        },
+      })
+
+      if (!res.ok) {
+        console.error('🦁 Failed to delete the task')
+        return
+      }
+
+      //postsの状態を更新
+      postsDispatch({
+        type: 'DELETE_TASK',
+        postId: selectPost?.customId as string,
+        taskId: selectTask?.customId as string,
+      })
+
+      router.refresh()
+
+      console.log('🦁 Success delete')
+      return 'Success delete'
+    } catch (error) {
+      console.error('🦁 An error occurred:', error)
+      return 'An error occurred'
+    }
   }
 
-  const TaskEdit = async () => {
-    const postId = 'test111'
-    const res = fetch('http://localhost:3000/api/posts/task/update', {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json', // JSONデータを送ることを明示
-      },
-      body: JSON.stringify({
-        customId: 'test',
-        taskFlow: 'diha@f',
-      }),
-    })
-  }
-
-  const toggle = () => {
-    setOpen(!open)
+  const TaskFormOpen = (title: string) => {
+    setFormTitle(title)
+    setOpen(true)
+    if (title === '編集') {
+      dispatch({ type: 'INITIALIZE_TASK', payload: selectTask as FormInputTaskType })
+    }
+    console.log(state)
   }
 
   useEffect(() => {
     const current = selectPost?.taskFlow?.filter((task) => task.finished === false)[0]
-    setSelectTask(current as TaskStateType)
-  }, [selectPost])
+    setSelectTask(current as FormInputTaskType)
+  }, [selectPost?.taskFlow, setSelectTask])
 
-  const handleSelectTask = (task: TaskStateType) => {
+  const handleSelectTask = (task: FormInputTaskType) => {
     setSelectTask(task)
   }
-  console.log(selectTask)
 
   return (
     <div className="mt-5 flex w-full flex-col">
-      <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={true} />
-      <div className="mb-1 flex justify-between">
+      <PostForm open={open} setOpen={setOpen} title={formTitle} onlyTaskForm={true} />
+      <div className="mb-1 flex items-center justify-between gap-3">
         <h2 className="block h-6 border-l-2 border-l-info pl-2">選考フロー</h2>
+        <button
+          className="btn btn-sm flex items-center justify-center rounded-full border-none text-gray-400 hover:bg-info hover:text-gray-100 dark:bg-gray-600 dark:hover:bg-info dark:hover:text-gray-200"
+          onClick={() => TaskFormOpen('追加')}
+        >
+          <AddCircle />
+          フローの追加
+        </button>
       </div>
+
       <div className="h-auto max-h-[300px] w-full overflow-x-scroll">
         <ul className="timeline timeline-horizontal mb-5 flex lg:ml-0">
           {selectPost?.taskFlow?.map((task, index) => (
@@ -81,7 +109,11 @@ const TaskFLow = () => {
                 className={`${task?.finished || task.current ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`}
               />
               <div className="timeline-middle">
-                <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
+                {task?.current ? (
+                  <p className="mx-1 size-5 animate-pulse rounded-full bg-info"></p>
+                ) : (
+                  <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
+                )}
               </div>
               <button
                 className={`timeline-end timeline-box flex cursor-pointer items-center gap-1 hover:bg-gray-300 ${task === selectTask ? 'bg-gray-300' : ''}`}
@@ -119,12 +151,15 @@ const TaskFLow = () => {
           <nav className="flex items-center">
             <button
               className="btn  btn-link btn-sm text-gray-400 hover:text-info"
-              onClick={() => setOpen(true)}
+              onClick={() => TaskFormOpen('編集')}
             >
               <Edit style={{ fontSize: '20px' }} />
               編集
             </button>
-            <button className="btn btn-link btn-sm text-gray-400 hover:text-error">
+            <button
+              className="btn btn-link btn-sm text-gray-400 hover:text-error"
+              onClick={TaskDelete}
+            >
               <Delete style={{ fontSize: '20px' }} />
               削除
             </button>

@@ -8,7 +8,7 @@ const CardHeader = () => {
   const [open, setOpen] = useState<boolean>(false)
   const { selectPost } = usePost()
 
-  const currentTask = (taskFlow: TaskStateType[]) => {
+  const currentTask = (taskFlow: TaskType[]) => {
     const current = taskFlow?.filter((task) => task.finished === false)[0]
 
     if (!current) {
@@ -28,7 +28,7 @@ const CardHeader = () => {
         <div className="ml-5 flex items-center gap-1">
           <Group className="text-info" />
           <p className="font-bold text-info dark:text-info ">
-            {currentTask(selectPost?.taskFlow as TaskStateType[])}
+            {currentTask(selectPost?.taskFlow as TaskType[])}
           </p>
         </div>
       </div>

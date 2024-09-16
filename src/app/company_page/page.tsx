@@ -1,3 +1,4 @@
+import { FormInputReducerContextProvider } from '../context/useFormInputReducer'
 import { PostContextProvider } from '../context/usePost'
 import CardList from './components/CardList.tsx/CardList'
 import ShowCard from './components/ShowCard/ShowCard'
@@ -11,8 +12,9 @@ const page = async () => {
     const res = await fetch(`${url}/api/posts?userId=${userId}`, {
       method: 'GET',
       headers: {
-        'content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
+      cache: 'no-store',
     })
 
     if (!res.ok) {
@@ -29,12 +31,14 @@ const page = async () => {
   return (
     <main className="h-screen ">
       <div className="mx-10 mt-10 items-start justify-between lg:flex">
-        <PostContextProvider>
-          <div className="hidden  w-5/12 lg:block">
-            <ShowCard />
-          </div>
-          <CardList postsData={postsData} />
-        </PostContextProvider>
+        <FormInputReducerContextProvider>
+          <PostContextProvider>
+            <div className="hidden  w-5/12 lg:block">
+              <ShowCard />
+            </div>
+            <CardList postsData={postsData} />
+          </PostContextProvider>
+        </FormInputReducerContextProvider>
       </div>
     </main>
   )
