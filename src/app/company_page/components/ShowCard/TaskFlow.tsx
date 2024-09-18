@@ -13,7 +13,7 @@ import {
   Person,
   Verified,
 } from '@mui/icons-material'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const judgeIcon = (taskname: string) => {
@@ -28,11 +28,12 @@ const judgeIcon = (taskname: string) => {
 }
 
 const TaskFLow = () => {
-  const { selectPost, setSelectTask, selectTask, postsState, postsDispatch } = usePost()
+  const { selectPost, setSelectPost, setSelectTask, selectTask, postsState, postsDispatch } =
+    usePost()
   const [open, setOpen] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
   const { state, dispatch } = usePostReducer()
-  const router = useRouter()
+  // const router = useRouter()
 
   const TaskDelete = async () => {
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
@@ -47,11 +48,6 @@ const TaskFLow = () => {
         },
       })
 
-      if (!res.ok) {
-        console.error('🦁 Failed to delete the task')
-        return
-      }
-
       //postsの状態を更新
       postsDispatch({
         type: 'DELETE_TASK',
@@ -59,7 +55,17 @@ const TaskFLow = () => {
         taskId: selectTask?.customId as string,
       })
 
-      router.refresh()
+      setSelectPost((prev) => {
+        if (!prev) return null
+        return {
+          ...prev,
+          taskFlow: prev.taskFlow.filter(
+            (task: { customId: string | undefined }) => task.customId !== selectTask?.customId,
+          ),
+        }
+      })
+
+      // router.refresh()
 
       console.log('🦁 Success delete')
       return 'Success delete'

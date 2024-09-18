@@ -1,4 +1,4 @@
-interface PostType extends Document {
+interface PostType {
   customId: string
   userId: string
   name: string
@@ -13,8 +13,8 @@ interface PostType extends Document {
     password: string
   }
   taskFlow: TaskType[]
-  createdAt: Date
-  updatedAt: Date
+  // createdAt: Date
+  // updatedAt: Date
 }
 
 interface TaskType {

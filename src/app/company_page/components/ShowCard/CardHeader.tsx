@@ -1,4 +1,5 @@
 'use client'
+import { usePostReducer } from '@/app/context/useFormInputReducer'
 import { usePost } from '@/app/context/usePost'
 import PostForm from '@/components/form/PostForm'
 import { Delete, Edit, Group } from '@mui/icons-material'
@@ -6,7 +7,8 @@ import { useState } from 'react'
 
 const CardHeader = () => {
   const [open, setOpen] = useState<boolean>(false)
-  const { selectPost } = usePost()
+  const { selectPost, postsDispatch, setSelectPost, posts } = usePost()
+  const { state, dispatch } = usePostReducer()
 
   const currentTask = (taskFlow: TaskType[]) => {
     const current = taskFlow?.filter((task) => task.finished === false)[0]
@@ -15,6 +17,33 @@ const CardHeader = () => {
       return 'なし'
     }
     return current.task
+  }
+
+  const handleDeletePost = () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+
+    try {
+      const res = fetch(`${url}/api/posts?postId=${selectPost?.customId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      postsDispatch({ type: 'DELETE_POST', postId: selectPost?.customId as string })
+      setOpen(false)
+      setSelectPost(posts[0])
+    } catch (error) {
+      console.log(`faild fetch : ${error}`)
+    }
+  }
+
+  const openEditForm = () => {
+    const { taskFlow, ...data } = selectPost as PostType
+    const initializeData = { ...data } as FormPostType
+
+    dispatch({ type: 'INITIALIZE', payload: initializeData })
+    setOpen(true)
   }
 
   return (
@@ -35,12 +64,15 @@ const CardHeader = () => {
       <div className="flex">
         <button
           className="btn  btn-link btn-sm text-gray-400 hover:text-info"
-          onClick={() => setOpen(true)}
+          onClick={openEditForm}
         >
           <Edit style={{ fontSize: '20px' }} />
           編集
         </button>
-        <button className="btn btn-link btn-sm text-gray-400 hover:text-error">
+        <button
+          className="btn btn-link btn-sm text-gray-400 hover:text-error"
+          onClick={handleDeletePost}
+        >
           <Delete style={{ fontSize: '20px' }} />
           削除
         </button>

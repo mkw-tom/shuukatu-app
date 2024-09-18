@@ -1,4 +1,5 @@
 import { usePostReducer } from '@/app/context/useFormInputReducer'
+import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
@@ -11,7 +12,7 @@ const MypageForm = ({
   title: string
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  // const [state, dispatch] = useReducer(PostReducer, PostState)
+  const { postsState, postsDispatch, selectPost, setSelectPost } = usePost()
   const { state, dispatch } = usePostReducer()
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -24,26 +25,39 @@ const MypageForm = ({
     setFormSlide('-translate-x-none')
   }
 
-  const handleAdd = async () => {
-    const res = await fetch('http://localhost:3000/api/posts', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json', // JSONデータを送ることを明示
-      },
-      body: JSON.stringify({
-        customId: state.customId,
-        mypage: state.mypage,
-      }),
-    })
+  const handleAddEditMypage = async () => {
+    // const userId = '66b80f4baa71df7091ecaaa3'
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+    try {
+      const res = await fetch(`${url}/api/posts`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json', // JSONデータを送ることを明示
+        },
+        body: JSON.stringify({
+          customId: state.customId,
+          mypage: state.mypage,
+        }),
+      })
 
-    const data = await res.json() // サーバーからのレスポンスを取得
-    console.log(state)
-    if (title === '編集') {
-      setFormSlide('-translate-x-none ')
-      setOpen(false)
-      dispatch({ type: 'CLEAR' })
-    } else {
-      setFormSlide('-translate-x-[1000px] ')
+      ///-------　フォーム入力用のstateを加工　ーーーーーーーーー
+      const { taskFlow, ...postData } = state
+      const updatedData = { ...postData, taskFlow: [] as TaskType[] }
+
+      postsDispatch({ type: 'UPDATE_POST', postId: state.customId, updatedPost: updatedData })
+
+      console.log(state)
+
+      if (title === '編集') {
+        setSelectPost(updatedData)
+        setOpen(false)
+        setFormSlide('-translate-x-none ')
+        dispatch({ type: 'CLEAR' })
+      } else {
+        setFormSlide('-translate-x-[1000px] ')
+      }
+    } catch (error) {
+      console.log(`faild fetch : ${error}`)
     }
   }
 
@@ -104,7 +118,7 @@ const MypageForm = ({
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
-            onClick={() => handleAdd()}
+            onClick={() => handleAddEditMypage()}
           >
             <span>{title}</span>
           </button>

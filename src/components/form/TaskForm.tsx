@@ -1,7 +1,7 @@
 import { usePostReducer } from '@/app/context/useFormInputReducer'
 import { usePost } from '@/app/context/usePost'
 import { AddCircle } from '@mui/icons-material'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
@@ -16,10 +16,10 @@ const TaskForm = ({
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
   const { state, dispatch } = usePostReducer()
-  const { setPosts, posts, selectPost, selectTask, postsDispatch } = usePost()
+  const { setPosts, posts, selectPost, setSelectPost, selectTask, postsDispatch } = usePost()
   const [date, setDate] = useState<string>('')
   const [limitDate, setLimitDate] = useState<string>('')
-  const router = useRouter()
+  // const router = useRouter()
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
@@ -69,7 +69,33 @@ const TaskForm = ({
       newTask: state.taskFlow,
     })
 
-    router.refresh()
+    setSelectPost((prev) => {
+      if (!prev) return null // prevがnullの場合はそのままnullを返す
+
+      return {
+        ...prev,
+        taskFlow: [
+          ...(prev.taskFlow || []), // taskFlowがnullまたはundefinedの場合は空配列を使用
+          state.taskFlow,
+        ],
+        customId: prev.customId || '', // customIdがundefinedの場合は空文字を使う
+        userId: prev.userId || '', // 同様に他のプロパティもデフォルトを設定
+        name: prev.name || '',
+        event: prev.event || '',
+        startDate: prev.startDate || '',
+        endDate: prev.endDate || '',
+        region: prev.region || '',
+        completed: prev.completed ?? false, // boolean型はnullやundefinedの場合falseに
+        mypage: {
+          ...prev.mypage,
+          url: prev.mypage?.url || '',
+          id: prev.mypage?.id || '',
+          password: prev.mypage?.password || '',
+        },
+      }
+    })
+
+    // router.refresh()
     dispatch({ type: 'CLEAR' })
   }
 
@@ -111,10 +137,21 @@ const TaskForm = ({
         },
       })
 
+      setSelectPost((prev) => {
+        if (!prev) return null
+
+        return {
+          ...prev,
+          taskFlow: prev.taskFlow.map((task) =>
+            task.customId === selectTask?.customId ? state.taskFlow : task,
+          ),
+        }
+      })
+
       dispatch({ type: 'CLEAR' })
       setOpen(false)
 
-      router.refresh()
+      // router.refresh()
     } catch (error) {
       alert(`faild fetch : ${error}`)
     }

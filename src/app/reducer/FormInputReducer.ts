@@ -40,7 +40,10 @@ export const FormInputReducer = (
 ): FormInputPostType => {
   switch (action.type) {
     case 'INITIALIZE':
-      return action.payload
+      return {
+        ...postState,
+        ...action.payload,
+      }
 
     case 'CLEAR':
       return {
