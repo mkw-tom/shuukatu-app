@@ -102,3 +102,33 @@ export async function GET(req: Request) {
     })
   }
 }
+
+export async function DELETE(req: Request) {
+  await connectDB()
+
+  // URLクエリパラメータからuserIdを取得
+  const url = new URL(req.url)
+  const postId = url.searchParams.get('postId')
+
+  if (!postId) {
+    return new Response('Error: Missing userId', { status: 400 })
+  }
+
+  try {
+    // eslint-disable-next-line object-shorthand
+    const deletePost = await PostModel.findOneAndDelete({
+      customId: postId,
+    })
+
+    return new Response(JSON.stringify(deletePost), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (error) {
+    console.error('Error updating post:', error)
+    return new Response(JSON.stringify({ error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
+}

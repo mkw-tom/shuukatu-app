@@ -13,6 +13,7 @@ interface PostContextType {
     | UpdateMypageAction
     | SetTaskAction
     | InitalizeTaskAction
+    | InitalizePostAction
   >
   currentPostId: string
 }

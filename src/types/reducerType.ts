@@ -39,6 +39,22 @@ interface FormInputTaskType {
   edit: boolean
 }
 
+interface FormPostType {
+  customId: string
+  userId: string
+  name: string
+  event: string
+  region: string
+  startDate: string
+  endDate: string
+  completed: boolean
+  mypage: {
+    url: string
+    id: string
+    password: string
+  }
+}
+
 //------- FormInputReducer ---------
 interface ClearAction {
   type: 'CLEAR'
@@ -58,7 +74,7 @@ interface SetCompanyAction {
 
 interface InitalizePostAction {
   type: 'INITIALIZE'
-  payload: FormInputPostType
+  payload: FormPostType
 }
 
 interface SetMypageAction {
@@ -112,7 +128,7 @@ interface SetTaskAction {
 type Action =
   | { type: 'INITIALIZE'; posts: PostType[] }
   | { type: 'ADD_POST'; post: PostType }
-  | { type: 'UPDATE_POST'; postId: string; updatedPost: Partial<PostType> }
+  | { type: 'UPDATE_POST'; postId: string; updatedPost: PostType }
   | { type: 'DELETE_POST'; postId: string }
   | { type: 'ADD_TASK'; postId: string; newTask: TaskType }
   | { type: 'UPDATE_TASK'; postId: string; taskId: string; updateTask: TaskType }
