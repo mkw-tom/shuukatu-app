@@ -1,6 +1,6 @@
 'use client'
 
-import { usePost } from '@/app/context/usePost'
+import { usePost } from '@/app/company_page/context/usePost'
 
 const Region = () => {
   const { selectPost } = usePost()

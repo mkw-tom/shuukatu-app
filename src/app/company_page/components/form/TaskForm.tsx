@@ -1,29 +1,38 @@
-import { usePostReducer } from '@/app/context/useFormInputReducer'
-import { usePost } from '@/app/context/usePost'
+import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
+import { usePost } from '@/app/company_page/context/usePost'
 import { AddCircle } from '@mui/icons-material'
-// import { useRouter } from 'next/navigation'
-import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { useRouter } from 'next/navigation'
+import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import useAddEdutTask from '../../hooks/useAddEdutTask'
 
 const TaskForm = ({
   setOpen,
   title,
-  setFormSlide,
+  // setFormSlide,
+  onlyTaskForm,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string
-  setFormSlide: Dispatch<SetStateAction<string>>
+  // setFormSlide: Dispatch<SetStateAction<string>>
+  onlyTaskForm: boolean
 }) => {
-  const { state, dispatch } = usePostReducer()
+  const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const { setPosts, posts, selectPost, setSelectPost, selectTask, postsDispatch } = usePost()
   const [date, setDate] = useState<string>('')
   const [limitDate, setLimitDate] = useState<string>('')
-  // const router = useRouter()
+  const router = useRouter()
+  const { handleAddEditTask, handleCancel } = useAddEdutTask(
+    title,
+    setOpen,
+    onlyTaskForm,
+    date,
+    limitDate,
+  )
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
-
     const { name, value } = e.target
     dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate } })
     console.log(state)
@@ -35,135 +44,6 @@ const TaskForm = ({
       setLimitDate(state.taskFlow.limitDate)
     }
   }, [state.taskFlow.date, state.taskFlow.limitDate, title])
-
-  const handleCancel = () => {
-    setFormSlide('-translate-x-none')
-    dispatch({ type: 'CLEAR' })
-    setOpen(false)
-  }
-
-  // --------------タスク追加ーーーーーーーーーーー-
-  const handleAddTask = async () => {
-    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
-    const res = await fetch(`${url}/api/posts/task`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json', // JSONデータを送ることを明示
-      },
-      body: JSON.stringify({
-        customId: state.customId || selectPost?.customId,
-        taskFlow: state.taskFlow,
-      }),
-    })
-
-    if (!res.ok) {
-      console.log('failed to fetch')
-    }
-
-    setFormSlide('-translate-x-none')
-    setOpen(false)
-
-    postsDispatch({
-      type: 'ADD_TASK',
-      postId: selectPost?.customId as string,
-      newTask: state.taskFlow,
-    })
-
-    setSelectPost((prev) => {
-      if (!prev) return null // prevがnullの場合はそのままnullを返す
-
-      return {
-        ...prev,
-        taskFlow: [
-          ...(prev.taskFlow || []), // taskFlowがnullまたはundefinedの場合は空配列を使用
-          state.taskFlow,
-        ],
-        customId: prev.customId || '', // customIdがundefinedの場合は空文字を使う
-        userId: prev.userId || '', // 同様に他のプロパティもデフォルトを設定
-        name: prev.name || '',
-        event: prev.event || '',
-        startDate: prev.startDate || '',
-        endDate: prev.endDate || '',
-        region: prev.region || '',
-        completed: prev.completed ?? false, // boolean型はnullやundefinedの場合falseに
-        mypage: {
-          ...prev.mypage,
-          url: prev.mypage?.url || '',
-          id: prev.mypage?.id || '',
-          password: prev.mypage?.password || '',
-        },
-      }
-    })
-
-    // router.refresh()
-    dispatch({ type: 'CLEAR' })
-  }
-
-  ///ーーーーーーーーーーーータスク編集ーーーーーーーーーーーーーーーーーーー
-  const hadleEditTask = async () => {
-    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
-    try {
-      const res = await fetch(`${url}/api/posts/task/update`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json', // JSONデータを送ることを明示
-        },
-        body: JSON.stringify({
-          postId: selectPost?.customId,
-          taskId: selectTask?.customId,
-          updateData: {
-            ...state.taskFlow,
-            date,
-            limitDate,
-          },
-        }),
-      })
-
-      if (res.ok!) {
-        console.log('failed fetch')
-      }
-
-      setFormSlide('-translate-x-none')
-      setOpen(false)
-
-      postsDispatch({
-        type: 'UPDATE_TASK',
-        postId: selectTask?.customId as string,
-        taskId: selectTask?.customId as string,
-        updateTask: {
-          ...state.taskFlow,
-          date,
-          limitDate,
-        },
-      })
-
-      setSelectPost((prev) => {
-        if (!prev) return null
-
-        return {
-          ...prev,
-          taskFlow: prev.taskFlow.map((task) =>
-            task.customId === selectTask?.customId ? state.taskFlow : task,
-          ),
-        }
-      })
-
-      dispatch({ type: 'CLEAR' })
-      setOpen(false)
-
-      // router.refresh()
-    } catch (error) {
-      alert(`faild fetch : ${error}`)
-    }
-  }
-
-  const updateTask = () => {
-    if (title === '編集') {
-      return hadleEditTask()
-    }
-
-    return handleAddTask()
-  }
 
   return (
     <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
@@ -242,7 +122,7 @@ const TaskForm = ({
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
-            onClick={() => updateTask()}
+            onClick={handleAddEditTask}
           >
             <span>{title}</span>
           </button>

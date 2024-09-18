@@ -1,5 +1,5 @@
 'use client'
-import PostForm from '@/components/form/PostForm'
+import PostForm from '@/app/company_page/components/form/PostForm'
 import { AddCircle } from '@mui/icons-material'
 import { useState } from 'react'
 
