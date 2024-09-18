@@ -1,5 +1,5 @@
 'use client'
-import { usePost } from '@/app/context/usePost'
+import { usePost } from '@/app/company_page/context/usePost'
 import { Verified } from '@mui/icons-material'
 import { useEffect } from 'react'
 import AddFormButton from './AddFormButton'

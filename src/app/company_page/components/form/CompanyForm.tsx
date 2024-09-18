@@ -1,24 +1,26 @@
-import { usePostReducer } from '@/app/context/useFormInputReducer'
-import { usePost } from '@/app/context/usePost'
+import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
+import { usePost } from '@/app/company_page/context/usePost'
 import { AddCircle } from '@mui/icons-material'
-import type { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-
+import useAddEditCompanyData from '../../hooks/useAddEditCompanyData'
 const CompanyForm = ({
   setOpen,
   title,
-  setFormSlide,
+  // setFormSlide,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string
-  setFormSlide: Dispatch<SetStateAction<string>>
+  // setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
   // const [state, dispatch] = useReducer(PostReducer, PostState)
   const { selectPost, setSelectPost, postsDispatch } = usePost()
-  const { state, dispatch } = usePostReducer()
+  const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
+
+  const { handleAddEdtCompanyData, handleCancel } = useAddEditCompanyData(title, setOpen)
 
   useEffect(() => {
     if (title === '編集') {
@@ -36,89 +38,6 @@ const CompanyForm = ({
       type: 'SET_COMPANY',
       payload: { customId, userId, startDate, endDate, name, value },
     })
-  }
-
-  const handleCancel = () => {
-    const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
-    // e.preventDefault()
-    dispatch({ type: 'CLEAR' })
-    setFormSlide('-translate-x-none')
-    setOpen(false)
-  }
-
-  const AddCompanyData = async () => {
-    const userId = '66b894e2aa71df7091ecc261'
-    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
-    const res = await fetch(`${url}/api/posts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json', // JSONデータを送ることを明示
-      },
-      body: JSON.stringify({
-        customId: state.customId,
-        userId,
-        name: state.name,
-        event: state.event,
-        startDate: state.startDate,
-        endDate: state.endDate,
-        region: state.region,
-      }),
-    })
-
-    ///-------　フォーム入力用の　state　を加工　ーーーーーーーーー
-    const { taskFlow, ...postData } = state
-    const addData = { ...postData, taskFlow: [] as TaskType[] }
-
-    postsDispatch({ type: 'ADD_POST', post: addData })
-
-    console.log(state)
-    setFormSlide('-translate-x-[500px]')
-  }
-
-  const EditCompanyData = async () => {
-    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
-
-    try {
-      const res = await fetch(`${url}/api/posts`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json', // JSONデータを送ることを明示
-        },
-        body: JSON.stringify({
-          customId: state.customId,
-          name: state.name,
-          event: state.event,
-          startDate: state.startDate,
-          endDate: state.endDate,
-          region: state.region,
-        }),
-      })
-
-      const { taskFlow, ...postFormData } = state
-      const updatedData = { ...postFormData, taskFlow: selectPost?.taskFlow as TaskType[] }
-
-      postsDispatch({
-        type: 'UPDATE_POST',
-        postId: selectPost?.customId as string,
-        updatedPost: {
-          ...updatedData,
-        },
-      })
-
-      setSelectPost(updatedData)
-
-      setFormSlide('-translate-x-[500px]')
-    } catch (error) {
-      console.log(`faild fetch : ${error}`)
-    }
-  }
-
-  const handleAddEdtCompanyData = () => {
-    if (title === '編集') {
-      return EditCompanyData()
-    }
-
-    return AddCompanyData()
   }
 
   return (

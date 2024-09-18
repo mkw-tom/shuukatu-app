@@ -1,7 +1,7 @@
-import { FormInputReducerContextProvider } from '../context/useFormInputReducer'
-import { PostContextProvider } from '../context/usePost'
 import CardList from './components/CardList.tsx/CardList'
 import ShowCard from './components/ShowCard/ShowCard'
+import { FormInputReducerContextProvider } from './context/useFormInputReducer'
+import { PostContextProvider } from './context/usePost'
 
 const page = async () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks

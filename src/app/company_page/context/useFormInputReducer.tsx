@@ -1,6 +1,6 @@
 'use client'
-import type { Dispatch, ReactNode } from 'react'
-import { createContext, useContext, useReducer } from 'react'
+import type { Dispatch, ReactNode, SetStateAction } from 'react'
+import { createContext, useContext, useReducer, useState } from 'react'
 import { FormInputReducer, FormInputState } from '../reducer/FormInputReducer'
 
 interface PostContextType {
@@ -16,6 +16,8 @@ interface PostContextType {
     | InitalizePostAction
   >
   currentPostId: string
+  formSlide: string
+  setFormSlide: Dispatch<SetStateAction<string>>
 }
 
 const formInputReducerContext = createContext<PostContextType | undefined>(undefined)
@@ -30,11 +32,14 @@ export const usePostReducer = () => {
 
 export const FormInputReducerContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(FormInputReducer, FormInputState)
+  const [formSlide, setFormSlide] = useState<string>('-translate-x-1000')
   const currentPostId = state.customId as string
   const value = {
     state,
     dispatch,
     currentPostId,
+    formSlide,
+    setFormSlide,
   }
 
   return (

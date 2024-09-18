@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { usePostReducer } from '../../context/useFormInputReducer'
 import CompanyForm from './CompanyForm'
 import MypageForm from './MypageForm'
 import TaskForm from './TaskForm'
@@ -15,7 +15,8 @@ const PostForm = ({
   title: string
   onlyTaskForm: boolean
 }) => {
-  const [formSlide, setFormSlide] = useState<string>('-translate-x-1000')
+  const { formSlide, setFormSlide } = usePostReducer()
+  // const [formSlide, setFormSlide] = useState<string>('-translate-x-1000')
 
   return (
     <div className={`${open ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-90 `}>
@@ -24,9 +25,9 @@ const PostForm = ({
           className={`flex flex-row ${onlyTaskForm ? '-translate-x-[1000px] ' : formSlide}`}
           style={{ width: 'calc(100% * 3)' }}
         >
-          <CompanyForm setOpen={setOpen} title={title} setFormSlide={setFormSlide} />
-          <MypageForm setOpen={setOpen} title={title} setFormSlide={setFormSlide} />
-          <TaskForm setOpen={setOpen} title={title} setFormSlide={setFormSlide} />
+          <CompanyForm setOpen={setOpen} title={title} />
+          <MypageForm setOpen={setOpen} title={title} />
+          <TaskForm setOpen={setOpen} title={title} onlyTaskForm={onlyTaskForm} />
         </div>
       </div>
     </div>

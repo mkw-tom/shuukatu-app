@@ -1,7 +1,7 @@
 'use client'
-import { usePostReducer } from '@/app/context/useFormInputReducer'
-import { usePost } from '@/app/context/usePost'
-import PostForm from '@/components/form/PostForm'
+import PostForm from '@/app/company_page/components/form/PostForm'
+import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
+import { usePost } from '@/app/company_page/context/usePost'
 import { Delete, Edit, Group } from '@mui/icons-material'
 import { useState } from 'react'
 
