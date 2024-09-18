@@ -15,7 +15,7 @@ const CompanyForm = ({
   setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
   // const [state, dispatch] = useReducer(PostReducer, PostState)
-  const { selectPost } = usePost()
+  const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch } = usePostReducer()
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
@@ -28,7 +28,7 @@ const CompanyForm = ({
   }, [state.startDate, state.endDate, title])
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const customId = uuidv4()
+    const customId = title === '編集' ? (selectPost?.customId as string) : uuidv4()
     const userId = 'aiueo'
 
     const { name, value } = e.target
@@ -46,8 +46,8 @@ const CompanyForm = ({
     setOpen(false)
   }
 
-  const handleAdd = async () => {
-    const userId = '66b80f4baa71df7091ecaaa3'
+  const AddCompanyData = async () => {
+    const userId = '66b894e2aa71df7091ecc261'
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
     const res = await fetch(`${url}/api/posts`, {
       method: 'POST',
@@ -65,8 +65,60 @@ const CompanyForm = ({
       }),
     })
 
+    ///-------　フォーム入力用の　state　を加工　ーーーーーーーーー
+    const { taskFlow, ...postData } = state
+    const addData = { ...postData, taskFlow: [] as TaskType[] }
+
+    postsDispatch({ type: 'ADD_POST', post: addData })
+
     console.log(state)
     setFormSlide('-translate-x-[500px]')
+  }
+
+  const EditCompanyData = async () => {
+    const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
+
+    try {
+      const res = await fetch(`${url}/api/posts`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json', // JSONデータを送ることを明示
+        },
+        body: JSON.stringify({
+          customId: state.customId,
+          name: state.name,
+          event: state.event,
+          startDate: state.startDate,
+          endDate: state.endDate,
+          region: state.region,
+        }),
+      })
+
+      const { taskFlow, ...postFormData } = state
+      const updatedData = { ...postFormData, taskFlow: selectPost?.taskFlow as TaskType[] }
+
+      postsDispatch({
+        type: 'UPDATE_POST',
+        postId: selectPost?.customId as string,
+        updatedPost: {
+          ...updatedData,
+        },
+      })
+
+      setSelectPost(updatedData)
+
+      setFormSlide('-translate-x-[500px]')
+    } catch (error) {
+      console.log(`faild fetch : ${error}`)
+    }
+  }
+
+  const handleAddEdtCompanyData = () => {
+    if (title === '編集') {
+      return EditCompanyData()
+    }
+
+    return AddCompanyData()
   }
 
   return (
@@ -107,12 +159,14 @@ const CompanyForm = ({
             <input
               type="datetime-local"
               className="input  input-bordered w-full bg-gray-200 text-gray-700 dark:bg-gray-400"
+              value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
             <p>から</p>
             <input
               type="datetime-local"
               className="input input-bordered w-full  bg-gray-200 text-gray-700 dark:bg-gray-400"
+              value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
@@ -141,7 +195,7 @@ const CompanyForm = ({
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="button"
-            onClick={handleAdd}
+            onClick={handleAddEdtCompanyData}
           >
             <span>{title}</span>
           </button>
