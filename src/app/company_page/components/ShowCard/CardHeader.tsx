@@ -7,17 +7,17 @@ import { useState } from 'react'
 
 const CardHeader = () => {
   const [open, setOpen] = useState<boolean>(false)
-  const { selectPost, postsDispatch, setSelectPost, posts } = usePost()
+  const { selectPost, postsDispatch, setSelectPost, posts, currentTask } = usePost()
   const { state, dispatch } = usePostReducer()
 
-  const currentTask = (taskFlow: TaskType[]) => {
-    const current = taskFlow?.filter((task) => task.finished === false)[0]
+  // const currentTask = (taskFlow: TaskType[]) => {
+  //   const current = taskFlow?.filter((task) => task.finished === false)[0]
 
-    if (!current) {
-      return 'なし'
-    }
-    return current.task
-  }
+  //   if (!current) {
+  //     return 'なし'
+  //   }
+  //   return current.task
+  // }
 
   const handleDeletePost = () => {
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
@@ -57,7 +57,7 @@ const CardHeader = () => {
         <div className="ml-5 flex items-center gap-1">
           <Group className="text-info" />
           <p className="font-bold text-info dark:text-info ">
-            {currentTask(selectPost?.taskFlow as TaskType[])}
+            {selectPost?.completed ? '内定・参加確定' : (currentTask?.task as string)}
           </p>
         </div>
       </div>

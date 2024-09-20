@@ -1,6 +1,5 @@
 'use client'
 import { usePost } from '@/app/company_page/context/usePost'
-import { Verified } from '@mui/icons-material'
 import { useEffect } from 'react'
 import AddFormButton from './AddFormButton'
 import BottomDrawer from './BottomDrawer'
@@ -25,10 +24,23 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
     }
   }
 
-  const currentTask = (taskFlow: TaskType[]) => {
+  const currentTaskJudge = (taskFlow: TaskType[]) => {
     if (!taskFlow) return 'なし'
     const current = taskFlow.filter((task) => task.finished === false)[0]
-    return current ? current.task : 'なし'
+    const prev = taskFlow.filter((task) => task.finished === true).slice(-1)[0]
+
+    if (!current && !selectPost?.completed) {
+      return prev.task
+    } else if (!current) {
+      return '内定・参加確定'
+    } else if (current?.current) {
+      return current.task
+    } else if (!current.current && prev) {
+      return prev.task
+    } else {
+      return 'なし'
+    }
+    // return current.current === true ? current.task : prev.task
   }
 
   return (
@@ -42,7 +54,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
         {postsState?.map((post, index) => (
           <button key={index} className="w-full" onClick={() => handleSelect(post)}>
             <div
-              className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost === post ? 'border-info dark:border-info' : ''}`}
+              className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost?.customId === post.customId ? 'border-info dark:border-info' : ''}`}
             >
               <div className="flex flex-col gap-1">
                 {/* <input type="radio" className="w-3 h-3" /> */}
@@ -51,8 +63,8 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
               </div>
 
               <div className="ml-auto flex items-center">
-                <Verified className="mr-1 size-4 text-orange-500" />
-                <span className="font-bold">{currentTask(post?.taskFlow)}</span>
+                {/* { ここにアイコンを埋め込む関数を作る } */}
+                <span className="font-bold">{currentTaskJudge(post?.taskFlow)}</span>
               </div>
             </div>
           </button>

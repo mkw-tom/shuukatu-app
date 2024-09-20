@@ -2,7 +2,7 @@ import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
 import { usePost } from '@/app/company_page/context/usePost'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent } from 'react'
-import useAddEditMypage from '../../hooks/formHooks/useAddEditMypage'
+import useAddEditMypage from '../../hooks/useAddEditMypage'
 
 const MypageForm = ({
   setOpen,

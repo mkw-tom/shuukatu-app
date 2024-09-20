@@ -4,7 +4,7 @@ import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import useAddEditCompanyData from '../../hooks/formHooks/useAddEditCompanyData'
+import useAddEditCompanyData from '../../hooks/useAddEditCompanyData'
 const CompanyForm = ({
   setOpen,
   title,

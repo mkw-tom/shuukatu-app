@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
-import useAddEdutTask from '../../hooks/formHooks/useAddEdutTask'
+import useAddEdutTask from '../../hooks/useAddEdutTask'
 
 const TaskForm = ({
   setOpen,
