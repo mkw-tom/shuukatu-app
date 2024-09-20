@@ -133,3 +133,4 @@ type Action =
   | { type: 'ADD_TASK'; postId: string; newTask: TaskType }
   | { type: 'UPDATE_TASK'; postId: string; taskId: string; updateTask: TaskType }
   | { type: 'DELETE_TASK'; postId: string; taskId: string }
+  | { type: 'SWITCH_TASK'; postId: string; switchedData: TaskType[] }

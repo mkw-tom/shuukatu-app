@@ -54,17 +54,6 @@ export const postReducer = (state: PostType[], action: Action): PostType[] => {
         return post
       })
 
-    case 'SWITCH_TASK':
-      return state.map((post) => {
-        if (post.customId === action.postId) {
-          return {
-            ...post,
-            taskFlow: action.switchedData,
-          }
-        }
-        return post
-      })
-
     default:
       return state
   }

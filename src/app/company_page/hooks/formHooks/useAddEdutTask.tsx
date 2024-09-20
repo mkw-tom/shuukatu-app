@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation'
 import type { Dispatch, SetStateAction } from 'react'
-import { usePostReducer } from '../context/useFormInputReducer'
-import { usePost } from '../context/usePost'
+import { usePostReducer } from '../../context/useFormInputReducer'
+import { usePost } from '../../context/usePost'
 
 export const useAddEdutTask = (
   title: string,

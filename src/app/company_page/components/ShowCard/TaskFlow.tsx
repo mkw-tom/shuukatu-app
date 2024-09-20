@@ -14,7 +14,7 @@ import {
   Verified,
 } from '@mui/icons-material'
 // import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const judgeIcon = (taskname: string) => {
   switch (taskname) {
@@ -28,8 +28,15 @@ const judgeIcon = (taskname: string) => {
 }
 
 const TaskFLow = () => {
-  const { selectPost, setSelectPost, setSelectTask, selectTask, postsState, postsDispatch } =
-    usePost()
+  const {
+    selectPost,
+    setSelectPost,
+    setSelectTask,
+    selectTask,
+    postsState,
+    postsDispatch,
+    currentTask,
+  } = usePost()
   const [open, setOpen] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
   const { state, dispatch } = usePostReducer()
@@ -84,11 +91,6 @@ const TaskFLow = () => {
     console.log(state)
   }
 
-  useEffect(() => {
-    const current = selectPost?.taskFlow?.filter((task) => task.finished === false)[0]
-    setSelectTask(current as FormInputTaskType)
-  }, [selectPost?.taskFlow, setSelectTask])
-
   const handleSelectTask = (task: FormInputTaskType) => {
     setSelectTask(task)
   }
@@ -115,10 +117,12 @@ const TaskFLow = () => {
                 className={`${task?.finished || task.current ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`}
               />
               <div className="timeline-middle">
-                {task?.current ? (
-                  <p className="mx-1 size-5 animate-pulse rounded-full bg-info"></p>
-                ) : (
+                {task?.finished ? (
                   <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
+                ) : (
+                  <p
+                    className={`mx-1 size-5 animate-pulse rounded-full ${task.current ? 'bg-info' : 'bg-gray-400'}`}
+                  ></p>
                 )}
               </div>
               <button
@@ -136,7 +140,7 @@ const TaskFLow = () => {
             </li>
           ))}
           <li>
-            <hr />
+            <hr className={`${selectPost?.completed ? 'bg-orange-400' : ''}`} />
             <div className="timeline-middle">
               <Verified className="text-orange-500" />
             </div>
