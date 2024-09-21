@@ -1,3 +1,4 @@
+'use server'
 import { PostModel } from '@/lib/mongoDB/models/Post'
 import connectDB from '@/lib/mongoDB/mongodb'
 

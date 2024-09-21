@@ -1,3 +1,4 @@
+'use server'
 import { PostModel } from '@/lib/mongoDB/models/Post'
 import connectDB from '@/lib/mongoDB/mongodb'
 
@@ -5,7 +6,6 @@ import connectDB from '@/lib/mongoDB/mongodb'
 export async function PUT(req: Request) {
   await connectDB()
   const body = await req.json()
-  console.log(body)
 
   try {
     await PostModel.findOneAndUpdate(
