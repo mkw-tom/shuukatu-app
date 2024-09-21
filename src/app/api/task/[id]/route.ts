@@ -23,11 +23,22 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     if (!res) {
       return new Response(JSON.stringify({ error: 'Post not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
       })
     }
 
-    return new Response('Success: Data added successfully', { status: 200 })
+    return new Response('Success: Data added successfully', {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    })
   } catch (error) {
     console.error('Error saving data:', error)
     return new Response('Error: Failed to add data', { status: 500 })
