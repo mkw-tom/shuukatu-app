@@ -3,21 +3,29 @@ import PostForm from '@/app/company_page/components/form/PostForm'
 import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
 import { usePost } from '@/app/company_page/context/usePost'
 import { Delete, Edit, Group } from '@mui/icons-material'
+import type { ReactNode } from 'react'
 import { useState } from 'react'
 
 const CardHeader = () => {
   const [open, setOpen] = useState<boolean>(false)
-  const { selectPost, postsDispatch, setSelectPost, posts, currentTask } = usePost()
+  const { selectPost, postsDispatch, setSelectPost, posts, currentTask, prevTask } = usePost()
   const { state, dispatch } = usePostReducer()
 
-  // const currentTask = (taskFlow: TaskType[]) => {
-  //   const current = taskFlow?.filter((task) => task.finished === false)[0]
+  const taskNameJudge = (): string => {
+    if (!currentTask && !selectPost?.completed) {
+      return prevTask?.task as string
+    } else if (!currentTask) {
+      return '内定・参加確定'
+    } else if (currentTask?.current) {
+      return currentTask.task as string
+    } else if (!currentTask.current && prevTask) {
+      return prevTask?.task as string
+    } else {
+      return 'なし'
+    }
+  }
 
-  //   if (!current) {
-  //     return 'なし'
-  //   }
-  //   return current.task
-  // }
+  const taskName: ReactNode = taskNameJudge()
 
   const handleDeletePost = () => {
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
@@ -56,9 +64,7 @@ const CardHeader = () => {
         <h3 className="ml-5 text-gray-500 dark:text-gray-400">{selectPost?.event as string}</h3>
         <div className="ml-5 flex items-center gap-1">
           <Group className="text-info" />
-          <p className="font-bold text-info dark:text-info ">
-            {selectPost?.completed ? '内定・参加確定' : (currentTask?.task as string)}
-          </p>
+          <p className="font-bold text-info dark:text-info ">{taskName}</p>
         </div>
       </div>
       <div className="flex">

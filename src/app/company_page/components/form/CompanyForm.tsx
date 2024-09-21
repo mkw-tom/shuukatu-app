@@ -8,17 +8,16 @@ import useAddEditCompanyData from '../../hooks/formHooks/useAddEditCompanyData'
 const CompanyForm = ({
   setOpen,
   title,
-  // setFormSlide,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   title: string
-  // setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  // const [state, dispatch] = useReducer(PostReducer, PostState)
   const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
+
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
+  const [selectEvent, setSelectEvent] = useState<boolean>(false)
 
   const { handleAddEdtCompanyData, handleCancel } = useAddEditCompanyData(title, setOpen)
 
@@ -60,16 +59,20 @@ const CompanyForm = ({
           />
         </label>
         <label htmlFor="event">
-          <span className="inline-block w-[100px] text-center text-info">イベント</span>
+          <span className="group inline-block w-[100px] text-center text-info">イベント</span>
           <select
             id="event"
             name="event"
             className="select select-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={state.event}
             onChange={(e) => handleStateChange(e)}
+            onClick={() => setSelectEvent(true)}
           >
-            <option>短期インターン</option>
-            <option>長期インターン</option>
+            <option disabled={selectEvent ? true : false}>イベントの選択</option>
+            <option onClick={() => setSelectEvent(false)}>本選考</option>
+            <option onClick={() => setSelectEvent(false)}>短期インターン</option>
+            <option onClick={() => setSelectEvent(false)}>長期インターン</option>
+            <option onClick={() => setSelectEvent(false)}>ハッカソン</option>
           </select>
         </label>
         <div className="flex w-full items-center">
