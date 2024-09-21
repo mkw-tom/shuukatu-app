@@ -21,7 +21,11 @@ export async function POST(req: Request) {
     if (!newPost) {
       return new Response(JSON.stringify({ error: 'Post not found' }), {
         status: 404,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
       })
     }
 
@@ -35,7 +39,11 @@ export async function POST(req: Request) {
     console.error('Error updating post:', error)
     return new Response(JSON.stringify({ error }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
     })
   }
 }
