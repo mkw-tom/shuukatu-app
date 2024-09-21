@@ -2,15 +2,16 @@ import { PostModel } from '@/lib/mongoDB/models/Post'
 import connectDB from '@/lib/mongoDB/mongodb'
 
 //特定のタスクの編集
-export async function PUT(req: Request) {
+export async function PUT(req: Request, { params }: { params: { id: string } }) {
   await connectDB()
   const body = await req.json()
+  const { id } = params
 
   try {
     const res = await PostModel.findOneAndUpdate(
       {
         customId: body.postId,
-        'taskFlow.customId': body.taskId,
+        'taskFlow.customId': id,
       },
       {
         $set: { 'taskFlow.$': body.updateData },

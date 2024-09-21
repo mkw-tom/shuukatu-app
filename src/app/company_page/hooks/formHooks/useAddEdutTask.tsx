@@ -18,7 +18,7 @@ export const useAddEdutTask = (
 
   // --------------タスク追加ーーーーーーーーーーー-
   const handleAddTask = async () => {
-    const res = await fetch(`${url}/api/posts/task`, {
+    const res = await fetch(`${url}/api/task`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json', // JSONデータを送ることを明示
@@ -75,15 +75,17 @@ export const useAddEdutTask = (
 
   ///ーーーーーーーーーーーータスク編集ーーーーーーーーーーーーーーーーーーー
   const hadleEditTask = async () => {
+    const taskId = selectTask?.customId
+
     try {
-      const res = await fetch(`${url}/api/posts/task/update`, {
+      const res = await fetch(`${url}/api/task/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json', // JSONデータを送ることを明示
         },
         body: JSON.stringify({
           postId: selectPost?.customId,
-          taskId: selectTask?.customId,
+          // taskId: selectTask?.customId,
           updateData: {
             ...state.taskFlow,
             date,
