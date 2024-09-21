@@ -9,7 +9,7 @@ const BottomDrawer = ({ selectPost }: { selectPost: { name: string; event: strin
   }
   return (
     <div
-      className={`lg:hidden ${selectPost ? 'fixed' : 'hidden'} ${open ? 'inset-0 z-50 bg-black bg-opacity-90' : ''} `}
+      className={`lg:hidden ${selectPost ? 'fixed' : 'hidden'} ${open ? 'inset-0 z-50 bg-black' : ''} `}
     >
       <div
         className={`fixed inset-x-0 bottom-0 h-[600px] w-full flex-col ${open ? 'translate-none' : 'translate-y-[470px]'} rounded-t-xl bg-base-200 px-5 pb-12 pt-1  dark:bg-gray-800 lg:hidden   ${selectPost ? 'fixed' : 'hidden'} transition duration-300`}
