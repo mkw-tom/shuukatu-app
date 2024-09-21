@@ -16,12 +16,12 @@ const PostForm = ({
   onlyTaskForm: boolean
 }) => {
   const { formSlide, setFormSlide } = usePostReducer()
-  // const [formSlide, setFormSlide] = useState<string>('-translate-x-1000')
 
   return (
-    <div className={`${open ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-90 `}>
+    <div className={`${open ? 'fixed' : 'hidden'} inset-0 z-50 bg-black`}>
       <div className="card mx-auto mt-20 h-auto w-[450px] overflow-hidden bg-white sm:w-[500px]">
         <div
+          // eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values
           className={`flex flex-row ${onlyTaskForm ? '-translate-x-[1000px] ' : formSlide}`}
           style={{ width: 'calc(100% * 3)' }}
         >

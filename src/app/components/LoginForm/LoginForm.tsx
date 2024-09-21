@@ -16,7 +16,7 @@ const LoginForm = ({
   }
 
   return (
-    <div className={`${formOpen ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-90`}>
+    <div className={`${formOpen ? 'fixed' : 'hidden'} inset-0 z-50 bg-black`}>
       <div className="card mx-auto mb-6 mt-40 h-auto w-[450px] overflow-hidden bg-base-100 px-5 pt-8 dark:bg-gray-800 sm:w-[500px]">
         <div className="mx-auto flex w-80">
           <button
