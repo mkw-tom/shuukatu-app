@@ -26,7 +26,6 @@ const page = async () => {
   }
 
   const postsData = (await getDatas()) as PostType[]
-  console.log(postsData)
 
   return (
     <main className="h-screen ">
