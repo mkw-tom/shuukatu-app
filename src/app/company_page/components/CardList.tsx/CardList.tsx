@@ -40,7 +40,6 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
     } else {
       return 'なし'
     }
-    // return current.current === true ? current.task : prev.task
   }
 
   return (
