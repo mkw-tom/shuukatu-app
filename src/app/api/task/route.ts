@@ -1,9 +1,10 @@
 'use server'
 import { PostModel } from '@/lib/mongoDB/models/Post'
+import connectDB from '@/lib/mongoDB/mongodb'
 
 //タスクの追加
 export async function PUT(req: Request) {
-  // await connectDB()
+  await connectDB()
   const body = await req.json()
 
   try {
@@ -42,7 +43,7 @@ export async function PUT(req: Request) {
 
 //特定のタスクの削除
 export async function DELETE(req: Request) {
-  // await connectDB()
+  await connectDB()
   const url = new URL(req.url)
   const postId = url.searchParams.get('postId')
   const taskId = url.searchParams.get('taskId')

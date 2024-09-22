@@ -1,9 +1,10 @@
 'use server'
 import { PostModel } from '@/lib/mongoDB/models/Post'
+import connectDB from '@/lib/mongoDB/mongodb'
 
 //特定のタスクの編集
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
-  // await connectDB()
+  await connectDB()
   const body = await req.json()
   const { id } = params
 

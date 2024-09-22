@@ -24,12 +24,12 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
     }
   }
 
-  const currentTaskJudge = (taskFlow: TaskType[]) => {
-    if (!taskFlow) return 'なし'
-    const current = taskFlow.filter((task) => task.finished === false)[0]
-    const prev = taskFlow.filter((task) => task.finished === true).slice(-1)[0]
+  const currentTaskJudge = (post: PostType) => {
+    if (!post?.taskFlow) return 'なし'
+    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
+    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
 
-    if (!current && !selectPost?.completed) {
+    if (!current && !post?.completed) {
       return prev.task
     } else if (!current) {
       return '内定・参加確定'
@@ -63,7 +63,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
 
               <div className="ml-auto flex items-center">
                 {/* { ここにアイコンを埋め込む関数を作る } */}
-                <span className="font-bold">{currentTaskJudge(post?.taskFlow)}</span>
+                <span className="font-bold">{currentTaskJudge(post)}</span>
               </div>
             </div>
           </button>
