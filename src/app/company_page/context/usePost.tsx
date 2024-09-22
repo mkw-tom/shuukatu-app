@@ -15,8 +15,9 @@ interface PostContextType {
   currentTask: TaskType | undefined
   finishedTasks: TaskType[] | undefined
   prevTask: TaskType | undefined
-  filterPosts: PostType[]
-  setFilterPosts: Dispatch<SetStateAction<PostType[]>>
+  allPosts: PostType[]
+  // searchPosts: PostType[]
+  // setSearchPosts: Dispatch<SetStateAction<PostType[]>>
 }
 const postContext = createContext<PostContextType | undefined>(undefined)
 
@@ -36,7 +37,8 @@ export const PostContextProvider = ({ children }: { children: ReactNode }) => {
   const currentTask = selectPost?.taskFlow?.filter((task) => task.finished === false)[0]
   const finishedTasks = selectPost?.taskFlow?.filter((task) => task.finished === true)
   const prevTask = finishedTasks?.slice(-1)[0]
-  const [filterPosts, setFilterPosts] = useState<PostType[]>([])
+  const allPosts = posts as PostType[]
+  // const [searchPosts, setSearchPosts] = useState<PostType[]>([])
 
   useEffect(() => {
     setSelectTask(currentTask as TaskType)
@@ -54,8 +56,9 @@ export const PostContextProvider = ({ children }: { children: ReactNode }) => {
     currentTask,
     finishedTasks,
     prevTask,
-    filterPosts,
-    setFilterPosts,
+    allPosts,
+    // searchPosts,
+    // setSearchPosts,
   }
   return <postContext.Provider value={value}>{children}</postContext.Provider>
 }
