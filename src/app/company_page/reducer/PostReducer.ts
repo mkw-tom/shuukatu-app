@@ -65,6 +65,12 @@ export const postReducer = (state: PostType[], action: Action): PostType[] => {
         return post
       })
 
+    case 'ONLY_COMPLETED':
+      return state.filter((post) => post.completed === true)
+
+    case 'SEARCH_POST':
+      return state.filter((post) => post.name.includes(action.searchText as string))
+
     default:
       return state
   }
