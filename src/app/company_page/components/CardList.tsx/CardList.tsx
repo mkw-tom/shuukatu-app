@@ -7,8 +7,16 @@ import Filter from './Filter'
 import SearchArea from './SearchArea'
 
 const CardList = ({ postsData }: { postsData: PostType[] }) => {
-  const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
-    usePost()
+  const {
+    posts,
+    setPosts,
+    selectPost,
+    setSelectPost,
+    setSelectTask,
+    postsState,
+    postsDispatch,
+    filterPosts,
+  } = usePost()
 
   useEffect(() => {
     if (postsData) {

@@ -134,3 +134,5 @@ type Action =
   | { type: 'UPDATE_TASK'; postId: string; taskId: string; updateTask: TaskType }
   | { type: 'DELETE_TASK'; postId: string; taskId: string }
   | { type: 'SWITCH_TASK'; postId: string; switchedData: TaskType[] }
+  | { type: 'ONLY_COMPLETED' }
+  | { type: 'SEARCH_POST'; searchText: string }
