@@ -1,10 +1,10 @@
-'use client'
+// 'use client'
 import { FilterAlt } from '@mui/icons-material'
 import { useRouter } from 'next/navigation'
 import { usePost } from '../../context/usePost'
 
 const Filter = () => {
-  const { postsState, postsDispatch, setFilterPosts, filterPosts, setSelectPost } = usePost()
+  const { postsState, postsDispatch, setSelectPost } = usePost()
   const router = useRouter()
   const completedNum = postsState.filter((post) => post.completed === true).length
   const allNum = postsState.length

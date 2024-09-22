@@ -7,16 +7,8 @@ import Filter from './Filter'
 import SearchArea from './SearchArea'
 
 const CardList = ({ postsData }: { postsData: PostType[] }) => {
-  const {
-    posts,
-    setPosts,
-    selectPost,
-    setSelectPost,
-    setSelectTask,
-    postsState,
-    postsDispatch,
-    filterPosts,
-  } = usePost()
+  const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
+    usePost()
 
   useEffect(() => {
     if (postsData) {
@@ -57,26 +49,30 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
         <SearchArea />
         <Filter />
       </div>
-      <ul className="flex h-[580px] flex-col gap-5 overflow-y-scroll">
-        {postsState?.map((post, index) => (
-          <button key={index} className="w-full" onClick={() => handleSelect(post)}>
-            <div
-              className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost?.customId === post.customId ? 'border-info dark:border-info' : ''}`}
-            >
-              <div className="flex flex-col gap-1">
-                {/* <input type="radio" className="w-3 h-3" /> */}
-                <h1 className="pl-4 text-start text-xl tracking-wider ">{post.name}</h1>
-                <p className="ml-6 mt-1 text-gray-400">{post.event}</p>
-              </div>
+      {postsState[0] ? (
+        <ul className="flex h-[580px] flex-col gap-5 overflow-y-scroll">
+          {postsState?.map((post, index) => (
+            <button key={index} className="w-full" onClick={() => handleSelect(post)}>
+              <div
+                className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost?.customId === post.customId ? 'border-info dark:border-info' : ''}`}
+              >
+                <div className="flex flex-col gap-1">
+                  {/* <input type="radio" className="w-3 h-3" /> */}
+                  <h1 className="pl-4 text-start text-xl tracking-wider ">{post.name}</h1>
+                  <p className="ml-6 mt-1 text-gray-400">{post.event}</p>
+                </div>
 
-              <div className="ml-auto flex items-center">
-                {/* { ここにアイコンを埋め込む関数を作る } */}
-                <span className="font-bold">{currentTaskJudge(post)}</span>
+                <div className="ml-auto flex items-center">
+                  {/* { ここにアイコンを埋め込む関数を作る } */}
+                  <span className="font-bold">{currentTaskJudge(post)}</span>
+                </div>
               </div>
-            </div>
-          </button>
-        ))}
-      </ul>
+            </button>
+          ))}
+        </ul>
+      ) : (
+        <div className="mt-36 text-center text-lg">データがありません💦</div>
+      )}
       <BottomDrawer selectPost={selectPost} />
     </div>
   )
