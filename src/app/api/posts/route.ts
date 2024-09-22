@@ -1,10 +1,9 @@
 'use server'
 import { PostModel } from '@/lib/mongoDB/models/Post'
-import connectDB from '@/lib/mongoDB/mongodb'
 
 //データの追加
 export async function POST(req: Request) {
-  await connectDB()
+  // await connectDB()
   const body = await req.json()
 
   try {
@@ -50,7 +49,7 @@ export async function POST(req: Request) {
 
 ///特定のデータを編集
 export async function PUT(req: Request) {
-  await connectDB()
+  // await connectDB()
   const body = await req.json()
 
   try {
@@ -86,7 +85,7 @@ export async function PUT(req: Request) {
 
 //ユーザーの登録データを全件取得
 export async function GET(req: Request) {
-  await connectDB()
+  // await connectDB()
 
   // URLクエリパラメータからuserIdを取得
   const url = new URL(req.url)
@@ -113,7 +112,7 @@ export async function GET(req: Request) {
 }
 
 export async function DELETE(req: Request) {
-  await connectDB()
+  // await connectDB()
 
   // URLクエリパラメータからuserIdを取得
   const url = new URL(req.url)
