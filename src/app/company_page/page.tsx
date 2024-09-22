@@ -1,3 +1,4 @@
+'use client'
 import CardList from './components/CardList.tsx/CardList'
 import ShowCard from './components/ShowCard/ShowCard'
 import { FormInputReducerContextProvider } from './context/useFormInputReducer'
@@ -14,7 +15,7 @@ const page = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      cache: 'no-store',
+      // cache: 'no-store',
     })
 
     if (!res.ok) {

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const mongoURL = process.env.NEXT_PUBLIC_MONGO_URL
+const mongoURL = process.env.MONGO_URL
 
 const connectDB = async () => {
   try {
