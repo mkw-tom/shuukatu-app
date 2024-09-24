@@ -21,8 +21,9 @@ const ShowCard = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[670px] w-auto animate-pulse rounded-2xl bg-gray-100">
-          <div className="mx-auto flex flex-col gap-1 p-5">
+        <div className="itemx-center flex h-[670px] w-auto justify-center rounded-2xl">
+          <p className="mx-auto mt-28 text-lg">データがありません💦</p>
+          {/* <div className="mx-auto flex flex-col gap-1 p-5">
             <div className="h-7 w-2/3 animate-pulse rounded-full bg-gray-200"></div>
             <div className="ml-3 h-5 w-1/2 animate-pulse rounded-full bg-gray-200"></div>
             <div className="ml-3 h-5 w-1/2 animate-pulse rounded-full bg-gray-200"></div>
@@ -34,7 +35,7 @@ const ShowCard = () => {
               <div className="mt-1 h-[50px] w-1/4 animate-pulse rounded-md bg-gray-200"></div>
               <div className="mt-1 h-[50px] w-3/4 animate-pulse rounded-md bg-gray-200"></div>
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </>

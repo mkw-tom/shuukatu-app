@@ -30,13 +30,13 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
     const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
 
     if (!current && !post?.completed) {
-      return prev.task
+      return prev?.task
     } else if (!current) {
       return '内定・参加確定'
     } else if (current?.current) {
-      return current.task
+      return current?.task
     } else if (!current.current && prev) {
-      return prev.task
+      return prev?.task
     } else {
       return 'なし'
     }
