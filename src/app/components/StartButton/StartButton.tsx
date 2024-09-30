@@ -5,6 +5,7 @@ import LoginForm from '../LoginForm/LoginForm'
 
 const StartButton = () => {
   const [formOpen, setFormOpen] = useState<boolean>(false)
+
   return (
     <>
       <LoginForm formOpen={formOpen} setFormOpen={setFormOpen} />

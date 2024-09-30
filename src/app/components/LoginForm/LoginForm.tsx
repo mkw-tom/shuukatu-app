@@ -1,4 +1,5 @@
 import { Email, GitHub, Google } from '@mui/icons-material'
+import { signIn } from 'next-auth/react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
 
@@ -10,6 +11,12 @@ const LoginForm = ({
   setFormOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
+  const handleSignIn = async () => {
+    const result = await signIn('github', { redirect: false })
+    if (result?.error) {
+      console.error('Sign in error:', result.error)
+    }
+  }
 
   const closeForm = () => {
     setFormOpen(false)
@@ -34,7 +41,10 @@ const LoginForm = ({
         </div>
 
         <div className="mt-10 flex flex-col gap-5">
-          <button className="btn btn-active flex gap-3 bg-gradient-to-tr  from-info to-orange-500 text-base-100 hover:opacity-70 dark:text-gray-800">
+          <button
+            className="btn btn-active flex gap-3 bg-gradient-to-tr  from-info to-orange-500 text-base-100 hover:opacity-70 dark:text-gray-800"
+            onClick={handleSignIn}
+          >
             <GitHub />
             <span>{isLogin ? 'Login' : 'SignUp'} with GitHub</span>
           </button>

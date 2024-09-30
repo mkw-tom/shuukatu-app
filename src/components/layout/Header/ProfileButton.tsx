@@ -1,10 +1,13 @@
 'use client'
 import { Logout } from '@mui/icons-material'
+import { signOut } from 'next-auth/react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const ProfileButton = () => {
   const [openProf, setOpenProf] = useState<boolean>(false)
+  const router = useRouter()
 
   const openProfToggle = () => {
     setOpenProf(!openProf)
@@ -46,7 +49,10 @@ const ProfileButton = () => {
             <li>内定・参加確定済み：２社</li>
             <li>全ての企業：12社</li>
           </ul>
-          <button className="itmes-center btn-infore btn btn-outline mt-10 border-2 font-bold  dark:btn-active">
+          <button
+            className="itmes-center btn-infore btn btn-outline mt-10 border-2 font-bold  dark:btn-active"
+            onClick={() => signOut()}
+          >
             <span>ログアウト</span>
             <Logout />
           </button>
