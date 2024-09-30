@@ -2,6 +2,7 @@
 
 [アプリを開く](https://shuukatu-app.vercel.app)
 
+<img src="file:///Users/user/Downloads/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202024-09-19%2011.38.38.jpg" width="100">
 
 
 ## 技術スタック
@@ -11,15 +12,4 @@
   * mongoose
   * DaysyUI
   * Material UI Icons
-
-
-
-## 開発背景
-* 就活をする中で、エントリーの管理をEXCELのスプレッドシートで管理していたが、煩雑になりやすく不便だったため😮‍💨
-
-
-
-## 主な機能
-* 企業の登録・管理
-* 選考フローの登録・管理
-
+  * NextAuth
