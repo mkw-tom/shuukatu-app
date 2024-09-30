@@ -5,7 +5,7 @@
 
 
 ## 技術スタック
-<img src="https://raw.githubusercontent.com/tandpfun/skill-icons/refs/heads/main/icons/TypeScript.svg" width="90" height="90" /><img src="https://raw.githubusercontent.com/tandpfun/skill-icons/refs/heads/main/icons/NextJS-Light.svg" width="90" height="90" /><img src="https://raw.githubusercontent.com/tandpfun/skill-icons/refs/heads/main/icons/MongoDB.svg" width="90" height="90" /><img src="https://raw.githubusercontent.com/tandpfun/skill-icons/refs/heads/main/icons/TailwindCSS-Dark.svg" width="90" height="90" /><img src="https://raw.githubusercontent.com/tandpfun/skill-icons/refs/heads/main/icons/Vercel-Dark.svg" width="90" height="90" />
+<img alt="my skills" src="https://skillicons.dev/icons?theme=dark&perline=7&i=ts,next,mongodb,mui,tailwindcss" />
 
  ### その他ライブラリ
   * mongoose
