@@ -2,6 +2,7 @@ import type { NextAuthOptions, User } from 'next-auth'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
+import GoogleProvider from 'next-auth/providers/google'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -28,9 +29,21 @@ export const authOptions: NextAuthOptions = {
         },
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope: 'read:user user:email',
+        },
+      },
+    }),
   ],
   session: {
     strategy: 'jwt', // ここで正しい型を指定
+  },
+  jwt: {
+    secret: process.env.JWT_SECRET,
   },
   callbacks: {
     async jwt({ token, user }) {
