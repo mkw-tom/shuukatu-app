@@ -3,10 +3,13 @@ import type { DefaultSession } from 'next-auth'
 
 declare module 'next-auth' {
   interface User {
-    id: string | number // ユーザーのIDの型を指定
+    id: string | number
+    // provider: string
   }
 
   interface Session {
+    accessToken: unknown
+    id: string | number
     user: {
       address: string
       id: string | number

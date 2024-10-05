@@ -1,10 +1,12 @@
-import { Schema, model } from 'mongoose'
+import mongoose, { Schema } from 'mongoose'
 // const mongoose = require('mongoose');
 
 interface IUser extends Document {
+  // authId: string
   username: string
   password: string
   profilePicture: string
+  email: string
   isAdmin: boolean
   allCompanies: []
   passCompanies: []
@@ -14,12 +16,17 @@ interface IUser extends Document {
 
 const UserSchema = new Schema<IUser>(
   {
+    // authId: {
+    //   type: String,
+    //   required: true,
+    //   unique: true
+    // },
     username: {
       type: String,
       require: true,
       min: 3,
       max: 25,
-      unique: true,
+      // unique: true,
     },
     password: {
       type: String,
@@ -30,7 +37,11 @@ const UserSchema = new Schema<IUser>(
     },
     profilePicture: {
       type: String,
-      default: '',
+      default: '/default_icon.png',
+    },
+    email: {
+      type: String,
+      require: true,
     },
     isAdmin: {
       type: Boolean,
@@ -48,4 +59,4 @@ const UserSchema = new Schema<IUser>(
   { timestamps: true },
 )
 
-module.exports = model<IUser>('user', UserSchema)
+export const UserModel = mongoose.models.User || mongoose.model(`User`, UserSchema)
