@@ -1,8 +1,17 @@
 import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
 import { usePost } from '@/app/company_page/context/usePost'
+import { mypageFormValidationSchema } from '@/lib/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { AddCircle } from '@mui/icons-material'
 import type { ChangeEvent } from 'react'
+import { useForm } from 'react-hook-form'
 import useAddEditMypage from '../../hooks/formHooks/useAddEditMypage'
+
+export interface MypageFormValidType {
+  url: string
+  id: string
+  password: string
+}
 
 const MypageForm = ({
   setOpen,
@@ -16,6 +25,12 @@ const MypageForm = ({
   const { postsState, postsDispatch, selectPost, setSelectPost } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const { handleAddEditMypage, handleCancel } = useAddEditMypage(title, setOpen)
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<MypageFormValidType>({ resolver: zodResolver(mypageFormValidationSchema) })
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target
@@ -28,10 +43,15 @@ const MypageForm = ({
         <AddCircle />
         <span>マイページの{title}</span>
       </h2>
-      <form method="post" className="flex w-full flex-col items-start gap-8 px-5">
+      <form
+        method="post"
+        className="flex w-full flex-col items-start gap-8 px-5"
+        onSubmit={handleSubmit(handleAddEditMypage)}
+      >
         <label htmlFor="url" className="">
           <span className="inline-block w-[100px] text-center text-info">マイページURL</span>
           <input
+            {...register('url')}
             type="text"
             id="url"
             name="url"
@@ -41,10 +61,12 @@ const MypageForm = ({
             onChange={(e) => handleStateChange(e)}
           />
         </label>
+        {errors.url && <span className="mx-auto text-sm text-red-500">{errors.url.message}</span>}
 
         <label htmlFor="id">
           <span className="inline-block w-[100px] text-center text-info">ID</span>
           <input
+            {...register('id')}
             id="id"
             name="id"
             type="text"
@@ -54,10 +76,12 @@ const MypageForm = ({
             onChange={(e) => handleStateChange(e)}
           />
         </label>
+        {errors.id && <span className="mx-auto text-sm text-red-500">{errors.id.message}</span>}
 
         <label htmlFor="password">
           <span className="w-[100px]text-center inline-block text-info">Password</span>
           <input
+            {...register('password')}
             id="password"
             name="password"
             type="text"
@@ -67,6 +91,9 @@ const MypageForm = ({
             onChange={(e) => handleStateChange(e)}
           />
         </label>
+        {errors.password && (
+          <span className="mx-auto text-sm text-red-500">{errors.password.message}</span>
+        )}
 
         <div className="mx-auto my-5 flex gap-3">
           <button
@@ -78,8 +105,8 @@ const MypageForm = ({
           </button>
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
-            type="button"
-            onClick={() => handleAddEditMypage()}
+            type="submit"
+            // onClick={() => handleAddEditMypage()}
           >
             <span>{title}</span>
           </button>
