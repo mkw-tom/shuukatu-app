@@ -1,4 +1,6 @@
 import Header from '@/components/layout/Header/Header'
+import NextAuthProvider from '@/lib/NextAuth/NextAuthProvider'
+import SesstionChecker from '@/lib/NextAuth/SesstionChecker'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -23,7 +25,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Header />
-        {children}
+        <NextAuthProvider>
+          <SesstionChecker>{children}</SesstionChecker>
+        </NextAuthProvider>
       </body>
     </html>
   )
