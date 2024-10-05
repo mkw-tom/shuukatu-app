@@ -11,7 +11,7 @@ const handler = NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        name: { label: 'Name', type: 'text' },
+        username: { label: 'Username', type: 'text' },
         email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
@@ -22,9 +22,9 @@ const handler = NextAuth({
         }
         const existUser = await UserModel.findOne({ email: credentials.email })
 
-        if (!credentials.name) {
+        if (!credentials.username) {
           if (!existUser) {
-            throw new Error(`this user is not found ${credentials.name}`)
+            throw new Error(`this user is not found ${credentials.username}`)
           }
 
           const isValidPassword = await compare(credentials.password, existUser.password)
@@ -34,11 +34,11 @@ const handler = NextAuth({
           return { id: existUser._id, name: existUser.username, email: existUser.email }
         } else {
           if (existUser) {
-            throw new Error(`already exist this user ${credentials.name}`)
+            throw new Error(`already exist this user ${credentials.username}`)
           }
           const hashedPassword = await hash(credentials.password, 12)
           const newUser = new UserModel({
-            username: credentials.name,
+            username: credentials.username,
             email: credentials.email,
             password: hashedPassword,
           })
@@ -61,7 +61,9 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
       authorization: {
         params: {
-          scope: 'read:user user:email user:name user:image',
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
         },
       },
     }),
