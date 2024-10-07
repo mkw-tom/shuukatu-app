@@ -13,3 +13,5 @@
   * DaysyUI
   * Material UI Icons
   * NextAuth
+  * React Hook Form
+  * Zod
