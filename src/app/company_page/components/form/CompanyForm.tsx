@@ -64,7 +64,7 @@ const CompanyForm = ({
   }
 
   return (
-    <div className="card mx-auto h-auto w-10/12 bg-white dark:bg-gray-700 md:w-[500px]">
+    <div className="card mx-auto h-auto w-96 bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
         <span>企業の{title}</span>
@@ -82,7 +82,7 @@ const CompanyForm = ({
             id="name"
             name="name"
             placeholder="企業名："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={state.name}
             onChange={(e) => handleStateChange(e)}
           />
@@ -96,7 +96,7 @@ const CompanyForm = ({
             {...register('event')}
             id="event"
             name="event"
-            className="select select-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="select select-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={state.event}
             onChange={(e) => handleStateChange(e)}
             onClick={() => setSelectEvent(true)}
@@ -114,7 +114,7 @@ const CompanyForm = ({
 
         <div className="flex w-full items-center">
           <span className="inline-block w-[100px] text-center text-info">開催日時</span>
-          <div className="flex w-[250px] flex-col items-center gap-2">
+          <div className="flex w-[230px] flex-col items-center gap-2">
             <input
               {...register('startDate')}
               type="datetime-local"
@@ -148,7 +148,7 @@ const CompanyForm = ({
             name="region"
             type="text"
             placeholder="開催地："
-            className="input input-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
             value={state.region}
             onChange={(e) => handleStateChange(e)}
           />

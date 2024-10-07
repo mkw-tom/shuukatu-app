@@ -16,7 +16,7 @@ const ProfileButton = () => {
   return (
     <div>
       <button
-        className="border-infore block cursor-pointer rounded-full border-2"
+        className="border-infore block cursor-pointer rounded-lg border-2"
         style={{ width: '30px', height: '30px' }}
         onClick={openProfToggle}
       >
@@ -25,15 +25,15 @@ const ProfileButton = () => {
           width={30}
           height={30}
           alt="ユーザー画像"
-          className="rounded-full"
+          className="rounded-lg"
         />
       </button>
       <div
-        className={`card absolute right-5 top-16 h-auto w-72 border-2 py-3 ${openProf ? 'block' : 'hidden'} z-50 bg-white dark:bg-gray-700`}
+        className={`absolute right-5 top-16 h-auto w-72 border-2 py-3 ${openProf ? 'block' : 'hidden'} z-50 rounded-lg bg-white dark:bg-gray-700`}
       >
         <div className="mx-auto flex w-11/12 flex-col items-center opacity-100">
           <div
-            className="border-infore mx-auto cursor-pointer rounded-full border-2"
+            className="border-infore mx-auto cursor-pointer rounded-md border-2"
             style={{ width: '70px', height: '70px' }}
           >
             <Image
@@ -41,7 +41,7 @@ const ProfileButton = () => {
               width={70}
               height={70}
               alt="ユーザー画像"
-              className="rounded-full"
+              className="rounded-md"
             />
           </div>
           <h3 className="mt-2">username</h3>

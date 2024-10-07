@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { usePost } from '../../context/usePost'
 
 const Filter = () => {
-  const { postsState, postsDispatch, setSelectPost } = usePost()
+  const { postsState, postsDispatch, setSelectPost, allPosts } = usePost()
   const router = useRouter()
   const completedNum = postsState.filter((post) => post.completed === true).length
   const allNum = postsState.length
@@ -26,7 +26,7 @@ const Filter = () => {
           className="flex w-full items-center justify-center gap-2 rounded-t-xl py-2 text-info duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200"
           onClick={getAllPosts}
         >
-          <span className="size-6 rounded-full bg-info pt-1 text-gray-200">{allNum}</span>
+          <span className="size-6 rounded-full bg-info pt-1 text-gray-200">{allPosts.length}</span>
           <span>全ての企業</span>
         </button>
         <button

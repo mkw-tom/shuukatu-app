@@ -24,7 +24,7 @@ const MypageForm = ({
 }) => {
   const { postsState, postsDispatch, selectPost, setSelectPost } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
-  const { handleAddEditMypage, handleCancel } = useAddEditMypage(title, setOpen)
+  const { handleAddEditMypage, handleSkipAndCancel } = useAddEditMypage(title, setOpen)
   const {
     register,
     handleSubmit,
@@ -38,7 +38,7 @@ const MypageForm = ({
   }
 
   return (
-    <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
+    <div className="card mx-auto h-auto w-96 bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
         <span>マイページの{title}</span>
@@ -56,7 +56,7 @@ const MypageForm = ({
             id="url"
             name="url"
             placeholder="URL："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={state.mypage.url}
             onChange={(e) => handleStateChange(e)}
           />
@@ -71,7 +71,7 @@ const MypageForm = ({
             name="id"
             type="text"
             placeholder="ID："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
             value={state.mypage.id}
             onChange={(e) => handleStateChange(e)}
           />
@@ -79,14 +79,14 @@ const MypageForm = ({
         {errors.id && <span className="mx-auto text-sm text-red-500">{errors.id.message}</span>}
 
         <label htmlFor="password">
-          <span className="w-[100px]text-center inline-block text-info">Password</span>
+          <span className="inline-block w-[100px] text-center text-info">Password</span>
           <input
             {...register('password')}
             id="password"
             name="password"
             type="text"
             placeholder="開催地："
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
             value={state.mypage.password}
             onChange={(e) => handleStateChange(e)}
           />
@@ -99,7 +99,7 @@ const MypageForm = ({
           <button
             className="btn w-40 bg-gray-400 text-gray-200 dark:btn-outline hover:border-gray-400 hover:bg-gray-400 dark:text-gray-400 dark:hover:bg-gray-400"
             type="button"
-            onClick={() => handleCancel()}
+            onClick={() => handleSkipAndCancel()}
           >
             <span>スキップ</span>
           </button>
