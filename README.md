@@ -6,7 +6,7 @@
 
 
 ## 技術スタック
-<img alt="my skills" src="https://skillicons.dev/icons?theme=dark&perline=7&i=ts,next,mongodb,mui,tailwindcss" />
+<img alt="my skills" src="https://skillicons.dev/icons?theme=dark&perline=7&i=ts,next,mongodb,mui,tailwindcss,vercel" />
 
  ### その他ライブラリ
   * mongoose
