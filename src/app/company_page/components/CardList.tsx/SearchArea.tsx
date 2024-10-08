@@ -13,8 +13,13 @@ const SearchArea = () => {
   }
 
   return (
-    <label className="input input-bordered flex h-10 w-2/3 items-center gap-2 bg-gray-100 dark:bg-gray-500">
-      <input type="text" className="grow " placeholder="Search" onChange={(e) => searchPost(e)} />
+    <label className="input input-bordered  flex h-10 w-2/3 items-center gap-2 bg-gray-100 dark:bg-gray-500">
+      <input
+        type="text"
+        className="grow "
+        placeholder="企業名で検索"
+        onChange={(e) => searchPost(e)}
+      />
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 16 16"

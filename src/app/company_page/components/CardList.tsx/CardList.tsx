@@ -1,10 +1,12 @@
 'use client'
 import { usePost } from '@/app/company_page/context/usePost'
+import { Group } from '@mui/icons-material'
 import { useEffect } from 'react'
 import AddFormButton from './AddFormButton'
 import BottomDrawer from './BottomDrawer'
 import Filter from './Filter'
 import SearchArea from './SearchArea'
+import SideDrawer from './SideDrawer'
 
 const CardList = ({ postsData }: { postsData: PostType[] }) => {
   const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
@@ -41,39 +43,88 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
       return 'なし'
     }
   }
+  const TaskLimitDate = (post: PostType) => {
+    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
+    if (!current || !current.limitDate) {
+      return null
+    }
+    return new Date(current.limitDate).toLocaleDateString()
+  }
 
   return (
-    <div className="flex w-full flex-col lg:w-5/12">
-      <div className="mb-3 flex items-center justify-between gap-3">
+    <div className="drawer drawer-end flex w-full flex-col">
+      <div className="mb-3 flex items-center justify-between gap-3 md:w-3/5">
         <AddFormButton />
         <SearchArea />
         <Filter />
       </div>
-      {postsState[0] ? (
-        <ul className="flex h-[580px] flex-col gap-5 overflow-y-scroll">
-          {postsState?.map((post, index) => (
-            <button key={index} className="w-full" onClick={() => handleSelect(post)}>
-              <div
-                className={`card card-side relative flex items-center justify-between border-2 border-l-8 p-4 shadow-md hover:border-info  dark:border-gray-500 dark:bg-gray-900 dark:text-gray-200 dark:hover:border-info ${selectPost?.customId === post.customId ? 'border-info dark:border-info' : ''}`}
+      <table className="table w-full">
+        <thead className="">
+          <tr className="text-info">
+            <th></th>
+            <th>企業名</th>
+            <td className="hidden md:block ">イベント</td>
+            <td>タスク</td>
+            <th className="hidden md:block"></th>
+          </tr>
+        </thead>
+        <tbody className="overflow-y-scroll">
+          {postsState && postsState.length > 0 ? (
+            postsState.map((post, index) => (
+              <tr
+                key={index}
+                className={`${selectPost?.customId === post.customId ? 'bg-sky-100 dark:bg-sky-950' : ''} cursor-pointer hover:bg-sky-100 dark:hover:bg-sky-950`}
+                onClick={() => handleSelect(post)}
               >
-                <div className="flex flex-col gap-1">
-                  {/* <input type="radio" className="w-3 h-3" /> */}
-                  <h1 className="pl-4 text-start text-xl tracking-wider ">{post.name}</h1>
-                  <p className="ml-6 mt-1 text-gray-400">{post.event}</p>
-                </div>
+                <th className="">
+                  <p className="mx-auto size-5 animate-pulse rounded-full bg-info"></p>
+                </th>
+                <th className="w-36">
+                  <div className="font-bold">{post.name}</div>
+                  <div className="badge badge-ghost badge-sm block opacity-80 md:badge-md md:hidden">
+                    {post.event}
+                  </div>
+                </th>
+                <td className="hidden md:block">
+                  <div className="badge badge-ghost badge-md opacity-80">{post.event}</div>
+                </td>
+                <td className="md:text-md text-xs">
+                  <p>
+                    <Group style={{ fontSize: '20px' }} className="mr-1" />
+                    {currentTaskJudge(post)}
+                  </p>
+                  {TaskLimitDate(post) ? (
+                    <div className="badge badge-error badge-sm mt-1 opacity-80">
+                      {TaskLimitDate(post)}まで
+                    </div>
+                  ) : null}
+                </td>
+                <th className="hidden sm:block">
+                  <label
+                    htmlFor="my-drawer-4"
+                    className="btn btn-outline btn-info drawer-button btn-xs"
+                  >
+                    open
+                  </label>
+                </th>
+              </tr>
+            ))
+          ) : (
+            // データがない場合の行
+            <tr className="mt-36 text-center text-lg">
+              <th className="w-16 sm:w-24"></th>
+              <td className="w-36">データがありません💦</td>
+              <td className="hidden md:block"></td>
+              <td className="md:text-md text-xs"></td>
+              <th className="hidden md:block"></th>
+            </tr>
+          )}
+        </tbody>
+      </table>
+      <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
 
-                <div className="ml-auto flex items-center">
-                  {/* { ここにアイコンを埋め込む関数を作る } */}
-                  <span className="font-bold">{currentTaskJudge(post)}</span>
-                </div>
-              </div>
-            </button>
-          ))}
-        </ul>
-      ) : (
-        <div className="mt-36 text-center text-lg">データがありません💦</div>
-      )}
       <BottomDrawer selectPost={selectPost} />
+      <SideDrawer selectPost={selectPost} />
     </div>
   )
 }

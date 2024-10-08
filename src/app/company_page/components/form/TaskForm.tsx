@@ -62,7 +62,7 @@ const TaskForm = ({
   }, [state.taskFlow.date, state.taskFlow.limitDate, title])
 
   return (
-    <div className="card mx-auto h-auto w-[500px] bg-white dark:bg-gray-700">
+    <div className="card mx-auto h-auto w-96 bg-white dark:bg-gray-700">
       <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
         <AddCircle />
         <span>タスクの{title}</span>
@@ -78,7 +78,7 @@ const TaskForm = ({
             {...register('task')}
             id="task"
             name="task"
-            className="select select-bordered w-[250px] bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="select select-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={state.taskFlow.task}
             onChange={(e) => handleStateChange(e)}
           >
@@ -104,7 +104,7 @@ const TaskForm = ({
             name="date"
             id="date"
             type="datetime-local"
-            className="input  input-bordered w-[250px]   bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input  input-bordered w-[230px]   bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={date || state.taskFlow.date}
             onChange={(e) => setDate(e.target.value)}
           />
@@ -118,7 +118,7 @@ const TaskForm = ({
             name="limitDate"
             id="limitDate"
             type="datetime-local"
-            className="input input-bordered w-[250px]  bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input input-bordered w-[230px]  bg-gray-200 text-gray-700 dark:bg-gray-400"
             value={limitDate || state.taskFlow.limitDate}
             onChange={(e) => setLimitDate(e.target.value)}
           />
@@ -135,7 +135,7 @@ const TaskForm = ({
             name="testFormat"
             type="text"
             placeholder="例：SPI3"
-            className="input input-bordered w-[300px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
             value={state.taskFlow.testFormat}
             onChange={(e) => handleStateChange(e)}
           />
@@ -149,7 +149,7 @@ const TaskForm = ({
             type="button"
             onClick={() => handleCancel()}
           >
-            <span>スキップ</span>
+            <span>{onlyTaskForm ? 'キャンセル' : 'スキップ'}</span>
           </button>
           <button
             className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"

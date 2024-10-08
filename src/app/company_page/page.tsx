@@ -1,5 +1,4 @@
 import CardList from './components/CardList.tsx/CardList'
-import ShowCard from './components/ShowCard/ShowCard'
 import { FormInputReducerContextProvider } from './context/useFormInputReducer'
 import { PostContextProvider } from './context/usePost'
 
@@ -29,12 +28,12 @@ const page = async () => {
 
   return (
     <main className="h-screen ">
-      <div className="mx-10 mt-10 items-start justify-between lg:flex">
+      <div className="mx-3 mt-10 items-start justify-between md:mx-10 lg:flex">
         <FormInputReducerContextProvider>
           <PostContextProvider>
-            <div className="hidden  w-5/12 lg:block">
+            {/* <div className=" ">
               <ShowCard />
-            </div>
+            </div> */}
             <CardList postsData={postsData} />
           </PostContextProvider>
         </FormInputReducerContextProvider>

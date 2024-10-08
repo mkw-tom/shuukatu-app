@@ -11,10 +11,10 @@ const Region = () => {
     >
       <ul className="flex flex-col gap-1">
         <li className="border-l-2 border-l-info pl-2 text-gray-900 dark:text-gray-400">
-          開催地： {selectPost?.region}
+          場所： {selectPost?.region}
         </li>
         <li className="flex items-center border-l-2 border-l-info pl-2 text-gray-900 dark:text-gray-400">
-          開催日時：
+          <span className="w-20">日時：</span>
           <span className="mx-2">{new Date(selectPost?.startDate as string).toLocaleString()}</span>
           <span> 〜 </span>
           <span className="mx-2">{new Date(selectPost?.endDate as string).toLocaleString()}</span>

@@ -33,10 +33,10 @@ const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolea
       if (title === '編集') {
         setSelectPost(updatedData)
         setOpen(false)
-        setFormSlide('-translate-x-none ')
+        setFormSlide('-translate-x-none')
         dispatch({ type: 'CLEAR' })
       } else {
-        setFormSlide('-translate-x-[1000px] ')
+        setFormSlide('-translate-x-[768px]')
       }
     } catch (error) {
       console.log(`faild fetch : ${error}`)
@@ -44,13 +44,17 @@ const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolea
   }
 
   //🐯🐯🐯🐯🐯 -----フォームキャンセルーーーーーーーーーーーーーーーーーーーーーーーーーー🐯🐯🐯🐯🐯
-  const handleCancel = () => {
-    setOpen(false)
-    dispatch({ type: 'CLEAR' })
-    setFormSlide('-translate-x-none')
+  const handleSkipAndCancel = () => {
+    if (title === '編集') {
+      setOpen(false)
+      dispatch({ type: 'CLEAR' })
+      setFormSlide('-translate-x-[768px]')
+    } else {
+      setFormSlide('-translate-x-[768px]')
+    }
   }
 
-  return { handleAddEditMypage, handleCancel }
+  return { handleAddEditMypage, handleSkipAndCancel }
 }
 
 export default useAddEditMypage

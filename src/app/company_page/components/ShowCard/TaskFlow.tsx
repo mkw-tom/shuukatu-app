@@ -88,7 +88,6 @@ const TaskFLow = () => {
     if (title === '編集') {
       dispatch({ type: 'INITIALIZE_TASK', payload: selectTask as FormInputTaskType })
     }
-    console.log(state)
   }
 
   const handleSelectTask = (task: FormInputTaskType) => {
@@ -105,7 +104,7 @@ const TaskFLow = () => {
           onClick={() => TaskFormOpen('追加')}
         >
           <AddCircle />
-          フローの追加
+          タスクを追加
         </button>
       </div>
 
@@ -139,52 +138,80 @@ const TaskFLow = () => {
               <hr className={`${task.finished ? 'bg-info' : ''} ${index === -1 ? 'hidden' : ''}`} />
             </li>
           ))}
-          <li>
-            <hr className={`${selectPost?.completed ? 'bg-orange-400' : ''}`} />
-            <div className="timeline-middle">
-              <Verified className="text-orange-500" />
-            </div>
-            <div className="timeline-end timeline-box text-orange-500">
-              <Celebration className="flex items-center gap-1 text-orange-500" />
-              <span>内定・参加確定</span>
-            </div>
-          </li>
+          {!selectPost?.taskFlow[0] ? (
+            <li
+              className="mt-3 flex h-[200px] w-full cursor-pointer flex-col justify-center border-2 border-dashed pt-3 text-center hover:bg-sky-100"
+              onClick={() => TaskFormOpen('追加')}
+            >
+              <span>タスクが未登録です💦</span>
+              <button className="btn btn-link btn-info">タスクを追加</button>
+            </li>
+          ) : (
+            <li>
+              <hr className={`${selectPost?.completed ? 'bg-orange-400' : ''}`} />
+              <div className="timeline-middle">
+                <Verified className="text-orange-500" />
+              </div>
+              <div className="timeline-end timeline-box text-orange-500">
+                <Celebration className="flex items-center gap-1 text-orange-500" />
+                <span>内定・参加確定</span>
+              </div>
+            </li>
+          )}
         </ul>
       </div>
 
-      <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
-        <div className="flex justify-between">
-          <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
-            <span className="text-info">{judgeIcon(selectTask?.task as string)}</span>
-            <span className="text-info">{selectTask?.task as string}</span>
-          </h3>
-          <nav className="flex items-center">
-            <button
-              className="btn  btn-link btn-sm text-gray-400 hover:text-info"
-              onClick={() => TaskFormOpen('編集')}
-            >
-              <Edit style={{ fontSize: '20px' }} />
-              編集
-            </button>
-            <button
-              className="btn btn-link btn-sm text-gray-400 hover:text-error"
-              onClick={TaskDelete}
-            >
-              <Delete style={{ fontSize: '20px' }} />
-              削除
-            </button>
-          </nav>
+      {currentTask ? (
+        <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
+          <div className="flex justify-between">
+            <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
+              <span className="text-info">{judgeIcon(currentTask?.task as string)}</span>
+              <span className="text-info">{currentTask?.task as string}</span>
+            </h3>
+            <nav className="flex items-center">
+              <button
+                className="btn  btn-link btn-sm text-gray-400 hover:text-info"
+                onClick={() => TaskFormOpen('編集')}
+              >
+                <Edit style={{ fontSize: '20px' }} />
+                編集
+              </button>
+              <button
+                className="btn btn-link btn-sm text-gray-400 hover:text-error"
+                onClick={TaskDelete}
+              >
+                <Delete style={{ fontSize: '20px' }} />
+                削除
+              </button>
+            </nav>
+          </div>
+          <p className={`${currentTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            テスト形式：{currentTask?.testFormat}
+          </p>
+          <p className={`${currentTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            実践日時：{currentTask?.date}
+          </p>
+          <p className={`${currentTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            期限：{currentTask?.limitDate}
+          </p>
         </div>
-        <p className={`${selectTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-          テスト形式：{selectTask?.testFormat}
-        </p>
-        <p className={`${selectTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-          実践日時：{selectTask?.date}
-        </p>
-        <p className={`${selectTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-          期限：{selectTask?.limitDate}
-        </p>
-      </div>
+      ) : (
+        <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
+          <h3
+            className={`flex h-8 items-center gap-2 border-l-2 border-l-orange-500 pl-2 ${selectPost?.completed ? 'block' : 'hidden'}`}
+          >
+            <span className="text-orange-500">
+              <Verified className="text-orange-500" />
+            </span>
+            <span className="text-orange-500">内定・参加確定</span>
+          </h3>
+          <h3
+            className={`flex h-8 items-center gap-2 border-l-2 border-l-info pl-2 text-info ${selectPost?.completed ? 'hidden' : 'block'}`}
+          >
+            <span className="mr-3">タスクなし</span>
+          </h3>
+        </div>
+      )}
     </div>
   )
 }
