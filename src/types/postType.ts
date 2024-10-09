@@ -25,7 +25,8 @@ interface TaskType {
   date: string
   limitDate: string
   current: boolean
-  next: boolean
+  failed: boolean
+  // next: boolean
   finished: boolean
-  edit: boolean
+  // edit: boolean
 }

@@ -25,7 +25,9 @@ export const useAddEdutTask = (
       },
       body: JSON.stringify({
         customId: state.customId || selectPost?.customId,
-        taskFlow: state.taskFlow,
+        taskFlow: {
+          ...state.taskFlow,
+        },
       }),
     })
 

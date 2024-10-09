@@ -27,7 +27,7 @@ const page = async () => {
   const postsData = (await getDatas()) as PostType[]
 
   return (
-    <main className="h-screen ">
+    <main className="h-lvh ">
       <div className="mx-3 mt-10 items-start justify-between md:mx-10 lg:flex">
         <FormInputReducerContextProvider>
           <PostContextProvider>

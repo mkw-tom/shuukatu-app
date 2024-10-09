@@ -20,9 +20,10 @@ export const FormInputState: FormInputPostType = {
     date: '',
     limitDate: '',
     current: false,
-    next: false,
+    failed: false,
+    // next: false,
     finished: false,
-    edit: false,
+    // edit: false,
   },
 }
 
@@ -69,9 +70,10 @@ export const FormInputReducer = (
           date: '',
           limitDate: '',
           current: false,
-          next: false,
+          failed: false,
+          // next: false,
           finished: false,
-          edit: false,
+          // edit: false,
         },
       }
 
@@ -124,6 +126,7 @@ export const FormInputReducer = (
           customId: action.payload.customId,
           date: action.payload.date,
           limitDate: action.payload.limitDate,
+          current: action.payload.current,
           [action.payload.name]: action.payload.value,
         },
       }

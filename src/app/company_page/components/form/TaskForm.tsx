@@ -43,27 +43,49 @@ const TaskForm = ({
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
-  } = useForm<TaskFormValidTYpe>({ resolver: zodResolver(taskFormValidationSchema) })
+  } = useForm<TaskFormValidTYpe>({
+    resolver: zodResolver(taskFormValidationSchema),
+    defaultValues: {
+      task: '',
+      date: '',
+      limitDate: '',
+      testFormat: '',
+    },
+  })
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
+    const current = selectPost?.taskFlow[0] ? false : true
     const { name, value } = e.target
-    dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate } })
+    dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate, current } })
     console.log(state)
   }
 
   useEffect(() => {
     if (title === '編集') {
+      reset({
+        task: state.taskFlow.task,
+        date: state.taskFlow.date,
+        limitDate: state.taskFlow.limitDate,
+        testFormat: state.taskFlow.testFormat,
+      })
       setDate(state.taskFlow.date)
       setLimitDate(state.taskFlow.limitDate)
     }
-  }, [state.taskFlow.date, state.taskFlow.limitDate, title])
+  }, [
+    reset,
+    state.taskFlow.date,
+    state.taskFlow.limitDate,
+    state.taskFlow.task,
+    state.taskFlow.testFormat,
+    title,
+  ])
 
   return (
-    <div className="card mx-auto h-auto w-96 bg-white dark:bg-gray-700">
-      <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-lg border-b-2 border-info py-2 text-xl  text-info dark:bg-info dark:text-gray-900 ">
+    <div className="card mx-auto h-auto w-80 bg-white dark:bg-gray-700 sm:w-96">
+      <h2 className="mx-auto mb-10 flex w-full items-center justify-center gap-1 rounded-t-sm border-b-2 border-info py-2 text-xl  text-info ">
         <AddCircle />
         <span>タスクの{title}</span>
       </h2>
@@ -73,12 +95,14 @@ const TaskForm = ({
         onSubmit={handleSubmit(handleAddEditTask)}
       >
         <label htmlFor="task">
-          <span className="inline-block w-[100px] text-center text-info">タスク</span>
+          <span className="sm:text-md inline-block w-[70px] text-center text-sm text-info sm:w-[100px]">
+            タスク
+          </span>
           <select
             {...register('task')}
             id="task"
             name="task"
-            className="select select-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="select select-bordered select-sm w-[200px] bg-gray-200 text-gray-700 sm:select-md dark:bg-gray-400 sm:w-[230px]"
             value={state.taskFlow.task}
             onChange={(e) => handleStateChange(e)}
           >
@@ -98,29 +122,37 @@ const TaskForm = ({
         {errors.task && <span className="mx-auto text-sm text-red-500">{errors.task.message}</span>}
 
         <label htmlFor="date">
-          <span className="inline-block w-[100px] text-center text-info">実践日時</span>
+          <span className="sm:text-md inline-block w-[70px] text-center text-sm text-info sm:w-[100px]">
+            実践日時
+          </span>
           <input
             {...register('date')}
             name="date"
             id="date"
             type="datetime-local"
-            className="input  input-bordered w-[230px]   bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700   sm:input-md dark:bg-gray-400 sm:w-[230px]"
             value={date || state.taskFlow.date}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={
+              title === '編集' ? (e) => handleStateChange(e) : (e) => setDate(e.target.value)
+            }
           />
         </label>
         {errors.date && <span className="mx-auto text-sm text-red-500">{errors.date.message}</span>}
 
         <label htmlFor="limitDate">
-          <span className="inline-block w-[100px] text-center text-info">期限</span>
+          <span className="sm:text-md inline-block w-[70px] text-center text-sm text-info sm:w-[100px]">
+            期限
+          </span>
           <input
             {...register('limitDate')}
             name="limitDate"
             id="limitDate"
             type="datetime-local"
-            className="input input-bordered w-[230px]  bg-gray-200 text-gray-700 dark:bg-gray-400"
+            className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700  sm:input-md dark:bg-gray-400 sm:w-[230px]"
             value={limitDate || state.taskFlow.limitDate}
-            onChange={(e) => setLimitDate(e.target.value)}
+            onChange={
+              title === '編集' ? (e) => handleStateChange(e) : (e) => setLimitDate(e.target.value)
+            }
           />
         </label>
         {errors.limitDate && (
@@ -128,14 +160,16 @@ const TaskForm = ({
         )}
 
         <label htmlFor="testFormat">
-          <span className="inline-block w-[100px] text-center text-info">テスト形式</span>
+          <span className="sm:text-md inline-block w-[70px] text-center text-sm text-info sm:w-[100px]">
+            テスト形式
+          </span>
           <input
             {...register('testFormat')}
             id="testFormat"
             name="testFormat"
             type="text"
             placeholder="例：SPI3"
-            className="input input-bordered w-[230px] bg-gray-200 text-gray-700 dark:bg-gray-400 "
+            className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700 sm:input-md dark:bg-gray-400 sm:w-[230px] "
             value={state.taskFlow.testFormat}
             onChange={(e) => handleStateChange(e)}
           />
@@ -143,16 +177,16 @@ const TaskForm = ({
         {errors.testFormat && (
           <span className="mx-auto text-sm text-red-500">{errors.testFormat.message}</span>
         )}
-        <div className="mx-auto my-5 flex gap-3">
+        <div className="mx-auto my-5 flex w-full gap-3">
           <button
-            className="btn w-40 bg-gray-400 text-gray-200 dark:btn-outline hover:border-gray-400 hover:bg-gray-400 dark:text-gray-400 dark:hover:bg-gray-400"
+            className="btn w-1/2 bg-gray-400 text-gray-200 dark:btn-outline hover:border-gray-400 hover:bg-gray-400 dark:text-gray-400 dark:hover:bg-gray-400"
             type="button"
             onClick={() => handleCancel()}
           >
             <span>{onlyTaskForm ? 'キャンセル' : 'スキップ'}</span>
           </button>
           <button
-            className="btn w-40 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
+            className="btn w-1/2 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
             type="submit"
             // onClick={handleAddEditTask}
           >

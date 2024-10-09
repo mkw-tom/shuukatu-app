@@ -19,10 +19,10 @@ const PostForm = ({
 
   return (
     <div className={`${open ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-40`}>
-      <div className="card mx-auto mt-20 h-auto w-96 overflow-hidden bg-white ">
+      <div className="mx-auto mt-20 h-auto w-80 overflow-hidden rounded-md bg-white dark:bg-gray-700 sm:w-96">
         <div
           // eslint-disable-next-line tailwindcss/enforces-negative-arbitrary-values
-          className={`flex flex-row ${onlyTaskForm ? '-translate-x-[768px] ' : formSlide}`}
+          className={`flex flex-row ${onlyTaskForm ? '-translate-x-[640px] sm:-translate-x-[768px] ' : formSlide} transtion duration-300`}
           style={{ width: 'calc(100% * 3)' }}
         >
           <CompanyForm setOpen={setOpen} title={title} />
