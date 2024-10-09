@@ -1,7 +1,7 @@
 'use client'
-import { Check, NextPlanOutlined } from '@mui/icons-material'
+import { Check, Clear, NextPlanOutlined } from '@mui/icons-material'
 import { usePost } from '../../context/usePost'
-import useTaskSwitch from '../../hooks/taskButtonsHooks/useTaskSwitch'
+import useTaskSwitch from '../../hooks/useTaskSwitch'
 
 const TaskButtons = () => {
   const {
@@ -29,6 +29,7 @@ const TaskButtons = () => {
         <>
           <button
             className={`btn w-auto flex-1 ${selectPost?.completed ? 'bg-gray-400 hover:border-gray-400 hover:bg-gray-500' : 'bg-orange-500 hover:border-orange-500 hover:bg-orange-500'} text-gray-200 dark:btn-outline  dark:text-orange-500 dark:hover:bg-orange-500 ${currentTask ? 'hidden' : 'block'} `}
+            disabled={selectPost?.taskFlow[0] ? false : true}
             onClick={() => handleCompleted()}
           >
             {selectPost?.completed ? '内定・参加取り消し' : '内定・参加確定'}
@@ -43,13 +44,19 @@ const TaskButtons = () => {
           </button>
         </>
       ) : (
-        <button
-          className="btn w-auto flex-1 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
-          onClick={handleFinished}
-        >
-          <Check />
-          完了
-        </button>
+        <>
+          <button className="btn btn-error w-1/3 text-white dark:btn-outline">
+            <Clear />
+            落選
+          </button>
+          <button
+            className="btn w-1/3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
+            onClick={handleFinished}
+          >
+            <Check />
+            完了
+          </button>
+        </>
       )}
     </div>
   )

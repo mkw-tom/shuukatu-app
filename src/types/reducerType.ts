@@ -20,9 +20,10 @@ interface FormInputPostType {
     date: string
     limitDate: string
     current: boolean
-    next: boolean
+    failed: boolean
+    // next: boolean
     finished: boolean
-    edit: boolean
+    // edit: boolean
   }
 }
 
@@ -34,9 +35,10 @@ interface FormInputTaskType {
   date: string
   limitDate: string
   current: boolean
-  next: boolean
+  // next: boolean
+  failed: boolean
   finished: boolean
-  edit: boolean
+  // edit: boolean
 }
 
 interface FormPostType {
@@ -120,6 +122,7 @@ interface SetTaskAction {
     value: string
     date: string
     limitDate: string
+    current: boolean
   }
 }
 

@@ -1,9 +1,11 @@
 'use client'
 
 import { usePost } from '@/app/company_page/context/usePost'
+import useConvertDateTime from '../../hooks/useConvertDateTime'
 
 const Region = () => {
   const { selectPost } = usePost()
+  const conversionDateTime = useConvertDateTime()
 
   return (
     <div
@@ -13,11 +15,11 @@ const Region = () => {
         <li className="border-l-2 border-l-info pl-2 text-gray-900 dark:text-gray-400">
           場所： {selectPost?.region}
         </li>
-        <li className="flex items-center border-l-2 border-l-info pl-2 text-gray-900 dark:text-gray-400">
-          <span className="w-20">日時：</span>
-          <span className="mx-2">{new Date(selectPost?.startDate as string).toLocaleString()}</span>
-          <span> 〜 </span>
-          <span className="mx-2">{new Date(selectPost?.endDate as string).toLocaleString()}</span>
+        <li className="flex items-start border-l-2 border-l-info pl-2 text-gray-900 dark:text-gray-400">
+          <span className="w-16">日時：</span>
+          <span className="">{conversionDateTime(selectPost?.startDate as string)}</span>
+          <span className="mx-2"> 〜 </span>
+          <span className="">{conversionDateTime(selectPost?.endDate as string)}</span>
         </li>
       </ul>
     </div>

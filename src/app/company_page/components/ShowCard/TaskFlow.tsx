@@ -15,6 +15,8 @@ import {
 } from '@mui/icons-material'
 // import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import useConvertDateTime from '../../hooks/useConvertDateTime'
+import useTaskJudger from '../../hooks/useTaskJudger'
 
 const judgeIcon = (taskname: string) => {
   switch (taskname) {
@@ -40,6 +42,8 @@ const TaskFLow = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
   const { state, dispatch } = usePostReducer()
+  const { taskIconJudger } = useTaskJudger()
+  const conversionDateTime = useConvertDateTime()
   // const router = useRouter()
 
   const TaskDelete = async () => {
@@ -96,7 +100,6 @@ const TaskFLow = () => {
 
   return (
     <div className="mt-5 flex w-full flex-col">
-      <PostForm open={open} setOpen={setOpen} title={formTitle} onlyTaskForm={true} />
       <div className="mb-1 flex items-center justify-between gap-3">
         <h2 className="block h-6 border-l-2 border-l-info pl-2">選考フロー</h2>
         <button
@@ -107,6 +110,8 @@ const TaskFLow = () => {
           タスクを追加
         </button>
       </div>
+
+      <PostForm open={open} setOpen={setOpen} title={formTitle} onlyTaskForm={true} />
 
       <div className="h-auto max-h-[300px] w-full overflow-x-scroll">
         <ul className="timeline timeline-horizontal mb-5 flex lg:ml-0">
@@ -120,16 +125,16 @@ const TaskFLow = () => {
                   <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
                 ) : (
                   <p
-                    className={`mx-1 size-5 animate-pulse rounded-full ${task.current ? 'bg-info' : 'bg-gray-400'}`}
+                    className={`mx-1 size-5  rounded-full ${task.current ? 'bg-info' : 'bg-gray-300'}`}
                   ></p>
                 )}
               </div>
               <button
-                className={`timeline-end timeline-box flex cursor-pointer items-center gap-1 hover:bg-gray-300 ${task === selectTask ? 'bg-gray-300' : ''}`}
+                className={`sm:text-md timeline-end timeline-box flex h-8 cursor-pointer items-center gap-1 text-sm hover:bg-gray-300 sm:h-auto ${task === selectTask ? 'bg-gray-300' : ''}`}
                 onClick={() => handleSelectTask(task)}
               >
                 <span className={`${task.finished ? 'text-info' : 'text-gray-500'}`}>
-                  {judgeIcon(task.task)}
+                  {taskIconJudger(task.task)}
                 </span>
                 <span className={`${task.finished ? 'text-info' : 'text-gray-500'} `}>
                   {task.task}
@@ -140,20 +145,20 @@ const TaskFLow = () => {
           ))}
           {!selectPost?.taskFlow[0] ? (
             <li
-              className="mt-3 flex h-[200px] w-full cursor-pointer flex-col justify-center border-2 border-dashed pt-3 text-center hover:bg-sky-100"
+              className="mt-3 flex h-[200px] w-full cursor-pointer flex-col justify-center border-2 border-dashed pt-3 text-center hover:bg-sky-100 dark:hover:bg-sky-900"
               onClick={() => TaskFormOpen('追加')}
             >
               <span>タスクが未登録です💦</span>
-              <button className="btn btn-link btn-info">タスクを追加</button>
+              <button className="btn btn-link btn-info dark:btn-secondary">タスクを追加</button>
             </li>
           ) : (
             <li>
               <hr className={`${selectPost?.completed ? 'bg-orange-400' : ''}`} />
-              <div className="timeline-middle">
+              <div className="timeline-middle ">
                 <Verified className="text-orange-500" />
               </div>
-              <div className="timeline-end timeline-box text-orange-500">
-                <Celebration className="flex items-center gap-1 text-orange-500" />
+              <div className="sm:text-auto timeline-end timeline-box flex h-8 items-center text-sm text-orange-500 sm:h-auto">
+                <Celebration className=" mr-1 text-orange-500" />
                 <span>内定・参加確定</span>
               </div>
             </li>
@@ -165,8 +170,8 @@ const TaskFLow = () => {
         <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
           <div className="flex justify-between">
             <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
-              <span className="text-info">{judgeIcon(currentTask?.task as string)}</span>
-              <span className="text-info">{currentTask?.task as string}</span>
+              <span className="text-info">{taskIconJudger(selectTask?.task as string)}</span>
+              <span className="sm:text-md text-sm text-info">{selectTask?.task as string}</span>
             </h3>
             <nav className="flex items-center">
               <button
@@ -174,25 +179,25 @@ const TaskFLow = () => {
                 onClick={() => TaskFormOpen('編集')}
               >
                 <Edit style={{ fontSize: '20px' }} />
-                編集
+                <span className="hidden sm:block">編集</span>
               </button>
               <button
                 className="btn btn-link btn-sm text-gray-400 hover:text-error"
                 onClick={TaskDelete}
               >
                 <Delete style={{ fontSize: '20px' }} />
-                削除
+                <span className="hidden sm:block">削除</span>
               </button>
             </nav>
           </div>
-          <p className={`${currentTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-            テスト形式：{currentTask?.testFormat}
+          <p className={`${selectTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            テスト形式：{selectTask?.testFormat}
           </p>
-          <p className={`${currentTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-            実践日時：{currentTask?.date}
+          <p className={`${selectTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            実践日時：{conversionDateTime(selectTask?.date as string)}
           </p>
-          <p className={`${currentTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
-            期限：{currentTask?.limitDate}
+          <p className={`${selectTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+            期限：{conversionDateTime(selectTask?.limitDate as string)}
           </p>
         </div>
       ) : (

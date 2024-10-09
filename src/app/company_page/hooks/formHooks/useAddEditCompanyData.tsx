@@ -36,7 +36,7 @@ export const useAddEditCompanyData = (
     postsDispatch({ type: 'ADD_POST', post: addData })
 
     console.log(state)
-    setFormSlide('-translate-x-96')
+    setFormSlide('-translate-x-80 sm:-translate-x-96')
   }
 
   ///----------- 企業データの編集 -----------------------
@@ -70,7 +70,7 @@ export const useAddEditCompanyData = (
 
       setSelectPost(updatedData)
 
-      setFormSlide('-translate-x-[400px]')
+      setFormSlide('-translate-x-80 sm:-translate-x-96')
     } catch (error) {
       console.log(`faild fetch : ${error}`)
     }

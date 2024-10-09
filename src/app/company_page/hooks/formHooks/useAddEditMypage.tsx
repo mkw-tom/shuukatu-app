@@ -36,7 +36,7 @@ const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolea
         setFormSlide('-translate-x-none')
         dispatch({ type: 'CLEAR' })
       } else {
-        setFormSlide('-translate-x-[768px]')
+        setFormSlide('-translate-x-[640px] sm:-translate-x-[768px]')
       }
     } catch (error) {
       console.log(`faild fetch : ${error}`)
@@ -48,9 +48,9 @@ const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolea
     if (title === '編集') {
       setOpen(false)
       dispatch({ type: 'CLEAR' })
-      setFormSlide('-translate-x-[768px]')
+      setFormSlide('-translate-x-none')
     } else {
-      setFormSlide('-translate-x-[768px]')
+      setFormSlide('-translate-x-[640px]  sm:-translate-x-[768px]')
     }
   }
 

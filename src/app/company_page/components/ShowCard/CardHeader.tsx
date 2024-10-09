@@ -2,14 +2,16 @@
 import PostForm from '@/app/company_page/components/form/PostForm'
 import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
 import { usePost } from '@/app/company_page/context/usePost'
-import { Delete, Edit, Group } from '@mui/icons-material'
+import { Delete, Edit } from '@mui/icons-material'
 import type { ReactNode } from 'react'
 import { useState } from 'react'
+import useTaskJudger from '../../hooks/useTaskJudger'
 
 const CardHeader = () => {
   const [open, setOpen] = useState<boolean>(false)
   const { selectPost, postsDispatch, setSelectPost, posts, currentTask, prevTask } = usePost()
   const { state, dispatch } = usePostReducer()
+  const { taskIconJudger } = useTaskJudger()
 
   const taskNameJudge = (): string => {
     if (!currentTask && !selectPost?.completed) {
@@ -57,14 +59,20 @@ const CardHeader = () => {
   return (
     <div className="mb-2 flex items-start justify-between">
       <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={false} />
-      <div className="flex flex-col items-start justify-start">
-        <h2 className="border-l-4 border-l-info pl-3 text-2xl tracking-wider dark:text-gray-200">
+      <div className="flex flex-col items-start justify-start gap-2">
+        <h2 className="border-l-4 border-l-info pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl">
           {selectPost?.name as string}
         </h2>
-        <h3 className="ml-5 text-gray-500 dark:text-gray-400">{selectPost?.event as string}</h3>
-        <div className="ml-5 flex items-center gap-1">
-          <Group className="text-info" />
-          <p className="font-bold text-info dark:text-info ">{taskName}</p>
+        <h3 className="text-bold badge badge-ghost badge-md  ml-5 text-gray-500 sm:badge-lg dark:text-gray-800">
+          {selectPost?.event as string}
+        </h3>
+        <div className="ml-5 flex w-auto items-center gap-1">
+          {taskIconJudger(taskName as string)}
+          <p
+            className={`md:text-md text-sm font-bold text-info ${selectPost?.completed ? 'text-orange-500' : 'text-info'}`}
+          >
+            {taskName}
+          </p>
         </div>
       </div>
       <div className="flex">
@@ -73,14 +81,14 @@ const CardHeader = () => {
           onClick={openEditForm}
         >
           <Edit style={{ fontSize: '20px' }} />
-          編集
+          <span className="hidden sm:block">編集</span>
         </button>
         <button
           className="btn btn-link btn-sm text-gray-400 hover:text-error"
           onClick={handleDeletePost}
         >
           <Delete style={{ fontSize: '20px' }} />
-          削除
+          <span className="hidden sm:block">削除</span>
         </button>
       </div>
     </div>

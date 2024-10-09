@@ -1,4 +1,4 @@
-import { usePost } from '../../context/usePost'
+import { usePost } from '../context/usePost'
 
 const useTaskSwitch = () => {
   const { currentTask, postsDispatch, selectPost, setSelectPost, prevTask } = usePost()

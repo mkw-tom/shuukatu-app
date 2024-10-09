@@ -86,9 +86,10 @@ const LoginForm = ({
   }
 
   return (
+    // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
     <div className={`${formOpen ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-80`}>
-      <div className="card mx-auto mb-6 mt-40 h-auto w-10/12 overflow-hidden bg-base-100 px-5 pt-8 dark:bg-gray-800 sm:w-[500px]">
-        <div className="mx-auto flex w-80">
+      <div className="card mx-auto mb-6 mt-20 h-auto w-10/12 overflow-hidden bg-base-100 px-5 pt-8 dark:bg-gray-800 sm:w-[500px]">
+        <div className="mx-auto flex w-56 sm:w-80 ">
           <button
             className={`w-1/2 border-b-4 font-bold text-info ${isLogin ? 'border-b-base-100 dark:border-b-gray-800' : 'border-b-info'}`}
             onClick={() => setIsLogin(false)}
