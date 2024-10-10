@@ -7,6 +7,7 @@ interface FormInputPostType {
   startDate: string
   endDate: string
   completed: boolean
+  failed: boolean
   mypage: {
     url: string
     id: string
@@ -50,6 +51,7 @@ interface FormPostType {
   startDate: string
   endDate: string
   completed: boolean
+  failed: boolean
   mypage: {
     url: string
     id: string
@@ -138,4 +140,5 @@ type Action =
   | { type: 'DELETE_TASK'; postId: string; taskId: string }
   | { type: 'SWITCH_TASK'; postId: string; switchedData: TaskType[] }
   | { type: 'ONLY_COMPLETED' }
+  | { type: 'ONLY_FAILED' }
   | { type: 'SEARCH_POST'; searchText: string }

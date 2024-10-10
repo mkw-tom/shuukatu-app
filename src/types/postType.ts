@@ -7,6 +7,7 @@ interface PostType {
   startDate: string
   endDate: string
   completed: boolean
+  failed: boolean
   mypage: {
     url: string
     id: string
