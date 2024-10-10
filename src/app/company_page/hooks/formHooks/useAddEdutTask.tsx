@@ -55,6 +55,7 @@ export const useAddEdutTask = (
         endDate: prev.endDate || '',
         region: prev.region || '',
         completed: prev.completed ?? false,
+        failed: prev.failed ?? false,
         mypage: {
           ...prev.mypage,
           url: prev.mypage?.url || '',
@@ -90,6 +91,8 @@ export const useAddEdutTask = (
           // taskId: selectTask?.customId,
           updateData: {
             ...state.taskFlow,
+            postId: selectTask?.customId as string,
+            taskId: selectTask?.customId as string,
             date,
             limitDate,
           },

@@ -30,6 +30,9 @@ const CardHeader = () => {
   const taskName: ReactNode = taskNameJudge()
 
   const handleDeletePost = () => {
+    if (!confirm(`${selectPost?.name}をリストから削除しますか？`)) {
+      return
+    }
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 
     try {
@@ -61,7 +64,7 @@ const CardHeader = () => {
       <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={false} />
       <div className="flex flex-col items-start justify-start gap-2">
         <h2
-          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : ''} ${selectPost?.completed ? 'border-l-orange-500' : ''} border-l-info pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
+          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''}  pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
         >
           {selectPost?.name as string}
         </h2>
@@ -69,11 +72,11 @@ const CardHeader = () => {
           {selectPost?.event as string}
         </h3>
         <div
-          className={`${selectPost?.failed ? 'text-error' : ''}  ${selectPost?.completed ? 'text-orange-500' : 'text-info'} ml-5 flex w-auto items-center gap-1`}
+          className={`${selectPost?.failed ? 'text-error' : 'text-info'}  ${selectPost?.completed ? 'text-orange-500' : ''} ml-5 flex w-auto items-center gap-1`}
         >
           {taskIconJudger(taskName as string)}
           <p
-            className={`md:text-md text-sm font-bold text-info ${selectPost?.failed ? 'text-error' : ''} ${selectPost?.completed ? 'text-orange-500' : 'text-info'}`}
+            className={`md:text-md text-sm font-bold  ${selectPost?.failed ? 'text-error' : 'text-info'} ${selectPost?.completed ? 'text-orange-500' : ''}`}
           >
             {taskName}
           </p>

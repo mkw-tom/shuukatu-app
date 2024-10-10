@@ -1,7 +1,7 @@
 import { usePost } from '../context/usePost'
 
 const useTaskSwitch = () => {
-  const { currentTask, postsDispatch, selectPost, setSelectPost, prevTask } = usePost()
+  const { currentTask, postsDispatch, selectPost, setSelectPost, prevTask, setPosts } = usePost()
   const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 
   /// 🐮🐮🐮🐮🐮🐮🐮ーーーー-------apiのfetchとstateの更新をする関数--------------------🐮🐮🐮🐮🐮🐮🐮🐮
@@ -59,7 +59,7 @@ const useTaskSwitch = () => {
       if (task.customId === currentTask?.customId) {
         return {
           ...task,
-          // current: false,
+          current: true,
           failed: task?.failed ? false : true,
         }
       }
@@ -93,7 +93,7 @@ const useTaskSwitch = () => {
         if (task.customId === prevTask?.customId) {
           return {
             ...task,
-            finished: isFailed ? false : true,
+            failed: isFailed ? false : true,
           }
         }
         return task

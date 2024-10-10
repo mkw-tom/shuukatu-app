@@ -21,7 +21,7 @@ const DarkModeButton = () => {
     <button
       key="light"
       onClick={handleLight}
-      className={`w-full rounded-t-xl py-2 duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200 ${theme === 'light' ? 'bg-info text-gray-200' : 'text-info'}`}
+      className={`w-full rounded-t-xl from-info to-orange-500 py-2  duration-200 hover:bg-gradient-to-tr hover:text-gray-200 dark:text-gray-200 ${theme === 'light' ? 'bg-gradient-to-tr  from-info to-orange-500 text-gray-200' : 'text-info'}`}
     >
       <LightMode />
       <span>Light</span>
@@ -29,7 +29,7 @@ const DarkModeButton = () => {
     <button
       key="dark"
       onClick={handleDark}
-      className={`w-full rounded-b-xl py-2 text-info duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200 ${theme === 'dark' ? 'bg-info text-gray-200' : 'text-info'}`}
+      className={`w-full rounded-b-xl from-info to-orange-500 py-2  duration-200 hover:bg-gradient-to-tr hover:text-gray-200 dark:text-gray-200 ${theme === 'dark' ? 'bg-gradient-to-tr  from-info to-orange-500 text-gray-200' : 'text-gray-500'}`}
     >
       <DarkMode />
       <span>Dark</span>
@@ -40,7 +40,7 @@ const DarkModeButton = () => {
     <div>
       <div
         onClick={() => setOpenButtons(true)}
-        className="z-50 cursor-pointer rounded-lg p-1 text-info "
+        className="z-50 cursor-pointer rounded-lg bg-gradient-to-tr from-info to-orange-400 p-1 text-gray-200"
       >
         {theme === 'light' ? <LightMode /> : <DarkMode />}
       </div>

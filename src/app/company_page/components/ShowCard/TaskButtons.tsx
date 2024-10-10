@@ -18,9 +18,9 @@ const TaskButtons = () => {
   return (
     <div className="mt-5 flex items-center justify-between gap-2 ">
       <button
-        className="btn w-3/12 bg-gray-400 text-gray-200 dark:btn-outline hover:border-gray-400 hover:bg-gray-400 dark:text-gray-400 dark:hover:bg-gray-400"
+        className={`btn ${prevTask === undefined ? 'hidden' : 'w-3/12 bg-gray-400 text-gray-200 dark:btn-outline  dark:text-gray-400 dark:hover:border-gray-400 dark:hover:text-gray-400'}  ${currentTask?.failed || selectPost?.completed ? 'hidden' : ''} `}
         onClick={handleBack}
-        disabled={prevTask === undefined || selectPost?.completed ? true : false}
+        disabled={prevTask === undefined ? true : false}
       >
         戻る
       </button>
@@ -28,7 +28,7 @@ const TaskButtons = () => {
       {!currentTask?.current ? (
         <>
           <button
-            className={`btn w-auto flex-1 ${selectPost?.completed ? 'bg-gray-400 hover:border-gray-400 hover:bg-gray-500' : 'bg-orange-500 hover:border-orange-500 hover:bg-orange-500'} text-gray-200 dark:btn-outline  dark:text-orange-500 dark:hover:bg-orange-500 ${currentTask ? 'hidden' : 'block'} `}
+            className={`btn w-auto flex-1 ${selectPost?.completed ? 'bg-gray-400 hover:border-gray-400 hover:bg-gray-500 dark:hover:border-gray-400' : 'bg-orange-500 text-gray-200 dark:btn-outline hover:border-orange-500 hover:bg-orange-500 dark:text-orange-500 dark:hover:border-orange-500 dark:hover:bg-orange-500  dark:hover:text-gray-800  '}   ${currentTask ? 'hidden' : 'block'} `}
             disabled={selectPost?.taskFlow[0] ? false : true}
             onClick={() => handleCompleted()}
           >
@@ -46,14 +46,14 @@ const TaskButtons = () => {
       ) : (
         <>
           <button
-            className={`dark btn btn-outline text-white dark:btn-error ${currentTask.failed ? 'flex-1 bg-gray-400 hover:border-gray-400 hover:bg-gray-500 dark:bg-gray-800' : ' w-1/3 '}`}
+            className={` btn  btn-error  ${prevTask === undefined ? 'flex-1' : ''} ${currentTask.failed ? 'flex-1 border-gray-400 bg-gray-400 hover:border-gray-400 hover:bg-gray-500 dark:border-gray-400 dark:bg-gray-400 dark:hover:border-gray-400 dark:hover:bg-gray-500 ' : ' w-1/3 text-white dark:btn-outline dark:btn-error dark:hover:text-error'}`}
             onClick={handleFailed}
           >
             <Clear />
             {currentTask.failed ? '落選を取り消す' : '落選'}
           </button>
           <button
-            className={`btn w-1/3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info ${currentTask.failed ? 'hidden' : 'block'}`}
+            className={`btn btn-info w-1/3 text-gray-200 dark:btn-outline  dark:btn-info  hover:bg-info ${currentTask.failed ? 'hidden' : 'block'}`}
             onClick={handleFinished}
           >
             <Check />

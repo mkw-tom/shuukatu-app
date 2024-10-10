@@ -45,6 +45,25 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
       return 'なし'
     }
   }
+
+  const currentTaskIdJudge = (post: PostType) => {
+    if (!post?.taskFlow) return null
+    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
+    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
+
+    if (!current && !post?.completed) {
+      return prev?.customId
+    } else if (!current) {
+      return null
+    } else if (current?.current) {
+      return current?.customId
+    } else if (!current.current && prev) {
+      return prev?.customId
+    } else {
+      return null
+    }
+  }
+
   const TaskLimitDate = (post: PostType) => {
     const current = post?.taskFlow.filter((task) => task.finished === false)[0]
     if (!current || !current.limitDate) {
@@ -71,7 +90,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
 
   return (
     <div className="drawer drawer-end flex size-full flex-col">
-      <div className="mb-3 flex w-full items-center justify-between gap-3 md:w-3/5">
+      <div className="mb-3 flex w-full items-center justify-between gap-3 md:w-4/5">
         <AddFormButton />
         <SearchArea />
         <Filter />
@@ -95,7 +114,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
                   className={`${selectPost?.customId === post.customId ? 'bg-sky-100 dark:bg-sky-800' : ''} cursor-pointer hover:bg-sky-100 dark:hover:bg-sky-800`}
                   onClick={() => handleSelect(post)}
                 >
-                  <th className="">{taksStatusJudger(post, currentTaskJudge(post))}</th>
+                  <th className="">{taksStatusJudger(post, currentTaskIdJudge(post))}</th>
                   <th className="w-36 min-w-36">
                     <div className="font-bold">{post.name}</div>
                     <div className="badge badge-ghost badge-sm block opacity-80 md:badge-md md:hidden">

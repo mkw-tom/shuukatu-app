@@ -4,6 +4,7 @@ import {
   AirlineSeatReclineNormal,
   AppRegistration,
   Assignment,
+  Celebration,
   CheckCircle,
   CoPresent,
   Diversity3,
@@ -41,28 +42,37 @@ const useTaskJudger = () => {
       case '一次面接' || '二次面接' || '三次面接' || '最終面接':
         return <AirlineSeatReclineNormal style={{ fontSize: '20px' }} className="mr-1 " />
       case '内定・参加確定':
-        return <Verified style={{ fontSize: '20px' }} className="mr-1 text-orange-500" />
+        return <Celebration style={{ fontSize: '20px' }} className="mr-1 text-orange-500" />
       default:
         return
     }
   }
 
-  const taksStatusJudger = (post: PostType, taskName: string) => {
-    const taskData = post.taskFlow.find((task) => task.task === taskName)
-    if (post.completed) {
-      return <Verified className="mx-auto w-full  text-orange-500" />
-    }
-    if (!taskData) {
-      return <p className="mx-auto size-5 rounded-full bg-gray-300"></p>
-    }
+  const taksStatusJudger = (post: PostType, taskId: string | null) => {
+    const taskData = post.taskFlow.find((task) => task.customId === taskId)
+
     if (taskData?.failed) {
       return <p className="mx-auto size-5 rounded-full bg-red-500"></p>
     }
 
     if (taskData?.finished) {
       return <CheckCircle className="mx-aut w-full text-info" />
-    } else {
+    }
+
+    if (!taskData?.finished && taskData?.current) {
       return <p className="mx-auto size-5 animate-pulse rounded-full bg-info"></p>
+    }
+
+    if (post.completed) {
+      return <Verified className="mx-auto w-full  text-orange-500" />
+    }
+
+    if (!taskData?.finished) {
+      return <p className="mx-auto size-5 rounded-full bg-gray-300"></p>
+    }
+
+    if (!taskData) {
+      return <p className="mx-auto size-5 rounded-full bg-gray-300"></p>
     }
   }
 

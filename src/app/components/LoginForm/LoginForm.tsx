@@ -131,7 +131,7 @@ const LoginForm = ({
 
           <div className="mx-auto flex w-11/12 flex-col gap-4">
             <label
-              className={`input input-bordered flex items-center gap-2 ${isLogin ? 'hidden' : ''}`}
+              className={`input input-bordered flex items-center gap-2 dark:bg-gray-500 ${isLogin ? 'hidden' : ''}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -155,7 +155,7 @@ const LoginForm = ({
                 {errors.username.message}
               </span>
             )}
-            <label className="input input-bordered flex items-center gap-2">
+            <label className="input input-bordered flex items-center gap-2 dark:bg-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -175,7 +175,7 @@ const LoginForm = ({
               />
             </label>
             {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
-            <label className="input input-bordered flex items-center gap-2">
+            <label className="input input-bordered flex items-center gap-2 dark:bg-gray-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"

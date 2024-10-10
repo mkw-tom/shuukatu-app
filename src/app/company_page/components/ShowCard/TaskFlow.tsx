@@ -6,7 +6,6 @@ import {
   AddCircle,
   AssignmentInd,
   Celebration,
-  CheckCircle,
   Delete,
   Edit,
   Group,
@@ -47,6 +46,9 @@ const TaskFLow = () => {
   // const router = useRouter()
 
   const TaskDelete = async () => {
+    if (!confirm(`${selectTask?.task}を選考フローから削除しますか？`)) {
+      return
+    }
     const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
     const postId = selectPost?.customId
     const taskId = selectTask?.customId
@@ -98,10 +100,22 @@ const TaskFLow = () => {
     setSelectTask(task)
   }
 
+  const openEditForm = () => {
+    if (selectTask?.failed) {
+      return alert('落選中のタスクは削除できません。')
+    }
+
+    TaskFormOpen('編集')
+  }
+
   return (
     <div className="mt-5 flex w-full flex-col">
       <div className="mb-1 flex items-center justify-between gap-3">
-        <h2 className="block h-6 border-l-2 border-l-info pl-2">選考フロー</h2>
+        <h2
+          className={`block h-6 border-l-2 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''} pl-2`}
+        >
+          選考フロー
+        </h2>
         <button
           className="btn btn-sm flex items-center justify-center rounded-full border-none text-gray-400 hover:bg-info hover:text-gray-100 dark:bg-gray-600 dark:hover:bg-info dark:hover:text-gray-200"
           onClick={() => TaskFormOpen('追加')}
@@ -121,25 +135,26 @@ const TaskFLow = () => {
                 className={`${task?.finished || task.current ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`}
               />
               <div className="timeline-middle">
-                {task?.finished ? (
+                {/* {task?.finished ? (
                   <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
                 ) : (
                   <p
-                    className={`mx-1 size-5  rounded-full ${task.failed ? 'bg-error' : ''} ${task.current ? 'bg-info' : 'bg-gray-300'}`}
+                    className={`mx-1 size-5  rounded-full ${currentTask?.failed ? 'bg-error' : ''} ${task.current ? 'bg-info' : 'bg-gray-300'}`}
                   ></p>
-                )}
+                )} */}
+                <div className="mx-1">{taksStatusJudger(selectPost, task.customId)}</div>
               </div>
               <button
                 className={`sm:text-md timeline-end timeline-box flex h-8 cursor-pointer items-center gap-1 text-sm hover:bg-gray-300 sm:h-auto ${task === selectTask ? 'bg-gray-300' : ''}`}
                 onClick={() => handleSelectTask(task)}
               >
                 <span
-                  className={`${task?.failed ? 'text-error' : ''} ${task.finished || task.current ? 'text-info' : 'text-gray-500'}`}
+                  className={`${task?.failed ? 'text-error' : 'text-info'} ${task.finished || task.current ? '' : 'text-gray-500'}`}
                 >
                   {taskIconJudger(task.task)}
                 </span>
                 <span
-                  className={`${task?.failed ? 'text-error' : ''} ${task.finished || task.current ? 'text-info' : 'text-gray-500'} `}
+                  className={`${task?.failed ? 'text-error' : 'text-info'} ${task.finished || task.current ? '' : 'text-gray-500'} `}
                 >
                   {task.task}
                 </span>
@@ -188,7 +203,7 @@ const TaskFLow = () => {
             <nav className="flex items-center">
               <button
                 className="btn  btn-link btn-sm text-gray-400 hover:text-info"
-                onClick={() => TaskFormOpen('編集')}
+                onClick={openEditForm}
               >
                 <Edit style={{ fontSize: '20px' }} />
                 <span className="hidden sm:block">編集</span>
