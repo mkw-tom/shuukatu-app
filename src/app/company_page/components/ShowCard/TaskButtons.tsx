@@ -13,7 +13,7 @@ const TaskButtons = () => {
     setSelectPost,
     prevTask,
   } = usePost()
-  const { handleFinished, handleNext, handleBack, handleCompleted } = useTaskSwitch()
+  const { handleFinished, handleNext, handleBack, handleCompleted, handleFailed } = useTaskSwitch()
 
   return (
     <div className="mt-5 flex items-center justify-between gap-2 ">
@@ -45,12 +45,15 @@ const TaskButtons = () => {
         </>
       ) : (
         <>
-          <button className="btn btn-error w-1/3 text-white dark:btn-outline">
+          <button
+            className={`dark btn btn-outline text-white dark:btn-error ${currentTask.failed ? 'flex-1 bg-gray-400 hover:border-gray-400 hover:bg-gray-500 dark:bg-gray-800' : ' w-1/3 '}`}
+            onClick={handleFailed}
+          >
             <Clear />
-            落選
+            {currentTask.failed ? '落選を取り消す' : '落選'}
           </button>
           <button
-            className="btn w-1/3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
+            className={`btn w-1/3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info ${currentTask.failed ? 'hidden' : 'block'}`}
             onClick={handleFinished}
           >
             <Check />

@@ -7,6 +7,7 @@ export const FormInputState: FormInputPostType = {
   endDate: '',
   region: '',
   completed: false,
+  failed: false,
   mypage: {
     url: '',
     id: '',
@@ -57,6 +58,7 @@ export const FormInputReducer = (
         endDate: '',
         region: '',
         completed: false,
+        failed: false,
         mypage: {
           url: '',
           id: '',

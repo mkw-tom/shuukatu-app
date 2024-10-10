@@ -106,7 +106,9 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
                     <div className="badge badge-ghost badge-md opacity-80">{post.event}</div>
                   </th>
                   <td className="min-w-[150px] ">
-                    <p className={`${post.completed ? 'text-orange-500' : ''} text-xs sm:text-sm`}>
+                    <p
+                      className={`${post.failed ? 'text-error' : ''}  ${post.completed ? 'text-orange-500' : ''} text-xs sm:text-sm`}
+                    >
                       {taskIconJudger(currentTaskJudge(post))}
                       {currentTaskJudge(post)}
                     </p>

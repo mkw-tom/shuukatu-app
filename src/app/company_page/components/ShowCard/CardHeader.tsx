@@ -60,16 +60,20 @@ const CardHeader = () => {
     <div className="mb-2 flex items-start justify-between">
       <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={false} />
       <div className="flex flex-col items-start justify-start gap-2">
-        <h2 className="border-l-4 border-l-info pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl">
+        <h2
+          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : ''} ${selectPost?.completed ? 'border-l-orange-500' : ''} border-l-info pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
+        >
           {selectPost?.name as string}
         </h2>
         <h3 className="text-bold badge badge-ghost badge-md  ml-5 text-gray-500 sm:badge-lg dark:text-gray-800">
           {selectPost?.event as string}
         </h3>
-        <div className="ml-5 flex w-auto items-center gap-1">
+        <div
+          className={`${selectPost?.failed ? 'text-error' : ''}  ${selectPost?.completed ? 'text-orange-500' : 'text-info'} ml-5 flex w-auto items-center gap-1`}
+        >
           {taskIconJudger(taskName as string)}
           <p
-            className={`md:text-md text-sm font-bold text-info ${selectPost?.completed ? 'text-orange-500' : 'text-info'}`}
+            className={`md:text-md text-sm font-bold text-info ${selectPost?.failed ? 'text-error' : ''} ${selectPost?.completed ? 'text-orange-500' : 'text-info'}`}
           >
             {taskName}
           </p>

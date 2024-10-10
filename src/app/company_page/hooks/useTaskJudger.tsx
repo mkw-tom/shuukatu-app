@@ -48,18 +48,18 @@ const useTaskJudger = () => {
   }
 
   const taksStatusJudger = (post: PostType, taskName: string) => {
-    const currentTaskData = post.taskFlow.find((task) => task.task === taskName)
+    const taskData = post.taskFlow.find((task) => task.task === taskName)
     if (post.completed) {
       return <Verified className="mx-auto w-full  text-orange-500" />
     }
-    if (!currentTaskData) {
+    if (!taskData) {
       return <p className="mx-auto size-5 rounded-full bg-gray-300"></p>
     }
-    // if(currentTaskData?.faild) {
-    //   return <p className="mx-auto size-5 rounded-full bg-red-500"></p>
-    // }
+    if (taskData?.failed) {
+      return <p className="mx-auto size-5 rounded-full bg-red-500"></p>
+    }
 
-    if (currentTaskData?.finished) {
+    if (taskData?.finished) {
       return <CheckCircle className="mx-aut w-full text-info" />
     } else {
       return <p className="mx-auto size-5 animate-pulse rounded-full bg-info"></p>

@@ -53,6 +53,80 @@ const useTaskSwitch = () => {
     await taskSwitchFunc(updateTaskFlow)
   }
 
+  ///🐯🐯🐯🐯----------------　落選ボタン　-----------------------🐯🐯🐯🐯🐯🐯
+  const handleTaskFailed = async () => {
+    const updateTaskFlow = selectPost?.taskFlow?.map((task, index) => {
+      if (task.customId === currentTask?.customId) {
+        return {
+          ...task,
+          // current: false,
+          failed: task?.failed ? false : true,
+        }
+      }
+      return task
+    }) as TaskType[]
+
+    await taskSwitchFunc(updateTaskFlow)
+  }
+
+  const handleFailed = async () => {
+    if (!selectPost?.customId) {
+      console.error('customId is undefined.')
+      return
+    }
+
+    const isFailed = selectPost.failed
+
+    try {
+      const res = await fetch(`${url}/api/posts`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customId: selectPost?.customId,
+          failed: isFailed ? false : true,
+        }),
+      })
+
+      const updateTasks = selectPost?.taskFlow?.map((task) => {
+        if (task.customId === prevTask?.customId) {
+          return {
+            ...task,
+            finished: isFailed ? false : true,
+          }
+        }
+        return task
+      })
+
+      setSelectPost((prev) => {
+        if (!prev) return null
+
+        return {
+          ...prev,
+          failed: isFailed ? false : true,
+          task: updateTasks,
+        }
+      })
+
+      const failedData = {
+        ...selectPost,
+        failed: isFailed ? false : true,
+        task: updateTasks,
+      }
+
+      postsDispatch({
+        type: 'UPDATE_POST',
+        postId: selectPost.customId,
+        updatedPost: failedData,
+      })
+
+      handleTaskFailed()
+    } catch (error) {
+      console.log(`faild fetch: ${error}`)
+    }
+  }
+
   ///🐯🐯🐯🐯----------------　次へボタン　-----------------------🐯🐯🐯🐯🐯🐯
   const handleNext = async () => {
     const updateTaskFlow = selectPost?.taskFlow?.map((task) => {
@@ -153,7 +227,7 @@ const useTaskSwitch = () => {
     }
   }
 
-  return { handleFinished, handleNext, handleBack, handleCompleted }
+  return { handleFinished, handleNext, handleBack, handleCompleted, handleFailed }
 }
 
 export default useTaskSwitch

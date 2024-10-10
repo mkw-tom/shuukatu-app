@@ -42,7 +42,7 @@ const TaskFLow = () => {
   const [open, setOpen] = useState<boolean>(false)
   const [formTitle, setFormTitle] = useState<string>('')
   const { state, dispatch } = usePostReducer()
-  const { taskIconJudger } = useTaskJudger()
+  const { taskIconJudger, taksStatusJudger } = useTaskJudger()
   const conversionDateTime = useConvertDateTime()
   // const router = useRouter()
 
@@ -125,7 +125,7 @@ const TaskFLow = () => {
                   <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
                 ) : (
                   <p
-                    className={`mx-1 size-5  rounded-full ${task.current ? 'bg-info' : 'bg-gray-300'}`}
+                    className={`mx-1 size-5  rounded-full ${task.failed ? 'bg-error' : ''} ${task.current ? 'bg-info' : 'bg-gray-300'}`}
                   ></p>
                 )}
               </div>
@@ -133,10 +133,14 @@ const TaskFLow = () => {
                 className={`sm:text-md timeline-end timeline-box flex h-8 cursor-pointer items-center gap-1 text-sm hover:bg-gray-300 sm:h-auto ${task === selectTask ? 'bg-gray-300' : ''}`}
                 onClick={() => handleSelectTask(task)}
               >
-                <span className={`${task.finished ? 'text-info' : 'text-gray-500'}`}>
+                <span
+                  className={`${task?.failed ? 'text-error' : ''} ${task.finished || task.current ? 'text-info' : 'text-gray-500'}`}
+                >
                   {taskIconJudger(task.task)}
                 </span>
-                <span className={`${task.finished ? 'text-info' : 'text-gray-500'} `}>
+                <span
+                  className={`${task?.failed ? 'text-error' : ''} ${task.finished || task.current ? 'text-info' : 'text-gray-500'} `}
+                >
                   {task.task}
                 </span>
               </button>
@@ -169,9 +173,17 @@ const TaskFLow = () => {
       {currentTask ? (
         <div className="mt-3 flex w-full flex-col gap-1 rounded-md border-2 p-2">
           <div className="flex justify-between">
-            <h3 className="flex items-center gap-2 border-l-2 border-l-info pl-2">
-              <span className="text-info">{taskIconJudger(selectTask?.task as string)}</span>
-              <span className="sm:text-md text-sm text-info">{selectTask?.task as string}</span>
+            <h3
+              className={`flex items-center gap-2 border-l-2 ${currentTask?.failed ? 'border-l-error' : 'border-l-info'} pl-2`}
+            >
+              <span className={`${currentTask?.failed ? 'text-error' : 'text-info'}`}>
+                {taskIconJudger(selectTask?.task as string)}
+              </span>
+              <span
+                className={`${currentTask?.failed ? 'text-error' : 'text-info'} sm:text-md text-sm`}
+              >
+                {selectTask?.task as string}
+              </span>
             </h3>
             <nav className="flex items-center">
               <button
@@ -190,13 +202,19 @@ const TaskFLow = () => {
               </button>
             </nav>
           </div>
-          <p className={`${selectTask?.testFormat ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          <p
+            className={`${selectTask?.testFormat ? '' : 'hidden'} border-l-2 ${currentTask?.failed ? 'border-l-error' : 'border-l-info'} pl-2`}
+          >
             テスト形式：{selectTask?.testFormat}
           </p>
-          <p className={`${selectTask?.date ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          <p
+            className={`${selectTask?.date ? '' : 'hidden'} border-l-2 ${currentTask?.failed ? 'border-l-error' : 'border-l-info'} pl-2`}
+          >
             実践日時：{conversionDateTime(selectTask?.date as string)}
           </p>
-          <p className={`${selectTask?.limitDate ? '' : 'hidden'} border-l-2 border-l-info pl-2`}>
+          <p
+            className={`${selectTask?.limitDate ? '' : 'hidden'} border-l-2 ${currentTask?.failed ? 'border-l-error' : 'border-l-info'} pl-2`}
+          >
             期限：{conversionDateTime(selectTask?.limitDate as string)}
           </p>
         </div>

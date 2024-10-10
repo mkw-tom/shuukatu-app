@@ -33,6 +33,10 @@ const PostSchema = new Schema<PostType>(
       type: Boolean,
       default: false,
     },
+    failed: {
+      type: Boolean,
+      default: false,
+    },
     mypage: {
       url: { type: String, max: 80, default: '' },
       id: { type: String, max: 40, default: '' },

@@ -68,6 +68,9 @@ export const postReducer = (state: PostType[], action: Action): PostType[] => {
     case 'ONLY_COMPLETED':
       return state.filter((post) => post.completed === true)
 
+    case 'ONLY_FAILED':
+      return state.filter((post) => post.failed === true)
+
     case 'SEARCH_POST':
       return state.filter((post) =>
         post.name.toLowerCase().includes(action.searchText.toLowerCase() as string),
