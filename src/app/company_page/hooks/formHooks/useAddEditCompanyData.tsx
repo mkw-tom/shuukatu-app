@@ -5,10 +5,11 @@ import { usePost } from '../../context/usePost'
 export const useAddEditCompanyData = (
   title: string,
   setOpen: Dispatch<SetStateAction<boolean>>,
+  startDate: string,
+  endDate: string,
 ) => {
   const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
-  const userId = '66b894e2aa71df7091ecc261'
   const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 
   ///--------- 企業データの追加 ----------------
@@ -20,11 +21,11 @@ export const useAddEditCompanyData = (
       },
       body: JSON.stringify({
         customId: state.customId,
-        userId,
+        userId: state.userId,
         name: state.name,
         event: state.event,
-        startDate: state.startDate,
-        endDate: state.endDate,
+        startDate,
+        endDate,
         region: state.region,
       }),
     })

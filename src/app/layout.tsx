@@ -1,8 +1,9 @@
 import Header from '@/components/layout/Header/Header'
 import NextAuthProvider from '@/lib/NextAuth/NextAuthProvider'
-import SesstionChecker from '@/lib/NextAuth/SesstionChecker'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { PostContextProvider } from './company_page/context/usePost'
+import { UserContextPorvider } from './company_page/context/useUser'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -26,7 +27,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         <NextAuthProvider>
-          <SesstionChecker>{children}</SesstionChecker>
+          <PostContextProvider>
+            <UserContextPorvider>{children}</UserContextPorvider>
+          </PostContextProvider>
         </NextAuthProvider>
       </body>
     </html>

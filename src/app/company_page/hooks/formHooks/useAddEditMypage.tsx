@@ -36,6 +36,7 @@ const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolea
         setFormSlide('-translate-x-none')
         dispatch({ type: 'CLEAR' })
       } else {
+        setSelectPost(updatedData)
         setFormSlide('-translate-x-[640px] sm:-translate-x-[768px]')
       }
     } catch (error) {

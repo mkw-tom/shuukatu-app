@@ -1,6 +1,5 @@
 'use client'
 import { usePost } from '@/app/company_page/context/usePost'
-import { useEffect } from 'react'
 import useTaskJudger from '../../hooks/useTaskJudger'
 import AddFormButton from './AddFormButton'
 import BottomDrawer from './BottomDrawer'
@@ -8,19 +7,19 @@ import Filter from './Filter'
 import SearchArea from './SearchArea'
 import SideDrawer from './SideDrawer'
 
-const CardList = ({ postsData }: { postsData: PostType[] }) => {
+const CardList = () => {
   const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
     usePost()
 
   const { taskIconJudger, taksStatusJudger } = useTaskJudger()
 
-  useEffect(() => {
-    if (postsData) {
-      setPosts(postsData)
-      setSelectPost(postsData[0]) // postsData[0]が存在することを確認
-      postsDispatch({ type: 'INITIALIZE', posts: postsData })
-    }
-  }, [postsData, postsDispatch, setPosts, setSelectPost])
+  // useEffect(() => {
+  //   if (postsData) {
+  //     setPosts(postsData)
+  //     setSelectPost(postsData[0]) // postsData[0]が存在することを確認
+  //     postsDispatch({ type: 'INITIALIZE', posts: postsData })
+  //   }
+  // }, [postsData, postsDispatch, setPosts, setSelectPost])
 
   const handleSelect = (post: PostType) => {
     if (post) {
@@ -98,7 +97,7 @@ const CardList = ({ postsData }: { postsData: PostType[] }) => {
       <div className="max-h-[500px] w-full overflow-y-scroll">
         <table className="table table-pin-rows">
           <thead className="w-full">
-            <tr className="z-10 bg-sky-200 text-info shadow-lg dark:bg-sky-950">
+            <tr className="z-10 bg-sky-200 bg-opacity-80 text-info shadow-lg dark:bg-sky-950">
               <th className="text-center">status</th>
               <th>企業名</th>
               <td className="hidden md:block ">イベント</td>
