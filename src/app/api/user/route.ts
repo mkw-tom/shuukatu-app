@@ -2,44 +2,35 @@
 import { PostModel } from '@/lib/mongoDB/models/Post'
 import { UserModel } from '@/lib/mongoDB/models/User'
 import connectDB from '@/lib/mongoDB/mongodb'
-import { compare, hash } from 'bcryptjs'
 
 const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 //ユーザーの登録データを全件取得
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   await connectDB()
 
   // URLクエリパラメータからuserIdを取得
-  const url = new URL(req.url)
-  const userEmail = url.searchParams.get('email')
+  // const url = new URL(req.url)
+  // const userEmail = url.searchParams.get('email')
+  const body = await req.json()
 
-  if (!userEmail) {
+  if (!body.userEmail) {
     return new Response('Error: Missing userId', { status: 400 })
   }
 
   try {
-    const hasheEmailAndSalt = await hash(userEmail, 12)
-    const user = await UserModel.findOne({ email: userEmail })
+    // const hasheEmailAndSalt = await hash(userEmail, 12)
+    const user = await UserModel.findOne({ email: body.userEmail })
+
     if (!user) {
       return new Response('Error: User not found', { status: 404 })
     }
 
     // DBのメールとハッシュ化されたメールを比較する
-    const isMatch = await compare(user.email, hasheEmailAndSalt) // DBに保存されているメールもハッシュ化されていると仮定
+    // const isMatch = await compare(user.email, hasheEmailAndSalt) // DBに保存されているメールもハッシュ化されていると仮定
 
-    if (!isMatch) {
-      return new Response('Error: User not found', { status: 404 })
-    }
-
-    // const userPostsData = await fetch(`${url}/api/posts?userId=${user.customId}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   // cache: 'no-store',
-    // })
-
-    // const userPosts = await userPostsData.json()
+    // if (!isMatch) {
+    //   return new Response('Error: User not found', { status: 404 })
+    // }
 
     const userPosts = await PostModel.find({ userId: user?.customId })
     if (!userPosts) {

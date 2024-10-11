@@ -30,9 +30,9 @@ const Filter = () => {
   }
 
   return (
-    <div className="group btn btn-square btn-sm relative z-50 dark:border-gray-500 dark:bg-gray-500">
+    <div className="group btn btn-square btn-sm relative z-20 dark:border-gray-500 dark:bg-gray-500">
       <FilterAlt />
-      <div className="absolute -top-1 right-1 z-50 hidden w-[200px] items-center rounded-xl bg-gray-200 shadow-md group-hover:flex group-hover:flex-col dark:border-gray-500 dark:bg-gray-500 ">
+      <div className="absolute -top-1 right-1 z-30 hidden w-[200px] items-center rounded-xl bg-gray-200 shadow-md group-hover:flex group-hover:flex-col dark:border-gray-500 dark:bg-gray-500 ">
         <button
           className="pointer-events-auto flex w-full items-center justify-center gap-2 rounded-t-xl py-2 text-info duration-200 hover:bg-info hover:text-gray-200 dark:text-gray-200"
           onClick={getAllPosts}

@@ -64,11 +64,11 @@ const CardHeader = () => {
       <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={false} />
       <div className="flex flex-col items-start justify-start gap-2">
         <h2
-          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''}  pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
+          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''}  pl-3 text-lg font-bold tracking-wider dark:text-gray-200 sm:text-2xl`}
         >
           {selectPost?.name as string}
         </h2>
-        <h3 className="text-bold badge badge-ghost badge-md  ml-5 text-gray-500 sm:badge-lg dark:text-gray-800">
+        <h3 className="text-bold badge badge-md ml-5  bg-gray-300 text-gray-700 sm:badge-lg dark:text-gray-800">
           {selectPost?.event as string}
         </h3>
         <div

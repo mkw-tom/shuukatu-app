@@ -36,13 +36,16 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
     }
     const getUserFunc = async () => {
       const userEmail = session?.user?.email as string
+
       try {
-        const res = await fetch(`${url}/api/user?email=${userEmail}`, {
-          method: 'GET',
+        const res = await fetch(`${url}/api/user`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          cache: 'no-store',
+          body: JSON.stringify({
+            userEmail,
+          }),
         })
 
         const jsonData = await res.json()

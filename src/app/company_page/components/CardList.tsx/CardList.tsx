@@ -116,12 +116,14 @@ const CardList = () => {
                   <th className="">{taksStatusJudger(post, currentTaskIdJudge(post))}</th>
                   <th className="w-36 min-w-36">
                     <div className="font-bold">{post.name}</div>
-                    <div className="badge badge-ghost badge-sm block opacity-80 md:badge-md md:hidden">
+                    <div className="badge badge-sm block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
                       {post.event}
                     </div>
                   </th>
                   <th className="hidden w-40 md:block">
-                    <div className="badge badge-ghost badge-md opacity-80">{post.event}</div>
+                    <div className="badge badge-md bg-gray-300 font-normal opacity-80">
+                      {post.event}
+                    </div>
                   </th>
                   <td className="min-w-[150px] ">
                     <p
