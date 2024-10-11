@@ -27,6 +27,8 @@ export const useAddEdutTask = (
         customId: state.customId || selectPost?.customId,
         taskFlow: {
           ...state.taskFlow,
+          date,
+          limitDate,
         },
       }),
     })
@@ -37,8 +39,8 @@ export const useAddEdutTask = (
 
     postsDispatch({
       type: 'ADD_TASK',
-      postId: selectPost?.customId as string,
-      newTask: state.taskFlow,
+      postId: (state?.customId as string) || (selectPost?.customId as string),
+      newTask: { ...state.taskFlow, date, limitDate },
     })
 
     setSelectPost((prev) => {

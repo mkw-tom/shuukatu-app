@@ -57,7 +57,7 @@ const TaskForm = ({
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = title == '編集' ? (selectPost?.customId as string) : uuidv4()
-    const current = posts[0].taskFlow[0] || selectPost?.taskFlow.length === 0 ? true : false
+    const current = state.customId === '' || selectPost?.taskFlow.length === 0 ? true : false
     const { name, value } = e.target
     dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate, current } })
     console.log(state)

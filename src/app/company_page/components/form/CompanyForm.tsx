@@ -7,6 +7,7 @@ import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
+import { useUser } from '../../context/useUser'
 import useAddEditCompanyData from '../../hooks/formHooks/useAddEditCompanyData'
 
 export interface CompanyFormValidateType {
@@ -26,6 +27,7 @@ const CompanyForm = ({
 }) => {
   const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
+  const { user } = useUser()
 
   const [startDate, setStartDate] = useState<string>('')
   const [endDate, setEndDate] = useState<string>('')
@@ -48,7 +50,12 @@ const CompanyForm = ({
     },
   })
 
-  const { handleAddEdtCompanyData, handleCancel } = useAddEditCompanyData(title, setOpen)
+  const { handleAddEdtCompanyData, handleCancel } = useAddEditCompanyData(
+    title,
+    setOpen,
+    startDate,
+    endDate,
+  )
 
   // const handleSaveAndValidate = () => {
 
@@ -71,7 +78,7 @@ const CompanyForm = ({
 
   const handleStateChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const customId = title === '編集' ? (selectPost?.customId as string) : uuidv4()
-    const userId = 'aiueo'
+    const userId = user?.customId as string
 
     const { name, value } = e.target
     dispatch({

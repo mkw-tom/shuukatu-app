@@ -1,8 +1,9 @@
 import mongoose, { Schema } from 'mongoose'
-// const mongoose = require('mongoose');
 
 interface IUser extends Document {
   // authId: string
+  // _id: string
+  customId: string
   username: string
   password: string
   profilePicture: string
@@ -10,27 +11,30 @@ interface IUser extends Document {
   isAdmin: boolean
   allCompanies: []
   passCompanies: []
+  userPosts: [Schema.Types.ObjectId]
   createdAt: Date
   updatedAt: Date
 }
 
 const UserSchema = new Schema<IUser>(
   {
-    // authId: {
+    // _id: {
     //   type: String,
-    //   required: true,
-    //   unique: true
     // },
-    username: {
+    customId: {
       type: String,
       require: true,
+      unique: true,
+    },
+    username: {
+      type: String,
+      required: true,
       min: 3,
       max: 25,
-      // unique: true,
     },
     password: {
       type: String,
-      require: true,
+      required: true,
       min: 6,
       max: 40,
       unique: true,
@@ -41,7 +45,7 @@ const UserSchema = new Schema<IUser>(
     },
     email: {
       type: String,
-      require: true,
+      required: true,
     },
     isAdmin: {
       type: Boolean,
@@ -55,8 +59,9 @@ const UserSchema = new Schema<IUser>(
       type: [Object],
       default: [],
     },
+    userPosts: [{ type: Schema.Types.ObjectId, ref: 'Post' }], // PostのIDを参照
   },
   { timestamps: true },
 )
 
-export const UserModel = mongoose.models.User || mongoose.model(`User`, UserSchema)
+export const UserModel = mongoose.models.User || mongoose.model('User', UserSchema)

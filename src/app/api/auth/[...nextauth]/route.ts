@@ -5,6 +5,7 @@ import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
+import { v4 as uuidv4 } from 'uuid'
 
 const handler = NextAuth({
   providers: [
@@ -36,11 +37,14 @@ const handler = NextAuth({
           if (existUser) {
             throw new Error(`already exist this user ${credentials.username}`)
           }
-          const hashedPassword = await hash(credentials.password, 12)
+          const hashedAndSaltPassword = await hash(credentials.password, 12)
+          const hashedAndSaltEmail = await hash(credentials.email, 12)
+
           const newUser = new UserModel({
+            customId: uuidv4(),
             username: credentials.username,
-            email: credentials.email,
-            password: hashedPassword,
+            email: hashedAndSaltEmail,
+            password: hashedAndSaltPassword,
           })
           await newUser.save()
           return { id: newUser._id, name: newUser.username, email: newUser.email }
@@ -97,8 +101,10 @@ const handler = NextAuth({
         const existUser = await UserModel.findOne({ email: user?.email })
 
         if (!existUser) {
+          const hashedAndSaltEmail = await hash(user?.email as string, 12)
           const newUser = new UserModel({
-            username: user?.email || 'unknown',
+            customId: uuidv4(),
+            username: user?.name || 'unknown',
             email: user?.email,
             password: await hash(Math.random().toString(36).slice(-8), 12),
             profilePicture: user?.image,
@@ -109,6 +115,13 @@ const handler = NextAuth({
 
       return true
     },
+  },
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
+    newUser: '/auth/new-user',
   },
 })
 
