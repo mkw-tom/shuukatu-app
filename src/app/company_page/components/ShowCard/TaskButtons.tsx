@@ -32,7 +32,7 @@ const TaskButtons = () => {
             disabled={selectPost?.taskFlow[0] ? false : true}
             onClick={() => handleCompleted()}
           >
-            {selectPost?.completed ? '内定・参加取り消し' : '内定・参加確定'}
+            {selectPost?.completed ? '合格を取り消す' : '合格'}
           </button>
           <button
             className={`btn w-auto flex-1 items-center bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info ${!currentTask && prevTask?.finished ? 'hidden' : 'flex'}`}
@@ -50,7 +50,7 @@ const TaskButtons = () => {
             onClick={handleFailed}
           >
             <Clear />
-            {currentTask.failed ? '落選を取り消す' : '落選'}
+            {currentTask.failed ? '不合格を取り消す' : '不合格'}
           </button>
           <button
             className={`btn btn-info w-1/3 text-gray-200 dark:btn-outline  dark:btn-info  hover:bg-info ${currentTask.failed ? 'hidden' : 'block'}`}
