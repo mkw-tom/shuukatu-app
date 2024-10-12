@@ -1,10 +1,12 @@
 'use client'
+import { useUser } from '@/app/company_page/context/useUser'
 import { Addchart, Business, MenuBook } from '@mui/icons-material'
 import Link from 'next/link'
 
 const Navigation = () => {
+  const { user } = useUser()
   return (
-    <nav className="hidden gap-7 md:flex ">
+    <nav className={` ${!user ? 'hidden' : 'hidden gap-7 md:flex'}`}>
       <Link href="/company_page">
         <button className="flex items-center gap-1  text-info  transition-opacity duration-300 hover:opacity-70 dark:text-gray-200">
           <Business />

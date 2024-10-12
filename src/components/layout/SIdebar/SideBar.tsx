@@ -1,4 +1,5 @@
 'use client'
+import { useUser } from '@/app/company_page/context/useUser'
 import useDarkMode from '@/lib/darkmode/useDarkMode'
 import { Addchart, Business, MenuBook } from '@mui/icons-material'
 import Link from 'next/link'
@@ -7,6 +8,7 @@ import { useState } from 'react'
 const SideBar = () => {
   const [open, setOpne] = useState<boolean>(false)
   const [theme] = useDarkMode()
+  const { user } = useUser()
 
   const sidebarItems = [
     { icon: <Business className="mr-auto text-info" />, text: '企業管理', link: '/company_page' },
@@ -15,7 +17,7 @@ const SideBar = () => {
   ]
 
   return (
-    <div className="drawer w-auto md:hidden">
+    <div className={`drawer w-auto md:hidden ${user ? '' : 'hidden'}`}>
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}

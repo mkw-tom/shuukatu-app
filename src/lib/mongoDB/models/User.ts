@@ -41,7 +41,7 @@ const UserSchema = new Schema<IUser>(
     },
     profilePicture: {
       type: String,
-      default: '/default_icon.png',
+      default: '/noAvatar.png',
     },
     email: {
       type: String,

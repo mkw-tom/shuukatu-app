@@ -40,9 +40,10 @@ const DarkModeButton = () => {
     <div>
       <div
         onClick={() => setOpenButtons(true)}
-        className="z-50 cursor-pointer rounded-lg bg-gradient-to-tr from-info to-orange-400 p-1 text-gray-200"
+        className="z-50 cursor-pointer rounded-lg 
+         p-1  text-info"
       >
-        {theme === 'light' ? <LightMode /> : <DarkMode />}
+        {theme === 'light' ? <LightMode className="" /> : <DarkMode />}
       </div>
 
       <div

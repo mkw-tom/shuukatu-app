@@ -25,10 +25,12 @@ export default function RootLayout({
         <link rel="icon" href="/file.png" type="image/<generated>" sizes="<generated>" />
       </head>
       <body className={inter.className}>
-        <Header />
         <NextAuthProvider>
           <PostContextProvider>
-            <UserContextPorvider>{children}</UserContextPorvider>
+            <UserContextPorvider>
+              <Header />
+              {children}
+            </UserContextPorvider>
           </PostContextProvider>
         </NextAuthProvider>
       </body>
