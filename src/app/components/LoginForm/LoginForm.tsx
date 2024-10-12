@@ -77,7 +77,7 @@ const LoginForm = ({
         }
     const result = await signIn('credentials', options)
     if (result?.error) {
-      alert('Sign in error')
+      alert('既にユーザーが存在します')
     }
   }
 
@@ -100,7 +100,7 @@ const LoginForm = ({
             className={`w-1/2 border-b-4 font-bold text-info ${isLogin ? ' border-b-info' : 'border-b-base-100 dark:border-b-gray-800'} `}
             onClick={() => setIsLogin(true)}
           >
-            ログイン
+            登録済み
           </button>
         </div>
 
@@ -110,14 +110,14 @@ const LoginForm = ({
             onClick={GitHubSignIn}
           >
             <GitHub />
-            <span>{isLogin ? 'Login' : 'SignUp'} with GitHub</span>
+            <span>{isLogin ? 'SignIn' : 'SignUp'} with GitHub</span>
           </button>
           <button
             className="btn btn-active flex gap-3 bg-gradient-to-tr  from-info to-orange-500 text-base-100 hover:opacity-70 dark:text-gray-800"
             onClick={GoogleSignIn}
           >
             <Google />
-            <span>{isLogin ? 'Login' : 'SignUp'} with Google</span>
+            <span>{isLogin ? 'SignIn' : 'SignUp'} with Google</span>
           </button>
 
           <div className="my-3 flex items-center">
@@ -207,7 +207,7 @@ const LoginForm = ({
             onClick={emailAuthAndValidate}
           >
             <Email />
-            <span>{isLogin ? 'Login' : 'SignUp'}with Email</span>
+            <span>{isLogin ? 'SignIn' : 'SignUp'} with Email</span>
           </button>
         </div>
 

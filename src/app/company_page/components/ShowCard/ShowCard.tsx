@@ -11,8 +11,8 @@ const ShowCard = () => {
   return (
     <div className="relative h-full">
       {postsState[0] ? (
-        <div className="h-auto w-full shadow-md dark:border-gray-500 dark:bg-gray-800 sm:h-screen  lg:border-2 ">
-          <div className="p-5">
+        <div className="h-screen w-full shadow-md dark:border-gray-500 dark:bg-gray-700 sm:h-screen  lg:border-2 ">
+          <div className="bg-base-200 px-5 pb-5  dark:bg-gray-700">
             <CardHeader />
             <Region />
             <Mypage />
@@ -21,7 +21,7 @@ const ShowCard = () => {
           </div>
         </div>
       ) : (
-        <div className="itemx-center flex h-[670px] w-auto justify-center rounded-2xl">
+        <div className="itemx-center flex h-screen w-auto justify-center rounded-2xl">
           <p className="mx-auto mt-28 text-lg">データがありません💦</p>
         </div>
       )}

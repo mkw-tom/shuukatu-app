@@ -35,7 +35,7 @@ const CardList = () => {
     if (!current && !post?.completed) {
       return prev?.task
     } else if (!current) {
-      return '内定・参加確定'
+      return '合格'
     } else if (current?.current) {
       return current?.task
     } else if (!current.current && prev) {
@@ -88,16 +88,16 @@ const CardList = () => {
   }
 
   return (
-    <div className="drawer drawer-end flex size-full flex-col">
+    <div className="drawer drawer-end flex size-full flex-col ">
       <div className="mb-3 flex w-full items-center justify-between gap-3 md:w-4/5">
         <AddFormButton />
         <SearchArea />
         <Filter />
       </div>
-      <div className="max-h-[500px] w-full overflow-y-scroll">
+      <div className="max-h-[600px] w-full overflow-y-scroll pb-96  shadow-inner md:max-h-[650px]">
         <table className="table table-pin-rows">
           <thead className="w-full">
-            <tr className="z-10 bg-sky-200 bg-opacity-80 text-info shadow-lg dark:bg-sky-950">
+            <tr className="z-10 bg-sky-200 bg-opacity-80 text-info shadow-lg dark:bg-sky-900 dark:bg-opacity-80">
               <th className="text-center">status</th>
               <th>企業名</th>
               <td className="hidden md:block ">イベント</td>
@@ -110,18 +110,18 @@ const CardList = () => {
               postsState.map((post, index) => (
                 <tr
                   key={index}
-                  className={`${selectPost?.customId === post.customId ? 'bg-sky-100 dark:bg-sky-800' : ''} cursor-pointer hover:bg-sky-100 dark:hover:bg-sky-800`}
+                  className={`${selectPost?.customId === post.customId ? 'bg-sky-100 dark:bg-sky-800' : ''} cursor-pointer border-b-2 border-b-gray-100 hover:bg-sky-100 dark:hover:bg-sky-800`}
                   onClick={() => handleSelect(post)}
                 >
                   <th className="">{taksStatusJudger(post, currentTaskIdJudge(post))}</th>
                   <th className="w-36 min-w-36">
                     <div className="font-bold">{post.name}</div>
-                    <div className="badge badge-sm block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
+                    <div className="badge badge-sm mt-1 block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
                       {post.event}
                     </div>
                   </th>
                   <th className="hidden w-40 md:block">
-                    <div className="badge badge-md bg-gray-300 font-normal opacity-80">
+                    <div className="badge badge-md mt-3 bg-gray-300 font-normal text-gray-900 opacity-80">
                       {post.event}
                     </div>
                   </th>

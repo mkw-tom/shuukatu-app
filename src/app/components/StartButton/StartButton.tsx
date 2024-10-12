@@ -10,7 +10,7 @@ const StartButton = () => {
     <>
       <LoginForm formOpen={formOpen} setFormOpen={setFormOpen} />
       <button
-        className="btn btn-active mt-20 w-[300px] border-none bg-orange-500 text-gray-100 dark:text-gray-800 "
+        className="btn btn-active mt-20 w-[300px] animate-pulse border-none bg-orange-500 text-gray-100 shadow-xl dark:text-gray-800"
         onClick={() => setFormOpen(true)}
       >
         <AccountBox />
