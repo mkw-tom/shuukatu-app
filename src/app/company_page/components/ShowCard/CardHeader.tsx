@@ -62,13 +62,31 @@ const CardHeader = () => {
   return (
     <div className="mb-2 flex items-start justify-between">
       <PostForm open={open} setOpen={setOpen} title="編集" onlyTaskForm={false} />
-      <div className="flex flex-col items-start justify-start gap-2">
-        <h2
-          className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''}  pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
-        >
-          {selectPost?.name as string}
-        </h2>
-        <h3 className="text-bold badge badge-ghost badge-md  ml-5 text-gray-500 sm:badge-lg dark:text-gray-800">
+      <div className="flex w-full flex-col items-start justify-start gap-2">
+        <div className="shadow-b-md fixed inset-x-10  flex items-center justify-between bg-base-200 py-1 dark:bg-gray-700 sm:inset-x-5 sm:pt-6">
+          <h2
+            className={`border-l-4 ${selectPost?.failed ? 'border-l-error' : 'border-l-info'} ${selectPost?.completed ? 'border-l-orange-500' : ''}  pl-3 text-lg tracking-wider dark:text-gray-200 sm:text-2xl`}
+          >
+            {selectPost?.name as string}
+          </h2>
+          <div className="flex">
+            <button
+              className="btn  btn-link btn-sm text-gray-400 hover:text-info"
+              onClick={openEditForm}
+            >
+              <Edit style={{ fontSize: '20px' }} />
+              <span className="hidden sm:block">編集</span>
+            </button>
+            <button
+              className="btn btn-link btn-sm text-gray-400 hover:text-error"
+              onClick={handleDeletePost}
+            >
+              <Delete style={{ fontSize: '20px' }} />
+              <span className="hidden sm:block">削除</span>
+            </button>
+          </div>
+        </div>
+        <h3 className="text-bold badge badge-md ml-5 mt-[42px] bg-gray-300  text-gray-700 sm:badge-lg dark:text-gray-800 sm:mt-16">
           {selectPost?.event as string}
         </h3>
         <div
@@ -81,22 +99,6 @@ const CardHeader = () => {
             {taskName}
           </p>
         </div>
-      </div>
-      <div className="flex">
-        <button
-          className="btn  btn-link btn-sm text-gray-400 hover:text-info"
-          onClick={openEditForm}
-        >
-          <Edit style={{ fontSize: '20px' }} />
-          <span className="hidden sm:block">編集</span>
-        </button>
-        <button
-          className="btn btn-link btn-sm text-gray-400 hover:text-error"
-          onClick={handleDeletePost}
-        >
-          <Delete style={{ fontSize: '20px' }} />
-          <span className="hidden sm:block">削除</span>
-        </button>
       </div>
     </div>
   )

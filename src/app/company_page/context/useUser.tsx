@@ -36,13 +36,18 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
     }
     const getUserFunc = async () => {
       const userEmail = session?.user?.email as string
+      const token = session?.accessToken
+
       try {
-        const res = await fetch(`${url}/api/user?email=${userEmail}`, {
-          method: 'GET',
+        const res = await fetch(`${url}/api/user`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
           },
-          cache: 'no-store',
+          // body: JSON.stringify({
+          //   userEmail: userEmail,
+          // }),
         })
 
         const jsonData = await res.json()
@@ -55,7 +60,6 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
 
         setUser(jsonData.userData)
 
-        console.log(user)
         return router.push('/company_page')
       } catch (error) {
         return router.push('/')

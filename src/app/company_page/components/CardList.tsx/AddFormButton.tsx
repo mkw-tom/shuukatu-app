@@ -9,7 +9,7 @@ const AddFormButton = () => {
     <div className="h-auto flex-1">
       <PostForm open={open} setOpen={setOpen} title="登録" onlyTaskForm={false} />
       <button
-        className="btn btn-square flex w-full flex-1 gap-3 bg-info text-gray-200 dark:btn-outline hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
+        className="btn btn-sm flex w-full flex-1 gap-3 bg-info text-gray-200 dark:btn-outline sm:btn-md hover:border-info hover:bg-info dark:text-info dark:hover:bg-info"
         onClick={() => setOpen(true)}
       >
         <AddCircle />

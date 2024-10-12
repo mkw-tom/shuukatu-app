@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import SideBar from '../SIdebar/SideBar'
 import DarkModeButton from './DarkModeButton'
+import HeaderStartButton from './HeaderStartButton'
 import Navigation from './Navigation'
 import ProfileButton from './ProfileButton'
 
 const Header = () => {
   return (
-    <div className="h-16 w-full border-b-2 border-t-4 border-t-info dark:border-b-gray-500">
+    <div className="absolute inset-x-0 top-0 h-16 w-full border-b-2 border-t-4 border-t-info bg-white dark:border-b-gray-500 dark:bg-gray-800">
       <div className="mx-5 flex h-16 items-center justify-between">
         <SideBar />
         <h1 className="flex items-center">
@@ -26,6 +27,7 @@ const Header = () => {
           <div className="flex items-center gap-5 border-l-2 pl-5 dark:border-l-gray-500">
             <DarkModeButton />
             <ProfileButton />
+            <HeaderStartButton />
           </div>
         </div>
       </div>

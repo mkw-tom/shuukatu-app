@@ -41,7 +41,7 @@ const useTaskJudger = () => {
         return <Diversity3 style={{ fontSize: '20px' }} className="mr-1 " />
       case '一次面接' || '二次面接' || '三次面接' || '最終面接':
         return <AirlineSeatReclineNormal style={{ fontSize: '20px' }} className="mr-1 " />
-      case '内定・参加確定':
+      case '合格':
         return <Celebration style={{ fontSize: '20px' }} className="mr-1 text-orange-500" />
       default:
         return

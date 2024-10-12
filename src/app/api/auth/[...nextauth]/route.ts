@@ -38,12 +38,11 @@ const handler = NextAuth({
             throw new Error(`already exist this user ${credentials.username}`)
           }
           const hashedAndSaltPassword = await hash(credentials.password, 12)
-          const hashedAndSaltEmail = await hash(credentials.email, 12)
 
           const newUser = new UserModel({
             customId: uuidv4(),
             username: credentials.username,
-            email: hashedAndSaltEmail,
+            email: credentials.email,
             password: hashedAndSaltPassword,
           })
           await newUser.save()
@@ -73,7 +72,7 @@ const handler = NextAuth({
     }),
   ],
   session: {
-    strategy: 'jwt', // ここで正しい型を指定
+    strategy: 'jwt', //セッション情報をクッキーに保存する
   },
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -101,7 +100,6 @@ const handler = NextAuth({
         const existUser = await UserModel.findOne({ email: user?.email })
 
         if (!existUser) {
-          const hashedAndSaltEmail = await hash(user?.email as string, 12)
           const newUser = new UserModel({
             customId: uuidv4(),
             username: user?.name || 'unknown',
