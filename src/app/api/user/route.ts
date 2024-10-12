@@ -11,12 +11,6 @@ const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_U
 export async function POST(req: NextRequest) {
   await connectDB()
 
-  // const body = await req.json()
-  // const userEmail = body.userEmail
-  // const authHeaders = req.headers.get('Authorization')
-
-  // const token = authHeaders?.split(' ')[1]
-
   const decoded = await getToken({ req, secret: process.env.JWT_SECRET })
 
   if (!decoded) {
@@ -38,13 +32,6 @@ export async function POST(req: NextRequest) {
     if (!user) {
       return new Response('Error: User not found', { status: 404 })
     }
-
-    // DBのメールとハッシュ化されたメールを比較する
-    // const isMatch = await compare(user.email, hasheEmailAndSalt) // DBに保存されているメールもハッシュ化されていると仮定
-
-    // if (!isMatch) {
-    //   return new Response('Error: User not found', { status: 404 })
-    // }
 
     const userPosts = await PostModel.find({ userId: user?.customId })
     if (!userPosts) {

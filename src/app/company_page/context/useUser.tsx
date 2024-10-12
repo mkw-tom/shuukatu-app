@@ -35,7 +35,6 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
       return router.push('/')
     }
     const getUserFunc = async () => {
-      const userEmail = session?.user?.email as string
       const token = session?.accessToken
 
       try {
@@ -45,9 +44,6 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          // body: JSON.stringify({
-          //   userEmail: userEmail,
-          // }),
         })
 
         const jsonData = await res.json()
@@ -59,15 +55,12 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
         }
 
         setUser(jsonData.userData)
-
-        return router.push('/company_page')
       } catch (error) {
-        return router.push('/')
+        // return router.push('/')
       }
     }
 
     getUserFunc()
-    return router.push('/company_page')
   }, [session])
 
   return <userContext.Provider value={{ user, setUser }}>{children}</userContext.Provider>
