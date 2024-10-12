@@ -1,13 +1,14 @@
 import { UserModel } from '@/lib/mongoDB/models/User'
 import connectDB from '@/lib/mongoDB/mongodb'
 import { compare, hash } from 'bcryptjs'
+import type { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import { v4 as uuidv4 } from 'uuid'
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -38,12 +39,11 @@ const handler = NextAuth({
             throw new Error(`already exist this user ${credentials.username}`)
           }
           const hashedAndSaltPassword = await hash(credentials.password, 12)
-          const hashedAndSaltEmail = await hash(credentials.email, 12)
 
           const newUser = new UserModel({
             customId: uuidv4(),
             username: credentials.username,
-            email: hashedAndSaltEmail,
+            email: credentials.email,
             password: hashedAndSaltPassword,
           })
           await newUser.save()
@@ -73,7 +73,7 @@ const handler = NextAuth({
     }),
   ],
   session: {
-    strategy: 'jwt', // ここで正しい型を指定
+    strategy: 'jwt', //セッション情報をクッキーに保存する
   },
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -101,7 +101,6 @@ const handler = NextAuth({
         const existUser = await UserModel.findOne({ email: user?.email })
 
         if (!existUser) {
-          const hashedAndSaltEmail = await hash(user?.email as string, 12)
           const newUser = new UserModel({
             customId: uuidv4(),
             username: user?.name || 'unknown',
@@ -123,7 +122,7 @@ const handler = NextAuth({
     verifyRequest: '/auth/verify-request', // (used for check email message)
     newUser: '/auth/new-user',
   },
-})
+}
 
-// const handler = NextAuth(authOptions)
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
