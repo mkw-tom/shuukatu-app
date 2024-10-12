@@ -1,14 +1,13 @@
 import { UserModel } from '@/lib/mongoDB/models/User'
 import connectDB from '@/lib/mongoDB/mongodb'
 import { compare, hash } from 'bcryptjs'
-import type { NextAuthOptions } from 'next-auth'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GitHubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 import { v4 as uuidv4 } from 'uuid'
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -122,7 +121,7 @@ export const authOptions: NextAuthOptions = {
     verifyRequest: '/auth/verify-request', // (used for check email message)
     newUser: '/auth/new-user',
   },
-}
+})
 
-const handler = NextAuth(authOptions)
+// const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
