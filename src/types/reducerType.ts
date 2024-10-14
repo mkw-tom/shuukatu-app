@@ -1,4 +1,4 @@
-interface FormInputPostType {
+export interface FormInputPostType {
   customId: string
   userId: string
   name: string
@@ -28,7 +28,7 @@ interface FormInputPostType {
   }
 }
 
-interface FormInputTaskType {
+export interface FormInputTaskType {
   customId: string
   task: string
   situation: string
@@ -42,7 +42,7 @@ interface FormInputTaskType {
   // edit: boolean
 }
 
-interface FormPostType {
+export interface FormPostType {
   customId: string
   userId: string
   name: string
@@ -60,11 +60,11 @@ interface FormPostType {
 }
 
 //------- FormInputReducer ---------
-interface ClearAction {
+export interface ClearAction {
   type: 'CLEAR'
 }
 
-interface SetCompanyAction {
+export interface SetCompanyAction {
   type: 'SET_COMPANY'
   payload: {
     customId: string
@@ -76,12 +76,12 @@ interface SetCompanyAction {
   }
 }
 
-interface InitalizePostAction {
+export interface InitalizePostAction {
   type: 'INITIALIZE'
   payload: FormPostType
 }
 
-interface SetMypageAction {
+export interface SetMypageAction {
   type: 'SET_MYPAGE'
   payload: {
     name: string
@@ -89,7 +89,7 @@ interface SetMypageAction {
   }
 }
 
-interface UpdateCompanyAction {
+export interface UpdateCompanyAction {
   type: 'UPDATE_COMPANY'
   payload: {
     customId: string
@@ -98,7 +98,7 @@ interface UpdateCompanyAction {
   }
 }
 
-interface UpdateMypageAction {
+export interface UpdateMypageAction {
   type: 'UPDATE_MYPAGE'
   payload: {
     customId: string
@@ -107,16 +107,16 @@ interface UpdateMypageAction {
   }
 }
 
-interface InitalizeTaskAction {
+export interface InitalizeTaskAction {
   type: 'INITIALIZE_TASK'
   payload: FormInputTaskType
 }
 
-interface ClearAction {
+export interface ClearAction {
   type: 'CLEAR'
 }
 
-interface SetTaskAction {
+export interface SetTaskAction {
   type: 'SET_TASK'
   payload: {
     customId: string
@@ -130,7 +130,7 @@ interface SetTaskAction {
 
 ///-----------  PostReducer -------------
 
-type Action =
+export type Action =
   | { type: 'INITIALIZE'; posts: PostType[] }
   | { type: 'ADD_POST'; post: PostType }
   | { type: 'UPDATE_POST'; postId: string; updatedPost: PostType }
@@ -142,3 +142,20 @@ type Action =
   | { type: 'ONLY_COMPLETED' }
   | { type: 'ONLY_FAILED' }
   | { type: 'SEARCH_POST'; searchText: string }
+
+///-----------  AnalysisReducer -------------
+
+export type ArrayFields =
+  | 'skills'
+  | 'certifications'
+  | 'experience'
+  | 'interests'
+  | 'values'
+  | 'workStyle'
+
+export type AnalysisFormAciton =
+  | { type: 'CLEAR' }
+  | { type: 'SET_VALUES'; name: string; array: string[] }
+  | { type: 'SET_VALUE' | 'REMOVE_VALUE'; field: ArrayFields; value: string }
+  | { type: 'SET_MBTI'; mbti: string }
+  | { type: 'SET_TEAMROLE'; teamRole: string }

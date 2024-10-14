@@ -1,7 +1,7 @@
 'use client'
 import PostForm from '@/app/company_page/components/form/PostForm'
-import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
-import { usePost } from '@/app/company_page/context/usePost'
+// import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
+import { usePost } from '@/app/state/context/usePost'
 import {
   AddCircle,
   AssignmentInd,
@@ -13,6 +13,8 @@ import {
   Verified,
 } from '@mui/icons-material'
 // import { useRouter } from 'next/navigation'
+import { usePostReducer } from '@/app/state/context/useFormInputReducer'
+import type { FormInputTaskType } from '@/types/reducerType'
 import { useState } from 'react'
 import useConvertDateTime from '../../hooks/useConvertDateTime'
 import useTaskJudger from '../../hooks/useTaskJudger'

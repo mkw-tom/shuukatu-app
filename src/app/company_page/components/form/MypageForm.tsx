@@ -1,5 +1,4 @@
-import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
-import { usePost } from '@/app/company_page/context/usePost'
+import { usePostReducer } from '@/app/state/context/useFormInputReducer'
 import { mypageFormValidationSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AddCircle } from '@mui/icons-material'
@@ -22,7 +21,6 @@ const MypageForm = ({
   title: string
   // setFormSlide: Dispatch<SetStateAction<string>>
 }) => {
-  const { postsState, postsDispatch, selectPost, setSelectPost } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const { handleAddEditMypage, handleSkipAndCancel } = useAddEditMypage(title, setOpen)
   const {
@@ -72,7 +70,7 @@ const MypageForm = ({
           <input
             {...register('url')}
             type="text"
-            id="url"
+            // id="url"
             name="url"
             placeholder="URL："
             className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700 sm:input-md dark:bg-gray-400 sm:w-[230px]"
@@ -88,7 +86,7 @@ const MypageForm = ({
           </span>
           <input
             {...register('id')}
-            id="id"
+            // id="id"
             name="id"
             type="text"
             placeholder="ID："
@@ -105,7 +103,7 @@ const MypageForm = ({
           </span>
           <input
             {...register('password')}
-            id="password"
+            // id="password"
             name="password"
             type="text"
             placeholder="開催地："

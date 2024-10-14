@@ -1,5 +1,5 @@
 'use client'
-import { usePostReducer } from '../../context/useFormInputReducer'
+import { usePostReducer } from '../../../state/context/useFormInputReducer'
 import CompanyForm from './CompanyForm'
 import MypageForm from './MypageForm'
 import TaskForm from './TaskForm'

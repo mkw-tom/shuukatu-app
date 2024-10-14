@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from '@/app/company_page/context/useUser'
+import { useUser } from '@/app/state/context/useUser'
 import useDarkMode from '@/lib/darkmode/useDarkMode'
 import { Addchart, Business, MenuBook } from '@mui/icons-material'
 import Link from 'next/link'

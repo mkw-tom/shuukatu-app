@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react'
-import { usePost } from '../../context/usePost'
+import { usePost } from '../../../state/context/usePost'
 
 const SearchArea = () => {
   const { postsState, postsDispatch, allPosts, setSelectPost } = usePost()

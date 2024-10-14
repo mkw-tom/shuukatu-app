@@ -1,5 +1,5 @@
-import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
-import { usePost } from '@/app/company_page/context/usePost'
+import { usePostReducer } from '@/app/state/context/useFormInputReducer'
+import { usePost } from '@/app/state/context/usePost'
 import { taskFormValidationSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AddCircle } from '@mui/icons-material'
@@ -100,7 +100,7 @@ const TaskForm = ({
           </span>
           <select
             {...register('task')}
-            id="task"
+            // id="task"
             name="task"
             className="select select-bordered select-sm w-[200px] bg-gray-200 text-gray-700 sm:select-md dark:bg-gray-400 sm:w-[230px]"
             value={state.taskFlow.task}
@@ -128,7 +128,6 @@ const TaskForm = ({
           <input
             {...register('date')}
             name="date"
-            id="date"
             type="datetime-local"
             className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700   sm:input-md dark:bg-gray-400 sm:w-[230px]"
             value={date || state.taskFlow.date}
@@ -146,7 +145,7 @@ const TaskForm = ({
           <input
             {...register('limitDate')}
             name="limitDate"
-            id="limitDate"
+            // id="limitDate"
             type="datetime-local"
             className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700  sm:input-md dark:bg-gray-400 sm:w-[230px]"
             value={limitDate || state.taskFlow.limitDate}
@@ -165,7 +164,7 @@ const TaskForm = ({
           </span>
           <input
             {...register('testFormat')}
-            id="testFormat"
+            // id="testFormat"
             name="testFormat"
             type="text"
             placeholder="例：SPI3"

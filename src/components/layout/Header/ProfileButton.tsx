@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from '@/app/company_page/context/useUser'
+import { useUser } from '@/app/state/context/useUser'
 import { Logout } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'

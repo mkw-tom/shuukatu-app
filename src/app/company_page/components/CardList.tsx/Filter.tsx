@@ -1,7 +1,7 @@
 // 'use client'
 import { useRouter } from 'next/navigation'
-import { usePost } from '../../context/usePost'
-import { useUser } from '../../context/useUser'
+import { usePost } from '../../../state/context/usePost'
+import { useUser } from '../../../state/context/useUser'
 
 const Filter = () => {
   const { postsState, postsDispatch, setSelectPost, allPosts } = usePost()

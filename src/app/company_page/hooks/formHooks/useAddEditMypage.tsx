@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { usePostReducer } from '../../context/useFormInputReducer'
-import { usePost } from '../../context/usePost'
+import { usePostReducer } from '../../../state/context/useFormInputReducer'
+import { usePost } from '../../../state/context/usePost'
 
 const useAddEditMypage = (title: string, setOpen: Dispatch<SetStateAction<boolean>>) => {
   const { postsState, postsDispatch, selectPost, setSelectPost } = usePost()
