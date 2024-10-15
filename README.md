@@ -1,4 +1,4 @@
-# <img src="/public/file.png" width="100"> Entrix　　　　- 就活エントリー管理アプリ　 -
+# <img src="/public/file.png" width="50"> Entrix　　　　- 就活エントリー管理アプリ　 -
 
 
 [アプリを開く](https://shuukatu-app.vercel.app)
