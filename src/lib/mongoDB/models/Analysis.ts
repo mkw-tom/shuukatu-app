@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-interface AnalysisDataType {
+export interface AnalysisDataType {
   userId: string
   jobProposals: string[]
   commonPoints: string[]

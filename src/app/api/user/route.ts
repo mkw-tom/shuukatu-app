@@ -1,4 +1,5 @@
 'use server'
+import { AnalysisModel } from '@/lib/mongoDB/models/Analysis'
 import { PostModel } from '@/lib/mongoDB/models/Post'
 import { UserModel } from '@/lib/mongoDB/models/User'
 import connectDB from '@/lib/mongoDB/mongodb'
@@ -6,7 +7,6 @@ import { getToken } from 'next-auth/jwt'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
-const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 //ユーザーの登録データを全件取得
 export async function POST(req: NextRequest) {
   await connectDB()
@@ -35,13 +35,21 @@ export async function POST(req: NextRequest) {
 
     const userPosts = await PostModel.find({ userId: user?.customId })
     if (!userPosts) {
-      console.log('userPosts are not found')
+      console.log('posts data is not found')
     }
 
-    return new NextResponse(JSON.stringify({ userData: user, postsData: userPosts }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    })
+    const userAnalysis = await AnalysisModel.findOne({ userId: user?.customId })
+    if (!userPosts) {
+      console.log('Analysis data is not found')
+    }
+
+    return new NextResponse(
+      JSON.stringify({ userData: user, postsData: userPosts, analysisData: userAnalysis }),
+      {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      },
+    )
   } catch (error) {
     console.error('Error updating post:', error)
     return new NextResponse(JSON.stringify({ error }), {

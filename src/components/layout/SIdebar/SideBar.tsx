@@ -12,7 +12,7 @@ const SideBar = () => {
 
   const sidebarItems = [
     { icon: <Business className="mr-auto text-info" />, text: '企業管理', link: '/company_page' },
-    { icon: <MenuBook className="mr-auto text-info" />, text: 'ES管理', link: '/ES_page' },
+    { icon: <MenuBook className="mr-auto text-info" />, text: '適職診断', link: '/analysis_page' },
     { icon: <Addchart className="mr-auto text-info" />, text: 'チャート', link: '/chart_page' },
   ]
 

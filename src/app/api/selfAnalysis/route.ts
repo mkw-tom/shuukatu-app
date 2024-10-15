@@ -59,18 +59,18 @@ export async function POST(req: NextRequest) {
       teamRole,
     } = await req.json()
 
-    if (
-      !mbti ||
-      !skills ||
-      !certifications ||
-      !experience ||
-      !values ||
-      !interests ||
-      !workStyle ||
-      !teamRole
-    ) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
-    }
+    // if (
+    //   !mbti ||
+    //   !skills ||
+    //   !certifications ||
+    //   !experience ||
+    //   !values ||
+    //   !interests ||
+    //   !workStyle ||
+    //   !teamRole
+    // ) {
+    //   return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    // }
 
     const prompt = `
     ユーザーのMBTIタイプは${mbti}です。ユーザーのMBTIの性格特性と以下の情報に基づいて、ユーザーに適した職業を提案してください。
@@ -110,23 +110,23 @@ export async function POST(req: NextRequest) {
     
   `
     //  OpenAI APIへのリクエスト
-    // const response = await openai.chat.completions.create({
-    //   model: 'gpt-3.5-turbo',
-    //   messages: [
-    //     { role: 'system', content: 'あなたはキャリアアドバイザーです。' },
-    //     {
-    //       role: 'user',
-    //       content: prompt,
-    //     },
-    //   ],
-    //   // messages: `あなたの価値観は次の通りです: ${values}\nあなたの目標は次の通りです: ${goals}\nこれに基づいて、就活の軸を具体的に言語化してください。`,
-    //   // max_tokens: 150,
-    //   max_tokens: 500, // 必要に応じてトークン数を調整
-    //   temperature: 0.7,
-    // })
+    const response = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        { role: 'system', content: 'あなたはキャリアアドバイザーです。' },
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+      // messages: `あなたの価値観は次の通りです: ${values}\nあなたの目標は次の通りです: ${goals}\nこれに基づいて、就活の軸を具体的に言語化してください。`,
+      // max_tokens: 150,
+      max_tokens: 500, // 必要に応じてトークン数を調整
+      temperature: 0.7,
+    })
 
-    const jobAxis = `jobAxis":"1. **5つの職業提案**\n - 動物看護師\n - 獣医師\n - ペットシッター\n - イベントプランナー（動物関連イベント）\n - 自営業（ペット関連ビジネス）\n\n2. **職業の共通項**\n - 動物との関わりが必要\n - 社会貢献が見込める\n - ワークライフバランスが取れやすい\n - 個人もしくは少人数で働ける場面がある\n\n3. **能力スコア**\n - 専門スキル: 90\n - リーダーシップ: 70\n - コミュニケーション能力: 85\n - 問題解決能力: 80\n - 学習能力: 85\n - チームワークスコア: 75`
-    // const jobAxis = response?.choices[0]?.message?.content?.trim()!
+    // const jobAxis = `jobAxis":"1. **5つの職業提案**\n - 動物看護師\n - 獣医師\n - ペットシッター\n - イベントプランナー（動物関連イベント）\n - 自営業（ペット関連ビジネス）\n\n2. **職業の共通項**\n - 動物との関わりが必要\n - 社会貢献が見込める\n - ワークライフバランスが取れやすい\n - 個人もしくは少人数で働ける場面がある\n\n3. **能力スコア**\n - 専門スキル: 90\n - リーダーシップ: 70\n - コミュニケーション能力: 85\n - 問題解決能力: 80\n - 学習能力: 85\n - チームワークスコア: 75`
+    const jobAxis = response?.choices[0]?.message?.content?.trim() as string
 
     // レスポンスを解析
     const parsedData = parseResponse(jobAxis)
@@ -135,19 +135,32 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'データが生成されていません' }, { status: 500 })
     }
 
-    const newAnalysis = new AnalysisModel({
+    const resultData = {
       userId,
       jobProposals: parsedData.jobProposals,
       commonPoints: parsedData.commonPoints,
       skillScores: parsedData.skillScores,
-    })
+    }
 
-    await newAnalysis.save()
+    //mongoDBに保存してまーす
 
-    // 応答のテキストを取得
+    const existedData = await AnalysisModel.findOne({ userId })
 
-    // レスポンスを返す
-    return NextResponse.json({ parsedData, mbti }, { status: 200 })
+    if (existedData) {
+      await AnalysisModel.findOneAndUpdate(
+        { userId },
+        {
+          ...resultData,
+        },
+      )
+    } else {
+      const newAnalysis = new AnalysisModel({
+        ...resultData,
+      })
+      await newAnalysis.save()
+    }
+
+    return NextResponse.json(resultData, { status: 200 })
   } catch (error) {
     console.error('Error generating job axis:', error)
     return NextResponse.json({ error: 'Error generating job axis' }, { status: 500 })
