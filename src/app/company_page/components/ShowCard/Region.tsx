@@ -5,7 +5,7 @@ import useConvertDateTime from '../../hooks/useConvertDateTime'
 
 const Region = () => {
   const { selectPost } = usePost()
-  const conversionDateTime = useConvertDateTime()
+  const { conversionDateTime } = useConvertDateTime()
 
   return (
     <div
