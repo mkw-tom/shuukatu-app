@@ -1,5 +1,6 @@
 'use client'
 import { usePost } from '@/app/state/context/usePost'
+import useConvertDateTime from '../../hooks/useConvertDateTime'
 import useTaskJudger from '../../hooks/useTaskJudger'
 import AddFormButton from './AddFormButton'
 import BottomDrawer from './BottomDrawer'
@@ -12,7 +13,7 @@ const CardList = () => {
     usePost()
 
   const { taskIconJudger, taksStatusJudger } = useTaskJudger()
-
+  const { MonthDay, MonthDayTime } = useConvertDateTime()
   // useEffect(() => {
   //   if (postsData) {
   //     setPosts(postsData)
@@ -68,7 +69,7 @@ const CardList = () => {
     if (!current || !current.limitDate) {
       return null
     }
-    return new Date(current.limitDate).toLocaleDateString()
+    return MonthDayTime(current.date)
   }
 
   const TaskDate = (post: PostType) => {
@@ -76,7 +77,7 @@ const CardList = () => {
     if (!current || !current.date) {
       return null
     }
-    return new Date(current.date).toLocaleDateString()
+    return MonthDayTime(current.date)
   }
 
   const TaskTestFormat = (post: PostType) => {
@@ -119,10 +120,16 @@ const CardList = () => {
                     <div className="badge badge-sm mt-1 block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
                       {post.event}
                     </div>
+                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
+                      {MonthDay(post.startDate, post.endDate)}
+                    </div>
                   </th>
                   <th className="hidden w-40 md:block">
                     <div className="badge badge-md mt-3 bg-gray-300 font-normal text-gray-900 opacity-80">
                       {post.event}
+                    </div>
+                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-sm">
+                      {MonthDay(post.startDate, post.endDate)}
                     </div>
                   </th>
                   <td className="min-w-[150px] ">

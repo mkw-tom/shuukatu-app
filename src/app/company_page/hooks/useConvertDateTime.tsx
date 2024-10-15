@@ -8,7 +8,28 @@ const useConvertDateTime = () => {
     return `${date} ${hours}:${minuites}`
   }
 
-  return conversionDateTime
+  const MonthDay = (start: string, end: string) => {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+    // 月と日を取得
+    const startMonth = startDate.getMonth() + 1
+    const endMonth = endDate.getMonth() + 1
+    const startDay = startDate.getDate()
+    const endDay = startDate.getDate()
+    return `${startMonth}/${startDay} - ${endMonth}/${endDay}`
+  }
+
+  const MonthDayTime = (original: string) => {
+    const date = new Date(original)
+    // 月と日を取得
+    const month = date.getMonth() + 1
+    const day = date.getDate()
+    const hours = date.getHours()
+    const minuites = date.getMinutes()
+    return `${month}/${day} ${hours}:${minuites}`
+  }
+
+  return { conversionDateTime, MonthDay, MonthDayTime }
 }
 
 export default useConvertDateTime

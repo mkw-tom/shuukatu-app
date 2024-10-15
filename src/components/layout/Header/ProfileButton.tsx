@@ -39,10 +39,7 @@ const ProfileButton = () => {
             />
           </div>
           <h3 className="mt-2">{user?.username}</h3>
-          <ul className="mt-5 flex flex-col items-center gap-2">
-            <li>内定・参加確定済み：２社</li>
-            <li>全ての企業：12社</li>
-          </ul>
+          <h3 className="mt-2">{user?.email}</h3>
           <button
             className="itmes-center btn mt-5 bg-gradient-to-tr from-info to-orange-500 font-bold  text-white dark:text-gray-900"
             onClick={() => signOut({ callbackUrl: '/' })}

@@ -26,8 +26,8 @@ const Skills = () => {
   }
 
   return (
-    <section className=" w-full rounded-md bg-sky-200  p-5 lg:w-1/2  ">
-      <h3 className="text-md mr-1 flex items-center font-bold text-gray-700 md:text-xl ">
+    <section className=" w-full rounded-md bg-sky-200 py-5 md:p-5 lg:w-1/2  ">
+      <h3 className="text-md mr-1 flex items-center pl-5 font-bold text-gray-700 md:p-0 md:text-xl">
         <Psychology style={{ fontSize: '25px' }} />
         <span>能力スコア</span>
       </h3>

@@ -1,7 +1,7 @@
 'use client'
 import { useUser } from '@/app/state/context/useUser'
 import useDarkMode from '@/lib/darkmode/useDarkMode'
-import { Addchart, Business, MenuBook } from '@mui/icons-material'
+import { Business, MultilineChart, PersonSearch } from '@mui/icons-material'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -12,8 +12,16 @@ const SideBar = () => {
 
   const sidebarItems = [
     { icon: <Business className="mr-auto text-info" />, text: '企業管理', link: '/company_page' },
-    { icon: <MenuBook className="mr-auto text-info" />, text: '適職診断', link: '/analysis_page' },
-    { icon: <Addchart className="mr-auto text-info" />, text: 'チャート', link: '/chart_page' },
+    {
+      icon: <MultilineChart className="mr-auto text-info" />,
+      text: 'チャート',
+      link: '/chart_page',
+    },
+    {
+      icon: <PersonSearch className="mr-auto text-info" />,
+      text: '適職診断',
+      link: '/analysis_page',
+    },
   ]
 
   return (

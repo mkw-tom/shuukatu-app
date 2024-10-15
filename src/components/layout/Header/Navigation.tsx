@@ -1,6 +1,6 @@
 'use client'
 import { useUser } from '@/app/state/context/useUser'
-import { Addchart, Business, MenuBook } from '@mui/icons-material'
+import { Business, MultilineChart, PersonSearch } from '@mui/icons-material'
 import Link from 'next/link'
 
 const Navigation = () => {
@@ -13,16 +13,16 @@ const Navigation = () => {
           <span>企業管理</span>
         </button>
       </Link>
-      <Link href="/analysis_page">
-        <button className="flex items-center gap-1  text-info transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
-          <MenuBook />
-          <span>適職診断</span>
+      <Link href="/chart_page">
+        <button className="flex items-center gap-1 text-info transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
+          <MultilineChart />
+          <span>チャート</span>
         </button>
       </Link>
-      <Link href="/">
-        <button className="flex items-center gap-1 text-info transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
-          <Addchart />
-          <span>チャート</span>
+      <Link href="/analysis_page">
+        <button className="flex items-center gap-1  text-info transition-opacity duration-300 hover:opacity-70  dark:text-gray-200">
+          <PersonSearch />
+          <span>適職診断</span>
         </button>
       </Link>
     </nav>
