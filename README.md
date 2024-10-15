@@ -1,5 +1,22 @@
-# Entrix　　　　-就活エントリー管理アプリ　-
- <img src="/public/file.png" width="50"> [アプリを開く](https://shuukatu-app.vercel.app)
+# Entrix　　　　-就活エントリー管理アプ-
+
+[アプリを開く](https://shuukatu-app.vercel.app)
+
+## 技術スタック
+
+<img alt="my skills" src="https://skillicons.dev/icons?theme=dark&perline=7&i=ts,next,mongodb,mui,tailwindcss,vercel" />
+
+### その他ライブラリ
+
+- OpenAI API⭐
+- NextAuth
+- mongoose
+- React Hook Form
+- Zod
+- DaysyUI
+- Material UI Icons
+<br/>
+<br/>
 
 ## アプリの機能
 
@@ -24,16 +41,3 @@
 
 
 
-## 技術スタック
-
-<img alt="my skills" src="https://skillicons.dev/icons?theme=dark&perline=7&i=ts,next,mongodb,mui,tailwindcss,vercel" />
-
-### その他ライブラリ
-
-- OpenAI API⭐
-- NextAuth
-- mongoose
-- React Hook Form
-- Zod
-- DaysyUI
-- Material UI Icons
