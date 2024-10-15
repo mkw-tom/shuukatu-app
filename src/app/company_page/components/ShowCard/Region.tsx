@@ -1,6 +1,6 @@
 'use client'
 
-import { usePost } from '@/app/company_page/context/usePost'
+import { usePost } from '@/app/state/context/usePost'
 import useConvertDateTime from '../../hooks/useConvertDateTime'
 
 const Region = () => {

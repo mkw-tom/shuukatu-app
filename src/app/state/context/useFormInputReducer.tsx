@@ -1,4 +1,15 @@
 'use client'
+import type {
+  ClearAction,
+  FormInputPostType,
+  InitalizePostAction,
+  InitalizeTaskAction,
+  SetCompanyAction,
+  SetMypageAction,
+  SetTaskAction,
+  UpdateCompanyAction,
+  UpdateMypageAction,
+} from '@/types/reducerType'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import { createContext, useContext, useReducer, useState } from 'react'
 import { FormInputReducer, FormInputState } from '../reducer/FormInputReducer'

@@ -1,5 +1,5 @@
-import { usePostReducer } from '@/app/company_page/context/useFormInputReducer'
-import { usePost } from '@/app/company_page/context/usePost'
+import { usePostReducer } from '@/app/state/context/useFormInputReducer'
+import { usePost } from '@/app/state/context/usePost'
 import { companyFormValidatioinSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AddCircle } from '@mui/icons-material'
@@ -7,7 +7,7 @@ import type { ChangeEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { v4 as uuidv4 } from 'uuid'
-import { useUser } from '../../context/useUser'
+import { useUser } from '../../../state/context/useUser'
 import useAddEditCompanyData from '../../hooks/formHooks/useAddEditCompanyData'
 
 export interface CompanyFormValidateType {
@@ -105,7 +105,7 @@ const CompanyForm = ({
           <input
             {...register('name')}
             type="text"
-            id="name"
+            // id="name"
             name="name"
             placeholder="企業名："
             className="input input-sm input-bordered w-[200px] bg-gray-200 text-gray-700 sm:input-md dark:bg-gray-400 sm:w-[230px]"
@@ -123,7 +123,7 @@ const CompanyForm = ({
           </span>
           <select
             {...register('event')}
-            id="event"
+            // id="event"
             name="event"
             className="select select-bordered select-sm w-[200px] bg-gray-200 text-gray-700 sm:select-md dark:bg-gray-400 sm:w-[230px]"
             value={state.event}
@@ -165,6 +165,7 @@ const CompanyForm = ({
               {...register('endDate')}
               type="datetime-local"
               className="input input-sm input-bordered w-full bg-gray-200  text-gray-700 sm:input-md dark:bg-gray-400 "
+              name="eneDate"
               value={endDate || state.endDate}
               onChange={
                 title === '編集' ? (e) => handleStateChange(e) : (e) => setEndDate(e.target.value)
@@ -182,7 +183,7 @@ const CompanyForm = ({
           </span>
           <input
             {...register('region')}
-            id="region"
+            // id="region"
             name="region"
             type="text"
             placeholder="開催地："

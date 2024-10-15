@@ -1,4 +1,5 @@
 'use client'
+import type { Action } from '@/types/reducerType'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import { createContext, useContext, useEffect, useReducer, useState } from 'react'
 import { postReducer } from '../reducer/PostReducer'

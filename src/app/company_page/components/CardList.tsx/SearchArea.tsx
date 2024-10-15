@@ -1,5 +1,5 @@
 import type { ChangeEvent } from 'react'
-import { usePost } from '../../context/usePost'
+import { usePost } from '../../../state/context/usePost'
 
 const SearchArea = () => {
   const { postsState, postsDispatch, allPosts, setSelectPost } = usePost()
@@ -13,7 +13,7 @@ const SearchArea = () => {
   }
 
   return (
-    <label className="input input-sm input-bordered  input-info flex w-2/3 items-center gap-2 bg-gray-100 sm:input-md dark:bg-gray-500">
+    <label className="input input-sm input-bordered  input-info flex w-3/5 items-center gap-2 bg-gray-100 sm:input-md dark:bg-gray-500 sm:w-2/3">
       <input
         type="text"
         className="grow "

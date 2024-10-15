@@ -34,14 +34,14 @@ const LoginForm = ({
   } = useForm<LoginValidType>({ resolver: zodResolver(loginValidationSchema) })
 
   const GitHubSignIn = async () => {
-    const result = await signIn('github', { redirect: true })
+    const result = await signIn('github', { callbackUrl: '/company_page' })
     if (result?.error) {
       console.error('Sign in error:', result.error)
     }
   }
 
   const GoogleSignIn = async () => {
-    const result = await signIn('google', { redirect: false })
+    const result = await signIn('google', { callbackUrl: '/company_page' })
     if (result?.error) {
       console.error('Sign in error:', result.error)
     }
@@ -65,12 +65,12 @@ const LoginForm = ({
   const emailAuth = async () => {
     const options = isLogin
       ? {
-          redirect: false,
+          callbackUrl: '/company_page',
           email,
           password,
         }
       : {
-          redirect: false,
+          callbackUrl: '/company_page',
           username,
           email,
           password,

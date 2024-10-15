@@ -1,6 +1,6 @@
 'use client'
-import { useUser } from '@/app/company_page/context/useUser'
 import LoginForm from '@/app/components/LoginForm/LoginForm'
+import { useUser } from '@/app/state/context/useUser'
 import { Login } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useState } from 'react'
@@ -14,6 +14,7 @@ const HeaderStartButton = () => {
     }
     setFormOpen(true)
   }
+
   return (
     <div className={`${user ? 'hidden' : 'block'}`}>
       <LoginForm formOpen={formOpen} setFormOpen={setFormOpen} />

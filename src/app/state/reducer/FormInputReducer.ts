@@ -1,3 +1,15 @@
+import type {
+  ClearAction,
+  FormInputPostType,
+  InitalizePostAction,
+  InitalizeTaskAction,
+  SetCompanyAction,
+  SetMypageAction,
+  SetTaskAction,
+  UpdateCompanyAction,
+  UpdateMypageAction,
+} from '@/types/reducerType'
+
 export const FormInputState: FormInputPostType = {
   customId: '',
   userId: '',

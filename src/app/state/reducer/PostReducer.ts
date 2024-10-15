@@ -1,3 +1,5 @@
+import type { Action } from '@/types/reducerType'
+
 export const postReducer = (state: PostType[], action: Action): PostType[] => {
   switch (action.type) {
     case 'INITIALIZE':
@@ -53,6 +55,28 @@ export const postReducer = (state: PostType[], action: Action): PostType[] => {
         }
         return post
       })
+
+    case 'SWITCH_TASK':
+      return state.map((post) => {
+        if (post.customId === action.postId) {
+          return {
+            ...post,
+            taskFlow: action.switchedData,
+          }
+        }
+        return post
+      })
+
+    case 'ONLY_COMPLETED':
+      return state.filter((post) => post.completed === true)
+
+    case 'ONLY_FAILED':
+      return state.filter((post) => post.failed === true)
+
+    case 'SEARCH_POST':
+      return state.filter((post) =>
+        post.name.toLowerCase().includes(action.searchText.toLowerCase() as string),
+      )
 
     default:
       return state

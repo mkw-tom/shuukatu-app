@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react'
-import { usePostReducer } from '../../context/useFormInputReducer'
-import { usePost } from '../../context/usePost'
+import { usePostReducer } from '../../../state/context/useFormInputReducer'
+import { usePost } from '../../../state/context/usePost'
 
 export const useAddEditCompanyData = (
   title: string,

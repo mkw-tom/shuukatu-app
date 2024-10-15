@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from '@/app/company_page/context/useUser'
+import { useUser } from '@/app/state/context/useUser'
 import { Logout } from '@mui/icons-material'
 import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -45,7 +45,7 @@ const ProfileButton = () => {
           </ul>
           <button
             className="itmes-center btn mt-5 bg-gradient-to-tr from-info to-orange-500 font-bold  text-white dark:text-gray-900"
-            onClick={() => signOut()}
+            onClick={() => signOut({ callbackUrl: '/' })}
           >
             <span>Logout</span>
             <Logout />

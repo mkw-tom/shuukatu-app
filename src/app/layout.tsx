@@ -2,9 +2,10 @@ import Header from '@/components/layout/Header/Header'
 import NextAuthProvider from '@/lib/NextAuth/NextAuthProvider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { PostContextProvider } from './company_page/context/usePost'
-import { UserContextPorvider } from './company_page/context/useUser'
 import './globals.css'
+import { AnalysisContextProvider } from './state/context/useAnalysisData'
+import { PostContextProvider } from './state/context/usePost'
+import { UserContextPorvider } from './state/context/useUser'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,10 +28,12 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           <PostContextProvider>
-            <UserContextPorvider>
-              <Header />
-              {children}
-            </UserContextPorvider>
+            <AnalysisContextProvider>
+              <UserContextPorvider>
+                <Header />
+                {children}
+              </UserContextPorvider>
+            </AnalysisContextProvider>
           </PostContextProvider>
         </NextAuthProvider>
       </body>

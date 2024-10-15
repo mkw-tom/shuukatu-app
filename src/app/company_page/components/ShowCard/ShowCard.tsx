@@ -1,5 +1,5 @@
 'use client'
-import { usePost } from '../../context/usePost'
+import { usePost } from '../../../state/context/usePost'
 import CardHeader from './CardHeader'
 import Mypage from './MyPage'
 import Region from './Region'

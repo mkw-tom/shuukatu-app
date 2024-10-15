@@ -12,7 +12,7 @@ import {
   Terminal,
   Verified,
 } from '@mui/icons-material'
-import { usePost } from '../context/usePost'
+import { usePost } from '../../state/context/usePost'
 
 const useTaskJudger = () => {
   const { posts } = usePost()

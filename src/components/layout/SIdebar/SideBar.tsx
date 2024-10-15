@@ -1,5 +1,5 @@
 'use client'
-import { useUser } from '@/app/company_page/context/useUser'
+import { useUser } from '@/app/state/context/useUser'
 import useDarkMode from '@/lib/darkmode/useDarkMode'
 import { Addchart, Business, MenuBook } from '@mui/icons-material'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ const SideBar = () => {
 
   const sidebarItems = [
     { icon: <Business className="mr-auto text-info" />, text: '企業管理', link: '/company_page' },
-    { icon: <MenuBook className="mr-auto text-info" />, text: 'ES管理', link: '/ES_page' },
+    { icon: <MenuBook className="mr-auto text-info" />, text: '適職診断', link: '/analysis_page' },
     { icon: <Addchart className="mr-auto text-info" />, text: 'チャート', link: '/chart_page' },
   ]
 

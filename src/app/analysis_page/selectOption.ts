@@ -1,0 +1,30 @@
+export const MBTiArray = [
+  { value: 'INTJ', text: 'INTJ - 建築家' },
+  { value: 'INTP', text: 'INTP - 論理学者' },
+  { value: 'ENTJ', text: 'ENTJ - 指揮官' },
+  { value: 'ENTP', text: 'ENTP - 討論者' },
+  { value: 'INFJ', text: 'INFJ - 提唱者' },
+  { value: 'INFP', text: 'INFP - 仲介者' },
+  { value: 'ENFJ', text: 'ENFJ - 主人公' },
+  { value: 'ENFP', text: 'ENFP - 広報運動家' },
+  { value: 'ISTJ', text: 'ISTJ - 管理者' },
+  { value: 'ISFJ', text: 'ISFJ - 擁護者' },
+  { value: 'ESTJ', text: 'ESTJ - 幹部' },
+  { value: 'ESFJ', text: 'ESFJ - 領事' },
+  { value: 'ISTP', text: 'ISTP - 巨匠' },
+  { value: 'ISFP', text: 'ISFP - 冒険家' },
+  { value: 'ESTP', text: 'ESTP - 起業家' },
+  { value: 'ESFP', text: 'ESFP - エンターテイナー' },
+]
+
+export const valesArray = [
+  { value: '社会貢献', text: '社会貢献' },
+  { value: '自己成長', text: '自己成長' },
+  { value: 'お金', text: 'お金' },
+  { value: 'ワークライフバランス', text: 'ワークライフバランス' },
+  { value: '出世', text: '出世' },
+  { value: '仕事仲間', text: '仕事仲間' },
+  { value: '好きを仕事にしたい', text: '好きを仕事にしたい' },
+  { value: '親孝行', text: '親孝行' },
+  { value: '地方創生', text: '地方創生' },
+]

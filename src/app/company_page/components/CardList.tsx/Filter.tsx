@@ -1,7 +1,7 @@
 // 'use client'
 import { useRouter } from 'next/navigation'
-import { usePost } from '../../context/usePost'
-import { useUser } from '../../context/useUser'
+import { usePost } from '../../../state/context/usePost'
+import { useUser } from '../../../state/context/useUser'
 
 const Filter = () => {
   const { postsState, postsDispatch, setSelectPost, allPosts } = usePost()
@@ -95,7 +95,7 @@ const Filter = () => {
     //   </div>
     // </div>
     <select
-      className="select select-info select-sm w-24 max-w-xs sm:select-md dark:bg-gray-500 sm:w-28"
+      className="select select-info select-sm w-20 max-w-xs text-xs sm:select-md dark:bg-gray-500 sm:w-28"
       onChange={(e) => handleFilter(e.target.value)}
     >
       <option disabled value="select">

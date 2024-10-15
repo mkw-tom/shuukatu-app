@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { useAnalysis } from './useAnalysisData'
 import { usePost } from './usePost'
 
 interface UserContextType {
@@ -27,15 +28,17 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
   const { data: session, status } = useSession()
   const router = useRouter()
   const { setPosts, postsDispatch, setSelectPost } = usePost()
-
+  const { setAnalysis } = useAnalysis()
   const url = process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_DEV_API_URL
 
   useEffect(() => {
     if (session === null || undefined) {
       return router.push('/')
     }
+    if (user) {
+      return
+    }
     const getUserFunc = async () => {
-      const userEmail = session?.user?.email as string
       const token = session?.accessToken
 
       try {
@@ -45,29 +48,25 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${token}`,
           },
-          // body: JSON.stringify({
-          //   userEmail: userEmail,
-          // }),
         })
 
         const jsonData = await res.json()
-
-        if (jsonData.postsData) {
-          setPosts(jsonData.postsData)
-          setSelectPost(jsonData.postsData[0]) // postsData[0]が存在することを確認
-          postsDispatch({ type: 'INITIALIZE', posts: jsonData.postsData })
+        if (!jsonData) {
+          return console.log('data is not found')
         }
 
-        setUser(jsonData.userData)
+        setPosts(jsonData.postsData)
+        setSelectPost(jsonData.postsData[0]) // postsData[0]が存在することを確認
+        postsDispatch({ type: 'INITIALIZE', posts: jsonData.postsData })
 
-        return router.push('/company_page')
+        setAnalysis(jsonData.analysisData)
+        setUser(jsonData.userData)
       } catch (error) {
-        return router.push('/')
+        // return router.push('/')
       }
     }
 
     getUserFunc()
-    return router.push('/company_page')
   }, [session])
 
   return <userContext.Provider value={{ user, setUser }}>{children}</userContext.Provider>
