@@ -27,7 +27,7 @@ const EventStatus = () => {
 
         <div className="stat">
           {/* <Verified className="stat-figure text-orange-500" /> */}
-          <div className="stat-title text-xs md:text-base">短期インんターン</div>
+          <div className="stat-title text-xs md:text-base">短期インターン</div>
           <div className="stat-value text-center text-lg md:text-xl">{miniIntern.length}社</div>
           {/* <div className="stat-desc">↘︎ 90 (14%)</div> */}
         </div>
