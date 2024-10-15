@@ -1,6 +1,7 @@
 'use client'
+import { useRouter } from 'next/navigation'
 import { MBTiArray, valesArray } from '../selectOption'
-import AnalyzeButton from './components/AnalyzeButton'
+import ErrorModal from './components/ErrorModal'
 import Loading from './components/Loading'
 import SuccessModal from './components/SuccessModal'
 import useAnalysisForm from './Hooks/useAnalysisForm'
@@ -15,13 +16,27 @@ const Page = () => {
     handleAnalyze,
     loading,
     success,
+    error,
   } = useAnalysisForm()
   // const { fetchAnalysisFunc, data} = useFetchAnalysis()
+  const router = useRouter()
+  const handlePageBack = () => {
+    router.back()
+  }
 
   return (
     <main className="h-auto dark:bg-gray-800">
       <div className="mx-5 h-full pb-48 pt-20 md:mx-10">
-        <h1 className="w-full text-xl">MBTI適職診断</h1>
+        <div className="flex w-full items-center justify-between">
+          <h1 className="mb-5 w-full font-mono text-xl font-bold tracking-widest">MBTI適職診断</h1>
+          <button
+            className="sm:text-md btn-link w-36  text-sm text-gray-700 hover:opacity-70 dark:text-base-300"
+            onClick={handlePageBack}
+          >
+            前へ戻る
+          </button>
+        </div>
+        <p className="text-md mb-5 font-bold">・８つの項目を入力してください。</p>
         <form className="bg-inf  flex size-full flex-col items-start gap-16">
           <label
             htmlFor=""
@@ -119,10 +134,10 @@ const Page = () => {
               </label>
               <input type="checkbox" id="my_modal_6" className="modal-toggle" />
               <div className="modal" role="dialog">
-                <div className="modal-box dark:bg-gray-500">
+                <div className="modal-box dark:bg-gray-500 ">
                   {valesArray?.map((value, index) => (
                     <label key={index} htmlFor="" className="label cursor-pointer">
-                      <span className="label-text">{value.text}</span>
+                      <span className="label-text dark:text-base-200">{value.text}</span>
                       <input
                         type="checkbox"
                         value={value.value}
@@ -169,8 +184,14 @@ const Page = () => {
         </form>
         <div className="mt-5 flex w-full items-center">
           {loading && <Loading />}
-          <SuccessModal />
-          <AnalyzeButton />
+          {success && <SuccessModal />}
+          {error && <ErrorModal />}
+          <button
+            className="btn mx-auto w-11/12 bg-gradient-to-tr from-info to-orange-500 md:w-5/12"
+            onClick={handleAnalyze}
+          >
+            診断する
+          </button>
         </div>
       </div>
     </main>

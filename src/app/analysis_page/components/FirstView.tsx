@@ -6,6 +6,8 @@ import {
   QueryStats,
   SupportAgent,
 } from '@mui/icons-material'
+import ButtonTopText from './ButtonTopText'
+import MigrateButton from './MigrateButton'
 
 const FirstView = () => {
   return (
@@ -33,10 +35,7 @@ const FirstView = () => {
         </p>
       </div>
 
-      <button className="btn btn-md mx-auto mb-48 mt-10 flex w-5/12 min-w-56 max-w-72 animate-pulse items-center bg-gradient-to-tr from-info to-orange-500 opacity-75 shadow-lg md:btn-lg">
-        {/* <img src='/file.png' className='size-12 md:w-16 md:h-16'></img> */}
-        <span className="text-md font-bold text-base-100 md:text-lg">さっそく診断する</span>
-      </button>
+      <MigrateButton />
 
       <div className="mb-10 w-full text-center font-mono text-2xl font-bold md:text-4xl">
         <p className="mb-5 inline border-b-2 border-gray-700 px-2 pb-1 tracking-widest text-gray-700 dark:border-base-300 dark:text-base-100">
@@ -44,11 +43,11 @@ const FirstView = () => {
           <span className="ml-1">分析の流れ</span>
         </p>
       </div>
-      <div className="h-auto w-full bg-base-200 px-2 py-10 dark:bg-gray-600">
+      <div className="h-auto w-full bg-base-200 px-2 py-10 dark:bg-gray-600 lg:px-10 lg:py-16">
         <div className="mx-auto flex w-full flex-col-reverse items-center justify-between gap-10 lg:flex-row ">
-          <div className="flex h-auto w-full flex-col items-center lg:w-2/5 ">
+          <div className="flex h-auto w-full flex-col items-center lg:w-2/5">
             <h3 className="font-mono text-2xl font-bold tracking-widest text-success md:text-4xl ">
-              MBTIの性格特徴
+              MBTIの性格特性
             </h3>
             <img
               src="/people-with-various-mbti-personality-types-isometric-icons-set-isolated-vector-illustration.png"
@@ -103,13 +102,8 @@ const FirstView = () => {
           <span>企業選びのヒントに</span>
         </h2>
       </div>
-      <p className="mt-10 w-full text-center text-lg font-bold md:text-2xl">
-        ↓↓ 5分でサクッと診断 ↓↓
-      </p>
-      <button className="btn btn-md mx-auto mt-10 flex w-9/12 min-w-56 max-w-80 animate-pulse items-center bg-gradient-to-tr from-info to-orange-500 opacity-75 shadow-lg md:btn-lg">
-        {/* <img src='/file.png' className='size-12 md:w-16 md:h-16'></img> */}
-        <span className="text-md font-bold text-base-100 md:text-lg">さっそく診断する</span>
-      </button>
+      <ButtonTopText />
+      <MigrateButton />
     </div>
   )
 }
