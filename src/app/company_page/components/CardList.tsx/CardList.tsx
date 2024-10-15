@@ -120,7 +120,7 @@ const CardList = () => {
                     <div className="badge badge-sm mt-1 block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
                       {post.event}
                     </div>
-                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
+                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-md dark:text-base-300 md:hidden">
                       {MonthDay(post.startDate, post.endDate)}
                     </div>
                   </th>
@@ -128,7 +128,7 @@ const CardList = () => {
                     <div className="badge badge-md mt-3 bg-gray-300 font-normal text-gray-900 opacity-80">
                       {post.event}
                     </div>
-                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-sm">
+                    <div className="badge badge-outline badge-sm mt-1  block font-normal text-gray-900 opacity-80 md:badge-sm dark:text-base-300">
                       {MonthDay(post.startDate, post.endDate)}
                     </div>
                   </th>

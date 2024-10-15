@@ -41,6 +41,9 @@ export const UserContextPorvider = ({ children }: { children: ReactNode }) => {
     const getUserFunc = async () => {
       const token = session?.accessToken
 
+      if (session) {
+        return router.push('/company_page')
+      }
       try {
         const res = await fetch(`${url}/api/user`, {
           method: 'POST',

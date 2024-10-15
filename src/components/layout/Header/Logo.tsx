@@ -1,12 +1,11 @@
 'use client'
 import { useUser } from '@/app/state/context/useUser'
 import Image from 'next/image'
-import Link from 'next/link'
 
 const Logo = () => {
   const { user } = useUser()
   return (
-    <Link href="/" className="cursor-pointer ">
+    <div className=" ">
       <h1 className={`flex items-center ${!user ? 'w-full justify-center' : ''} `}>
         <Image
           src="/file.png"
@@ -19,7 +18,7 @@ const Logo = () => {
           Entrix
         </p>
       </h1>
-    </Link>
+    </div>
   )
 }
 

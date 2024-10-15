@@ -1,6 +1,6 @@
 import { loginValidationSchema } from '@/lib/validation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Email, GitHub, Google } from '@mui/icons-material'
+import { Email, GitHub, Google, RemoveRedEye, VisibilityOff } from '@mui/icons-material'
 import { signIn } from 'next-auth/react'
 import type { Dispatch, SetStateAction } from 'react'
 import { useState } from 'react'
@@ -19,13 +19,10 @@ const LoginForm = ({
   setFormOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   const [isLogin, setIsLogin] = useState<boolean>(false)
-  // const [email, setEmail] = useState<string>('')
-  // const nameRef = useRef<HTMLInputElement | null>(null)
-  // const emaillRef = useRef<HTMLInputElement | null>(null)
-  // const passwordRef = useRef<HTMLInputElement | null>(null)
   const [username, setUsername] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [openPass, setOpenPass] = useState<boolean>(false)
   const {
     register,
     trigger,
@@ -88,7 +85,7 @@ const LoginForm = ({
   return (
     // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
     <div className={`${formOpen ? 'fixed' : 'hidden'} inset-0 z-50 bg-black bg-opacity-80`}>
-      <div className="card mx-auto mb-6 mt-20 h-auto w-10/12 overflow-hidden bg-base-100 px-5 pt-8 dark:bg-gray-800 sm:w-[500px]">
+      <div className="card mx-auto mb-6 mt-12 h-auto w-10/12 overflow-hidden bg-base-100 px-5 pt-8 dark:bg-gray-800 sm:w-[500px]">
         <div className="mx-auto flex w-56 sm:w-80 ">
           <button
             className={`w-1/2 border-b-4 font-bold text-info ${isLogin ? 'border-b-base-100 dark:border-b-gray-800' : 'border-b-info'}`}
@@ -190,12 +187,18 @@ const LoginForm = ({
               </svg>
               <input
                 {...register('password')}
-                type="password"
+                type={openPass ? 'text' : 'password'}
                 className="grow"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                className=" ml-auto px-3 text-gray-700 dark:text-gray-200 "
+                onClick={() => setOpenPass(!openPass)}
+              >
+                {openPass ? <VisibilityOff /> : <RemoveRedEye />}
+              </button>
             </label>
             {errors.password && (
               <span className="text-sm text-red-500">{errors.password.message}</span>

@@ -24,26 +24,26 @@ export default function Home() {
             <li className="flex items-center">
               <TaskAlt className="mr-2 text-orange-500" />
               <span className="text-md font-bold tracking-wide text-gray-100 dark:text-gray-800 md:text-xl">
+                複雑なエントリー管理をラクに
+              </span>
+            </li>
+            <li className="flex items-center">
+              <TaskAlt className="mr-2 text-orange-500 " />
+              <span className="text-md font-bold tracking-wide text-gray-100 dark:text-gray-800 md:text-xl">
                 エントリー状況を可視化
               </span>
             </li>
             <li className="flex items-center">
               <TaskAlt className="mr-2 text-orange-500 " />
               <span className="text-md font-bold tracking-wide text-gray-100 dark:text-gray-800 md:text-xl">
-                AIによるES添削
-              </span>
-            </li>
-            <li className="flex items-center">
-              <TaskAlt className="mr-2 text-orange-500 " />
-              <span className="text-md font-bold tracking-wide text-gray-100 dark:text-gray-800 md:text-xl">
-                グラフで可視化・分析
+                AIによる適職検査
               </span>
             </li>
           </ul>
           <StartButton />
         </div>
 
-        <div className="flex h-screen w-full flex-col justify-center lg:w-1/2 ">
+        <div className=" hidden h-screen w-full flex-col justify-center sm:flex lg:w-1/2 ">
           <WindowMock />
           <nav className="mx-auto mt-5 flex gap-2">
             <button>
