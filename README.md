@@ -10,9 +10,10 @@
 
 ### その他ライブラリ
 
-- mongoose
-- DaysyUI
-- Material UI Icons
+- OpenAI API⭐
 - NextAuth
+- mongoose
 - React Hook Form
 - Zod
+- DaysyUI
+- Material UI Icons
