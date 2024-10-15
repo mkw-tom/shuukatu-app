@@ -9,7 +9,7 @@
 ### その他ライブラリ
 
 - OpenAI API⭐
-- NextAuth
+- NextAuth (OAuth・JWT)
 - mongoose
 - React Hook Form
 - Zod
