@@ -1,3 +1,5 @@
+import type { Action } from '@/types/reducerType'
+
 export const postReducer = (state: PostType[], action: Action): PostType[] => {
   switch (action.type) {
     case 'INITIALIZE':

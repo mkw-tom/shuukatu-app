@@ -29,7 +29,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "dist/types/**/*.ts",
-    "src/lib/NextAuth/NextAuthProvider.tsx"
-, "src/app/analysis_page/result_page/components/ResultChart.js"  ],
+    "src/lib/NextAuth/NextAuthProvider.tsx",
+    "src/app/analysis_page/result_page/components/ResultChart.js"
+  ],
   "exclude": ["node_modules"]
 }

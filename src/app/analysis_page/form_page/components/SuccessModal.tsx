@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 const SuccessModal = () => {
   return (
+    // eslint-disable-next-line tailwindcss/migration-from-tailwind-2
     <div className="fixed inset-0 bg-black bg-opacity-60 ">
       <div className="mx-auto flex h-full w-11/12 flex-col items-center justify-center">
         <div className="card w-96 bg-base-100 shadow-xl dark:bg-gray-700">
