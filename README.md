@@ -1,4 +1,4 @@
-# Entrix　　　　-就活エントリー管理アプ-
+# Entrix　　　　-就活エントリー管理アプリ-
 
 [アプリを開く](https://shuukatu-app.vercel.app)
 
