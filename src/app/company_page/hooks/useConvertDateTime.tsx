@@ -15,10 +15,9 @@ const useConvertDateTime = () => {
     const startMonth = startDate.getMonth() + 1
     const endMonth = endDate.getMonth() + 1
     const startDay = startDate.getDate()
-    const endDay = startDate.getDate()
+    const endDay = endDate.getDate()
     return `${startMonth}/${startDay} - ${endMonth}/${endDay}`
   }
-
   const MonthDayTime = (original: string) => {
     const date = new Date(original)
     // 月と日を取得
