@@ -47,7 +47,9 @@ const Mypage = () => {
             target="blank"
             className="hidden items-center px-2 text-sm duration-150 hover:opacity-70 sm:flex "
           >
-            <span className=" btn btn-link text-xs text-base-300 md:text-sm ">マイページへ</span>
+            <span className=" btn btn-link text-xs text-gray-700 dark:text-base-300 md:text-sm ">
+              マイページへ
+            </span>
           </a>
         </div>
       </div>

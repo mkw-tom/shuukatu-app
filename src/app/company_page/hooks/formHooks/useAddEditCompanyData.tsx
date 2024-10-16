@@ -6,7 +6,9 @@ export const useAddEditCompanyData = (
   title: string,
   setOpen: Dispatch<SetStateAction<boolean>>,
   startDate: string,
+  setStartDate: Dispatch<SetStateAction<string>>,
   endDate: string,
+  setEndDate: Dispatch<SetStateAction<string>>,
 ) => {
   const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
@@ -36,6 +38,8 @@ export const useAddEditCompanyData = (
 
     postsDispatch({ type: 'ADD_POST', post: addData })
 
+    setStartDate('')
+    setEndDate('')
     console.log(state)
     setFormSlide('-translate-x-80 sm:-translate-x-96')
   }
@@ -70,7 +74,8 @@ export const useAddEditCompanyData = (
       })
 
       setSelectPost(updatedData)
-
+      setStartDate('')
+      setEndDate('')
       setFormSlide('-translate-x-80 sm:-translate-x-96')
     } catch (error) {
       console.log(`faild fetch : ${error}`)

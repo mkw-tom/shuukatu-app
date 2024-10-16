@@ -9,6 +9,8 @@ export const useAddEdutTask = (
   onlyTaskForm: boolean,
   date: string,
   limitDate: string,
+  setDate: Dispatch<SetStateAction<string>>,
+  setLimitDat: Dispatch<SetStateAction<string>>,
 ) => {
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const { setPosts, posts, selectPost, setSelectPost, selectTask, postsDispatch } = usePost()
@@ -46,9 +48,15 @@ export const useAddEdutTask = (
     setSelectPost((prev) => {
       if (!prev) return null
 
+      const addDate = {
+        ...state.taskFlow,
+        date,
+        limitDate,
+      }
+
       return {
         ...prev,
-        taskFlow: [...(prev.taskFlow || []), state.taskFlow],
+        taskFlow: [...(prev.taskFlow || []), addDate],
         customId: prev.customId || '',
         userId: prev.userId || '',
         name: prev.name || '',
@@ -68,8 +76,9 @@ export const useAddEdutTask = (
     })
 
     setFormSlide('-translate-x-none')
+    setDate('')
+    setLimitDat('')
     setOpen(false)
-
     dispatch({ type: 'CLEAR' })
 
     if (onlyTaskForm === false) {
@@ -81,6 +90,12 @@ export const useAddEdutTask = (
   ///ーーーーーーーーーーーータスク編集ーーーーーーーーーーーーーーーーーーー
   const hadleEditTask = async () => {
     const taskId = selectTask?.customId
+    const updateTask = {
+      ...state.taskFlow,
+      customId: selectTask?.customId as string,
+      date,
+      limitDate,
+    }
 
     try {
       const res = await fetch(`${url}/api/task/${taskId}`, {
@@ -93,8 +108,7 @@ export const useAddEdutTask = (
           // taskId: selectTask?.customId,
           updateData: {
             ...state.taskFlow,
-            postId: selectTask?.customId as string,
-            taskId: selectTask?.customId as string,
+            customId: selectTask?.customId,
             date,
             limitDate,
           },
@@ -110,10 +124,11 @@ export const useAddEdutTask = (
 
       postsDispatch({
         type: 'UPDATE_TASK',
-        postId: selectTask?.customId as string,
+        postId: selectPost?.customId as string,
         taskId: selectTask?.customId as string,
         updateTask: {
           ...state.taskFlow,
+          customId: selectTask?.customId as string,
           date,
           limitDate,
         },
@@ -125,14 +140,15 @@ export const useAddEdutTask = (
         return {
           ...prev,
           taskFlow: prev.taskFlow.map((task) =>
-            task.customId === selectTask?.customId ? state.taskFlow : task,
+            task.customId === selectTask?.customId ? updateTask : task,
           ),
         }
       })
 
       dispatch({ type: 'CLEAR' })
+      setDate('')
+      setLimitDat('')
       setOpen(false)
-
       // router.refresh()
     } catch (error) {
       alert(`faild fetch : ${error}`)

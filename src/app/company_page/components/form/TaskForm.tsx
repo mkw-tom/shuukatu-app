@@ -39,6 +39,8 @@ const TaskForm = ({
     onlyTaskForm,
     date,
     limitDate,
+    setLimitDate,
+    setDate,
   )
   const {
     register,
@@ -60,7 +62,6 @@ const TaskForm = ({
     const current = state.customId !== '' || selectPost?.taskFlow.length === 0 ? true : false
     const { name, value } = e.target
     dispatch({ type: 'SET_TASK', payload: { customId, name, value, date, limitDate, current } })
-    console.log(state)
   }
 
   useEffect(() => {
