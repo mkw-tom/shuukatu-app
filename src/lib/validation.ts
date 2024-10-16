@@ -19,7 +19,7 @@ export const companyFormValidatioinSchema = z.object({
   name: z.string().min(1, '企業名は必須入力です').max(15, '15字以内で入力してください'),
   event: z.string().min(1, 'イベントは必須入力です'),
   startDate: z.string().min(1, '開催日時は必須入力です'),
-  // endDate: z.string().min(1, '開催日時は必須入力です'),
+  endDate: z.string().min(1, '開催日時は必須入力です'),
   region: z.string().min(1, '開催地は必須入力です').max(10, '10字以内で入力してください'),
 })
 

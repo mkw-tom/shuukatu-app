@@ -12,7 +12,7 @@ const CardList = () => {
   const { posts, setPosts, selectPost, setSelectPost, setSelectTask, postsState, postsDispatch } =
     usePost()
 
-  const { taskIconJudger, taksStatusJudger } = useTaskJudger()
+  const { taskIconJudger, taksStatusJudger, currentTaskName, currentTaskId } = useTaskJudger()
   const { MonthDay, MonthDayTime } = useConvertDateTime()
   // useEffect(() => {
   //   if (postsData) {
@@ -25,42 +25,6 @@ const CardList = () => {
   const handleSelect = (post: PostType) => {
     if (post) {
       setSelectPost(post)
-    }
-  }
-
-  const currentTaskJudge = (post: PostType) => {
-    if (!post?.taskFlow) return 'なし'
-    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
-    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
-
-    if (!current && !post?.completed) {
-      return prev?.task
-    } else if (!current) {
-      return '合格'
-    } else if (current?.current) {
-      return current?.task
-    } else if (!current.current && prev) {
-      return prev?.task
-    } else {
-      return 'なし'
-    }
-  }
-
-  const currentTaskIdJudge = (post: PostType) => {
-    if (!post?.taskFlow) return null
-    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
-    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
-
-    if (!current && !post?.completed) {
-      return prev?.customId
-    } else if (!current) {
-      return null
-    } else if (current?.current) {
-      return current?.customId
-    } else if (!current.current && prev) {
-      return prev?.customId
-    } else {
-      return null
     }
   }
 
@@ -114,7 +78,7 @@ const CardList = () => {
                   className={`${selectPost?.customId === post.customId ? 'bg-sky-100 dark:bg-sky-800' : ''} cursor-pointer border-b-2 border-b-gray-100 hover:bg-sky-100 dark:hover:bg-sky-800`}
                   onClick={() => handleSelect(post)}
                 >
-                  <th className="">{taksStatusJudger(post, currentTaskIdJudge(post))}</th>
+                  <th className="">{taksStatusJudger(post, currentTaskId(post))}</th>
                   <th className="w-36 min-w-36">
                     <div className="font-bold">{post.name}</div>
                     <div className="badge badge-sm mt-1 block bg-gray-300 font-normal text-gray-900 opacity-80 md:badge-md md:hidden">
@@ -136,8 +100,8 @@ const CardList = () => {
                     <p
                       className={`${post.failed ? 'text-error' : ''}  ${post.completed ? 'text-orange-500' : ''} text-xs sm:text-sm`}
                     >
-                      {taskIconJudger(currentTaskJudge(post))}
-                      {currentTaskJudge(post)}
+                      {taskIconJudger(currentTaskName(post))}
+                      {currentTaskName(post)}
                     </p>
                     <div className="flex flex-wrap sm:gap-2">
                       {TaskDate(post) ? (

@@ -38,6 +38,8 @@ export const useAddEditCompanyData = (
 
     postsDispatch({ type: 'ADD_POST', post: addData })
 
+    setStartDate('')
+    setEndDate('')
     console.log(state)
     setFormSlide('-translate-x-80 sm:-translate-x-96')
   }
@@ -72,7 +74,8 @@ export const useAddEditCompanyData = (
       })
 
       setSelectPost(updatedData)
-
+      setStartDate('')
+      setEndDate('')
       setFormSlide('-translate-x-80 sm:-translate-x-96')
     } catch (error) {
       console.log(`faild fetch : ${error}`)
@@ -84,8 +87,7 @@ export const useAddEditCompanyData = (
     if (title === '編集') {
       return EditCompanyData()
     }
-    setStartDate('')
-    setEndDate('')
+
     return AddCompanyData()
   }
 

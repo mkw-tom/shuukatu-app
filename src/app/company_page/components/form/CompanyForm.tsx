@@ -158,8 +158,8 @@ const CompanyForm = ({
                 title === '編集' ? (e) => handleStateChange(e) : (e) => setStartDate(e.target.value)
               }
             />
-            {errors.endDate && (
-              <span className="text-sm text-red-500">{errors.endDate.message}</span>
+            {errors.startDate && (
+              <span className="text-sm text-red-500">{errors.startDate.message}</span>
             )}
 
             <p>から</p>
@@ -167,14 +167,14 @@ const CompanyForm = ({
               {...register('endDate')}
               type="datetime-local"
               className="input input-sm input-bordered w-full bg-gray-200  text-gray-700 sm:input-md dark:bg-gray-400 "
-              name="eneDate"
+              name="endDate"
               value={endDate || state.endDate}
               onChange={
                 title === '編集' ? (e) => handleStateChange(e) : (e) => setEndDate(e.target.value)
               }
             />
-            {errors.startDate && (
-              <span className="text-sm text-red-500">{errors.startDate.message}</span>
+            {errors.endDate && (
+              <span className="text-sm text-red-500">{errors.endDate.message}</span>
             )}
           </div>
         </div>

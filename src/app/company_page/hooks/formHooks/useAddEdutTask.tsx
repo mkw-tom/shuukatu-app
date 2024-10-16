@@ -90,6 +90,12 @@ export const useAddEdutTask = (
   ///ーーーーーーーーーーーータスク編集ーーーーーーーーーーーーーーーーーーー
   const hadleEditTask = async () => {
     const taskId = selectTask?.customId
+    const updateTask = {
+      ...state.taskFlow,
+      customId: selectTask?.customId as string,
+      date,
+      limitDate,
+    }
 
     try {
       const res = await fetch(`${url}/api/task/${taskId}`, {
@@ -102,8 +108,7 @@ export const useAddEdutTask = (
           // taskId: selectTask?.customId,
           updateData: {
             ...state.taskFlow,
-            postId: selectTask?.customId as string,
-            taskId: selectTask?.customId as string,
+            customId: selectTask?.customId,
             date,
             limitDate,
           },
@@ -119,10 +124,11 @@ export const useAddEdutTask = (
 
       postsDispatch({
         type: 'UPDATE_TASK',
-        postId: selectTask?.customId as string,
+        postId: selectPost?.customId as string,
         taskId: selectTask?.customId as string,
         updateTask: {
           ...state.taskFlow,
+          customId: selectTask?.customId as string,
           date,
           limitDate,
         },
@@ -134,7 +140,7 @@ export const useAddEdutTask = (
         return {
           ...prev,
           taskFlow: prev.taskFlow.map((task) =>
-            task.customId === selectTask?.customId ? state.taskFlow : task,
+            task.customId === selectTask?.customId ? updateTask : task,
           ),
         }
       })

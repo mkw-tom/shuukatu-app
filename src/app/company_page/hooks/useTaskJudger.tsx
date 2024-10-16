@@ -17,13 +17,43 @@ import { usePost } from '../../state/context/usePost'
 const useTaskJudger = () => {
   const { posts } = usePost()
 
-  const taskIconJudger = (taskName: string) => {
-    // const current = post?.taskFlow.filter((task) => task.finished === false)[0]
-    // const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
-    // if(!current) {
-    //   return
-    // }
+  const currentTaskName = (post: PostType) => {
+    if (!post?.taskFlow) return 'なし'
+    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
+    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
 
+    if (!current && !post?.completed) {
+      return prev?.task
+    } else if (!current) {
+      return '合格'
+    } else if (current?.current) {
+      return current?.task
+    } else if (!current.current && prev) {
+      return prev?.task
+    } else {
+      return 'なし'
+    }
+  }
+
+  const currentTaskId = (post: PostType) => {
+    if (!post?.taskFlow) return null
+    const current = post?.taskFlow.filter((task) => task.finished === false)[0]
+    const prev = post?.taskFlow.filter((task) => task.finished === true).slice(-1)[0]
+
+    if (!current && !post?.completed) {
+      return prev?.customId
+    } else if (!current) {
+      return null
+    } else if (current?.current) {
+      return current?.customId
+    } else if (!current.current && prev) {
+      return prev?.customId
+    } else {
+      return null
+    }
+  }
+
+  const taskIconJudger = (taskName: string) => {
     switch (taskName) {
       case '説明会':
         return <CoPresent style={{ fontSize: '20px' }} className="mr-1 " />
@@ -76,7 +106,7 @@ const useTaskJudger = () => {
     }
   }
 
-  return { taskIconJudger, taksStatusJudger }
+  return { taskIconJudger, taksStatusJudger, currentTaskName, currentTaskId }
 }
 
 export default useTaskJudger
