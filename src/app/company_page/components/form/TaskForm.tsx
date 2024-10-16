@@ -39,6 +39,8 @@ const TaskForm = ({
     onlyTaskForm,
     date,
     limitDate,
+    setLimitDate,
+    setDate,
   )
   const {
     register,

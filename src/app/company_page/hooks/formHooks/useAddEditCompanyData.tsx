@@ -6,7 +6,9 @@ export const useAddEditCompanyData = (
   title: string,
   setOpen: Dispatch<SetStateAction<boolean>>,
   startDate: string,
+  setStartDate: Dispatch<SetStateAction<string>>,
   endDate: string,
+  setEndDate: Dispatch<SetStateAction<string>>,
 ) => {
   const { selectPost, setSelectPost, postsDispatch } = usePost()
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
@@ -82,7 +84,8 @@ export const useAddEditCompanyData = (
     if (title === '編集') {
       return EditCompanyData()
     }
-
+    setStartDate('')
+    setEndDate('')
     return AddCompanyData()
   }
 

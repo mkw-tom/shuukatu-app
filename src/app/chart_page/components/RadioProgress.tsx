@@ -7,8 +7,7 @@ const RadioProgress = () => {
   const { postsState } = usePost()
   const completed = postsState.filter((post) => post.completed)
   const persent = (completed.length / postsState.length) * 100
-
-  console.log(persent)
+  const integetPersent = Math.floor(persent)
   return (
     <section className="mx-auto flex  w-full flex-col gap-4 rounded-md  p-5  lg:w-1/2 ">
       <h3 className="flex gap-1 text-lg font-bold text-orange-500 md:text-2xl  ">
@@ -26,7 +25,7 @@ const RadioProgress = () => {
         }
         role="progressbar"
       >
-        {persent}%
+        {integetPersent}%
       </div>
 
       {/* <div

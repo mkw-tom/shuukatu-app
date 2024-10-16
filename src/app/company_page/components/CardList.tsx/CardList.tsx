@@ -69,7 +69,7 @@ const CardList = () => {
     if (!current || !current.limitDate) {
       return null
     }
-    return MonthDayTime(current.date)
+    return MonthDayTime(current.limitDate)
   }
 
   const TaskDate = (post: PostType) => {

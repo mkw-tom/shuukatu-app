@@ -56,7 +56,7 @@ const useTaskJudger = () => {
     }
 
     if (taskData?.finished) {
-      return <CheckCircle className="mx-aut w-full text-info" />
+      return <CheckCircle className="mx-auto w-full text-info" />
     }
 
     if (!taskData?.finished && taskData?.current) {

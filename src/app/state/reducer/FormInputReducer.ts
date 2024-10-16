@@ -14,7 +14,7 @@ export const FormInputState: FormInputPostType = {
   customId: '',
   userId: '',
   name: '',
-  event: '',
+  event: '本選考',
   startDate: '',
   endDate: '',
   region: '',
@@ -27,7 +27,7 @@ export const FormInputState: FormInputPostType = {
   },
   taskFlow: {
     customId: '',
-    task: '',
+    task: '説明会',
     situation: '',
     testFormat: '',
     date: '',
@@ -61,34 +61,7 @@ export const FormInputReducer = (
 
     case 'CLEAR':
       return {
-        ...postState,
-        customId: '',
-        userId: '',
-        name: '',
-        event: '',
-        startDate: '',
-        endDate: '',
-        region: '',
-        completed: false,
-        failed: false,
-        mypage: {
-          url: '',
-          id: '',
-          password: '',
-        },
-        taskFlow: {
-          customId: '',
-          task: '',
-          situation: '未完了',
-          testFormat: '',
-          date: '',
-          limitDate: '',
-          current: false,
-          failed: false,
-          // next: false,
-          finished: false,
-          // edit: false,
-        },
+        ...FormInputState,
       }
 
     case 'SET_COMPANY':

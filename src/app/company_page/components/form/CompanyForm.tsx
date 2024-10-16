@@ -54,7 +54,9 @@ const CompanyForm = ({
     title,
     setOpen,
     startDate,
+    setStartDate,
     endDate,
+    setEndDate,
   )
 
   // const handleSaveAndValidate = () => {

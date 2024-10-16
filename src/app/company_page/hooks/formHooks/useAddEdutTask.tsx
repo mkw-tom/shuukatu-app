@@ -9,6 +9,8 @@ export const useAddEdutTask = (
   onlyTaskForm: boolean,
   date: string,
   limitDate: string,
+  setDate: Dispatch<SetStateAction<string>>,
+  setLimitDat: Dispatch<SetStateAction<string>>,
 ) => {
   const { state, dispatch, formSlide, setFormSlide } = usePostReducer()
   const { setPosts, posts, selectPost, setSelectPost, selectTask, postsDispatch } = usePost()
@@ -46,9 +48,15 @@ export const useAddEdutTask = (
     setSelectPost((prev) => {
       if (!prev) return null
 
+      const addDate = {
+        ...state.taskFlow,
+        date,
+        limitDate,
+      }
+
       return {
         ...prev,
-        taskFlow: [...(prev.taskFlow || []), state.taskFlow],
+        taskFlow: [...(prev.taskFlow || []), addDate],
         customId: prev.customId || '',
         userId: prev.userId || '',
         name: prev.name || '',
@@ -68,8 +76,9 @@ export const useAddEdutTask = (
     })
 
     setFormSlide('-translate-x-none')
+    setDate('')
+    setLimitDat('')
     setOpen(false)
-
     dispatch({ type: 'CLEAR' })
 
     if (onlyTaskForm === false) {
@@ -131,8 +140,9 @@ export const useAddEdutTask = (
       })
 
       dispatch({ type: 'CLEAR' })
+      setDate('')
+      setLimitDat('')
       setOpen(false)
-
       // router.refresh()
     } catch (error) {
       alert(`faild fetch : ${error}`)
