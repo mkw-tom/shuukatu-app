@@ -10,10 +10,11 @@
 
 - OpenAI API ⭐
 - NextAuth (OAuth・JWT)
+- Chart.js
 - mongoose
 - React Hook Form
 - Zod
-- DaysyUI
+- daysyUI
 - Material UI Icons
 <br/>
 <br/>

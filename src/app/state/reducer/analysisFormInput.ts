@@ -1,55 +1,38 @@
-import type { AnalysisType } from '@/types/AnalysisType'
-import type { AnalysisFormAciton } from '@/types/reducerType'
+export interface analisysInputType {
+  mbti: string
+  skills: string
+  certifications: string
+  experience: string
+  interests: string
+  values: string
+  workStyle: string
+  teamRole: string
+}
 
-export const AnalysisFormInputState: AnalysisType = {
+export const AnalysisFormInputState: analisysInputType = {
   mbti: '',
-  skills: [],
-  certifications: [],
-  experience: [],
-  interests: [],
-  values: [],
-  workStyle: [],
+  skills: '',
+  certifications: '',
+  experience: '',
+  interests: '',
+  values: '',
+  workStyle: '',
   teamRole: '',
 }
 
 // export type ArrayFields = 'skills' | 'certifications' | 'experience' | 'interests' | 'values' | 'workStyle'
 
-// type AnalysisFormAciton =
-//   | { type: 'CLEAR' }
-//   | { type: 'SET_VALUES'; name: string; array: string[] }
-//   | { type: 'SET_VALUE' | 'REMOVE_VALUE'; field: ArrayFields; value: string }
-//   | { type: 'SET_MBTI'; mbti: string}
-//   | { type: 'SET_TEAMROLE', teamRole: string }
-export const AnalysisFormInputReducer = (
-  state: AnalysisType,
-  action: AnalysisFormAciton,
-): AnalysisType => {
-  switch (action.type) {
-    case 'CLEAR':
-      return {
-        ...state,
-        ...AnalysisFormInputState,
-      }
+type analisysInputAciton = { type: 'SET_INPUT'; name: string; value: string }
 
-    case 'SET_VALUE':
+export const AnalysisFormInputReducer = (
+  state: analisysInputType,
+  action: analisysInputAciton,
+): analisysInputType => {
+  switch (action.type) {
+    case 'SET_INPUT':
       return {
-        ...state,
-        [action.field]: [...state[action.field], action.value],
-      }
-    case 'REMOVE_VALUE':
-      return {
-        ...state,
-        [action.field]: state[action.field].filter((item) => item !== action.value),
-      }
-    case 'SET_MBTI':
-      return {
-        ...state,
-        mbti: action.mbti,
-      }
-    case 'SET_TEAMROLE':
-      return {
-        ...state,
-        teamRole: action.teamRole,
+        ...AnalysisFormInputState,
+        [action.name]: action.value,
       }
     default:
       return state

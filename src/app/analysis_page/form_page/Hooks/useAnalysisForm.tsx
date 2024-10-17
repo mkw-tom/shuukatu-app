@@ -4,14 +4,14 @@ import { Close } from '@mui/icons-material'
 import type { ChangeEvent, KeyboardEvent } from 'react'
 import { useReducer, useState } from 'react'
 import {
-  AnalysisFormInputReducer,
-  AnalysisFormInputState,
-} from '../../../state/reducer/analysisFormInput'
+  AnalysisFormDataReducer,
+  AnalysisFormDataState,
+} from '../../../state/reducer/analysisFormData'
 import useFetchAnalysis from './useFetchAnalysis'
 
 const useAnalysisForm = () => {
   const [inputData, setInputData] = useState<string>('')
-  const [state, dispatch] = useReducer(AnalysisFormInputReducer, AnalysisFormInputState)
+  const [state, dispatch] = useReducer(AnalysisFormDataReducer, AnalysisFormDataState)
   const { fetchAnalysisFunc, loading, success, error } = useFetchAnalysis()
 
   const selectMBTI = (mbti: string) => {
@@ -71,6 +71,7 @@ const useAnalysisForm = () => {
       </ul>
     )
   }
+  console.log(state)
   const handleAnalyze = () => {
     fetchAnalysisFunc(state)
   }

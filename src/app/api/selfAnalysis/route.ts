@@ -125,8 +125,8 @@ export async function POST(req: NextRequest) {
       temperature: 0.7,
     })
 
-    // const jobAxis = `jobAxis":"1. **5つの職業提案**\n - 動物看護師\n - 獣医師\n - ペットシッター\n - イベントプランナー（動物関連イベント）\n - 自営業（ペット関連ビジネス）\n\n2. **職業の共通項**\n - 動物との関わりが必要\n - 社会貢献が見込める\n - ワークライフバランスが取れやすい\n - 個人もしくは少人数で働ける場面がある\n\n3. **能力スコア**\n - 専門スキル: 90\n - リーダーシップ: 70\n - コミュニケーション能力: 85\n - 問題解決能力: 80\n - 学習能力: 85\n - チームワークスコア: 75`
-    const jobAxis = response?.choices[0]?.message?.content?.trim() as string
+    const jobAxis = `jobAxis":"1. **5つの職業提案**\n - 動物看護師\n - 獣医師\n - ペットシッター\n - イベントプランナー（動物関連イベント）\n - 自営業（ペット関連ビジネス）\n\n2. **職業の共通項**\n - 動物との関わりが必要\n - 社会貢献が見込める\n - ワークライフバランスが取れやすい\n - 個人もしくは少人数で働ける場面がある\n\n3. **能力スコア**\n - 専門スキル: 90\n - リーダーシップ: 70\n - コミュニケーション能力: 85\n - 問題解決能力: 80\n - 学習能力: 85\n - チームワークスコア: 75`
+    // const jobAxis = response?.choices[0]?.message?.content?.trim() as string
 
     // レスポンスを解析
     const parsedData = parseResponse(jobAxis)

@@ -86,7 +86,11 @@ const useTaskJudger = () => {
     }
 
     if (taskData?.finished) {
-      return <CheckCircle className="mx-auto w-full text-info" />
+      return (
+        <CheckCircle
+          sx={{ width: '100%', color: 'var(--fallback-in,oklch(var(--in)/var(--tw-bg-opacity)))' }}
+        />
+      )
     }
 
     if (!taskData?.finished && taskData?.current) {
@@ -94,7 +98,7 @@ const useTaskJudger = () => {
     }
 
     if (post.completed) {
-      return <Verified className="mx-auto w-full  text-orange-500" />
+      return <Verified sx={{ width: '100%', color: '#f97316' }} />
     }
 
     if (!taskData?.finished) {

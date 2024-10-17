@@ -4,16 +4,16 @@ import { useReducer, useState } from 'react'
 import { useAnalysis } from '@/app/state/context/useAnalysisData'
 import { useUser } from '@/app/state/context/useUser'
 import {
-  AnalysisFormInputReducer,
-  AnalysisFormInputState,
-} from '@/app/state/reducer/analysisFormInput'
+  AnalysisFormDataReducer,
+  AnalysisFormDataState,
+} from '@/app/state/reducer/analysisFormData'
 import type { AnalysisType } from '@/types/AnalysisType'
 
 const useFetchAnalysis = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
-  const [state, reducer] = useReducer(AnalysisFormInputReducer, AnalysisFormInputState)
+  const [state, reducer] = useReducer(AnalysisFormDataReducer, AnalysisFormDataState)
   const { user } = useUser()
   const { setAnalysis } = useAnalysis()
   const data = {
