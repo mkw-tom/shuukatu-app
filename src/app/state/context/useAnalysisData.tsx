@@ -4,9 +4,12 @@ import type { AnalysisType } from '@/types/AnalysisType'
 import type { AnalysisFormAciton } from '@/types/reducerType'
 import type { Dispatch, ReactNode, SetStateAction } from 'react'
 import { createContext, useContext, useReducer, useState } from 'react'
-import { AnalysisFormDataReducer, AnalysisFormDataState } from '../reducer/AnalysisFormData'
-import type { analisysInputAciton, analisysInputType } from '../reducer/AnalysisFormInput'
-import { AnalysisFormInputReducer, AnalysisFormInputState } from '../reducer/AnalysisFormInput'
+import { AnalysisFormDataReducer, AnalysisFormDataState } from '../reducer/analysisFormData'
+import type { analisysInputAciton, analisysInputType } from '../reducer/analysisFormInput'
+import { AnalysisFormInputReducer, AnalysisFormInputState } from '../reducer/analysisFormInput'
+// import { AnalysisFormDataReducer, AnalysisFormDataState } from '../reducer/AnalysisFormData'
+// import type { analisysInputAciton, analisysInputType } from '../reducer/AnalysisFormInput'
+// import { AnalysisFormInputReducer, AnalysisFormInputState } from '../reducer/analysisFor'
 
 interface AnalysisContextType {
   Analysis: AnalysisDataType | null

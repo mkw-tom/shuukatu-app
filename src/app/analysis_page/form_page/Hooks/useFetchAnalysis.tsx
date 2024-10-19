@@ -22,7 +22,7 @@ import { useUser } from '@/app/state/context/useUser'
 import {
   AnalysisFormDataReducer,
   AnalysisFormDataState,
-} from '@/app/state/reducer/AnalysisFormData'
+} from '@/app/state/reducer/analysisFormData'
 import type { AnalysisType } from '@/types/AnalysisType'
 
 const useFetchAnalysis = () => {

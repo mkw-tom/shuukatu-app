@@ -24,6 +24,7 @@ const useAnalysisForm = () => {
     formDataDispatch({ type: 'SET_MBTI', mbti })
   }
 
+  console.log(formDataState)
   const checkValuesSave = (field: ArrayFields, e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
     if (!checked) {
