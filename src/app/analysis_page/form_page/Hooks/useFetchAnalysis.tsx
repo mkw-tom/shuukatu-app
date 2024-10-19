@@ -7,10 +7,14 @@ import { useUser } from '@/app/state/context/useUser'
 //   AnalysisFormDataReducer,
 //   AnalysisFormDataState,
 // } from '@/app/state/reducer/AnalysisFormData'
+// import {
+//   AnalysisFormDataReducer,
+//   AnalysisFormDataState,
+// } from '@/app/state/reducer/AnalysisFormData'
 import {
   AnalysisFormDataReducer,
   AnalysisFormDataState,
-} from '@/app/state/reducer/analysisFormData'
+} from '@/app/state/reducer/AnalysisFormData'
 import type { AnalysisType } from '@/types/AnalysisType'
 
 const useFetchAnalysis = () => {
