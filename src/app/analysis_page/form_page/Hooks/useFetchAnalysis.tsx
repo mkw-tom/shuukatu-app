@@ -3,6 +3,22 @@ import { useReducer, useState } from 'react'
 // import { AnalysisFormInputReducer, AnalysisFormInputState, AnalysisFormInputType } from '../../../state/reducer/analysisFormInput'
 import { useAnalysis } from '@/app/state/context/useAnalysisData'
 import { useUser } from '@/app/state/context/useUser'
+// import {
+//   AnalysisFormDataReducer,
+//   AnalysisFormDataState,
+// } from '@/app/state/reducer/AnalysisFormData'
+// import {
+//   AnalysisFormDataReducer,
+//   AnalysisFormDataState,
+// } from '@/app/state/reducer/AnalysisFormData'
+// import {
+//   AnalysisFormDataReducer,
+//   AnalysisFormDataState,
+// } from '@/app/state/reducer/AnalysisFormData'
+// import {
+//   AnalysisFormDataReducer,
+//   AnalysisFormDataState,
+// } from '@/app/state/reducer/AnalysisFormData'
 import {
   AnalysisFormDataReducer,
   AnalysisFormDataState,
@@ -14,6 +30,7 @@ const useFetchAnalysis = () => {
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   const [state, reducer] = useReducer(AnalysisFormDataReducer, AnalysisFormDataState)
+  const { formDataDispatch } = useAnalysis()
   const { user } = useUser()
   const { setAnalysis } = useAnalysis()
   const data = {
@@ -55,11 +72,14 @@ const useFetchAnalysis = () => {
       setSuccess(true)
       const result = await res.json()
 
+      // formDataDispatch({ type: 'CLEAR'})
       return setAnalysis(result)
     } catch (error) {
+      formDataDispatch({ type: 'CLEAR' })
       console.log('faild fetch')
       setError(true)
     } finally {
+      formDataDispatch({ type: 'CLEAR' })
       setLoading(false)
     }
   }

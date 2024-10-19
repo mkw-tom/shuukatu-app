@@ -10,7 +10,7 @@ export interface analisysInputType {
 }
 
 export const AnalysisFormInputState: analisysInputType = {
-  mbti: '',
+  mbti: 'INTJ',
   skills: '',
   certifications: '',
   experience: '',
@@ -22,7 +22,9 @@ export const AnalysisFormInputState: analisysInputType = {
 
 // export type ArrayFields = 'skills' | 'certifications' | 'experience' | 'interests' | 'values' | 'workStyle'
 
-type analisysInputAciton = { type: 'SET_INPUT'; name: string; value: string }
+export type analisysInputAciton =
+  | { type: 'SET_INPUT'; name: string; value: string }
+  | { type: 'CLEAR_INPUT'; name: string }
 
 export const AnalysisFormInputReducer = (
   state: analisysInputType,
@@ -31,8 +33,13 @@ export const AnalysisFormInputReducer = (
   switch (action.type) {
     case 'SET_INPUT':
       return {
-        ...AnalysisFormInputState,
+        ...state,
         [action.name]: action.value,
+      }
+    case 'CLEAR_INPUT':
+      return {
+        ...state,
+        [action.name]: '',
       }
     default:
       return state
