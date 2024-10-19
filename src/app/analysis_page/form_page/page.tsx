@@ -1,9 +1,10 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { MBTiArray, valesArray } from '../selectOption'
-import ErrorModal from './components/ErrorModal'
-import Loading from './components/Loading'
-import SuccessModal from './components/SuccessModal'
+import FormAction from './components/fetchActions/FormAction'
+import CertificationsAndExperience from './components/formArea/CertificationsAndExperience'
+import InterestsAndValues from './components/formArea/InterestsAndValues'
+import MBTIandSkills from './components/formArea/MBTIandSkills'
+import WorkStyleAndTeamRole from './components/formArea/WorkStyleAndTeamRole'
 import useAnalysisForm from './Hooks/useAnalysisForm'
 
 const Page = () => {
@@ -38,7 +39,7 @@ const Page = () => {
         </div>
         <p className="text-md mb-5 font-bold">・８つの項目を入力してください。</p>
         <form className="bg-inf  flex size-full flex-col items-start gap-16">
-          <label
+          {/* <label
             htmlFor=""
             className="flex w-full flex-col border-b-2 py-1 sm:items-start lg:flex-row lg:items-center"
           >
@@ -71,9 +72,10 @@ const Page = () => {
               />
             </label>
             {valueList('skills')}
-          </div>
+          </div> */}
+          <MBTIandSkills />
 
-          <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
+          {/* <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
             <label
               htmlFor=""
               className="flex w-full flex-col sm:items-start lg:flex-row lg:items-center"
@@ -102,9 +104,10 @@ const Page = () => {
               ></textarea>
             </label>
             {valueList('experience')}
-          </div>
+          </div> */}
+          <CertificationsAndExperience />
 
-          <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
+          {/* <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
             <label
               htmlFor=""
               className="flex w-full flex-col sm:items-start lg:flex-row lg:items-center"
@@ -150,9 +153,10 @@ const Page = () => {
               </div>
             </label>
             {valueList('values')}
-          </div>
+          </div> */}
+          <InterestsAndValues />
 
-          <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
+          {/* <div className="flex w-full flex-col gap-3 border-b-2 py-1 lg:flex-row ">
             <label
               htmlFor=""
               className="flex w-full flex-col sm:items-start lg:flex-row lg:items-center"
@@ -180,9 +184,10 @@ const Page = () => {
                 onKeyDown={(e) => addTeamRole(e)}
               ></textarea>
             </label>
-          </div>
+          </div> */}
+          <WorkStyleAndTeamRole />
         </form>
-        <div className="mt-5 flex w-full items-center">
+        {/* <div className="mt-5 flex w-full items-center">
           {loading && <Loading />}
           {success && <SuccessModal />}
           {error && <ErrorModal />}
@@ -192,7 +197,8 @@ const Page = () => {
           >
             診断する
           </button>
-        </div>
+        </div> */}
+        <FormAction />
       </div>
     </main>
   )

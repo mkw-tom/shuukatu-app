@@ -1,29 +1,35 @@
 'use client'
+import { useAnalysis } from '@/app/state/context/useAnalysisData'
 import type { ArrayFields } from '@/types/reducerType'
 import { Close } from '@mui/icons-material'
 import type { ChangeEvent, KeyboardEvent } from 'react'
-import { useReducer, useState } from 'react'
-import {
-  AnalysisFormDataReducer,
-  AnalysisFormDataState,
-} from '../../../state/reducer/analysisFormData'
+import { useState } from 'react'
 import useFetchAnalysis from './useFetchAnalysis'
+// import { useAnalysis } from '@/app/formDataState/context/useAnalysisData'
 
 const useAnalysisForm = () => {
   const [inputData, setInputData] = useState<string>('')
-  const [state, dispatch] = useReducer(AnalysisFormDataReducer, AnalysisFormDataState)
+  // const [formDataState, formDataDispatch] = useReducer(AnalysisFormDataReducer, AnalysisFormDataState)
+  const { formDataDispatch, formDataState, inputState, inputDispatch } = useAnalysis()
   const { fetchAnalysisFunc, loading, success, error } = useFetchAnalysis()
 
+  const handleChangeInput = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
+  ) => {
+    const { name, value } = e.target
+    inputDispatch({ type: 'SET_INPUT', name, value })
+  }
+
   const selectMBTI = (mbti: string) => {
-    dispatch({ type: 'SET_MBTI', mbti })
+    formDataDispatch({ type: 'SET_MBTI', mbti })
   }
 
   const checkValuesSave = (field: ArrayFields, e: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target
     if (!checked) {
-      return dispatch({ type: 'REMOVE_VALUE', field, value })
+      return formDataDispatch({ type: 'REMOVE_VALUE', field, value })
     }
-    dispatch({ type: 'SET_VALUE', field, value })
+    formDataDispatch({ type: 'SET_VALUE', field, value })
   }
 
   const handleAddValue = (
@@ -37,32 +43,34 @@ const useAnalysisForm = () => {
     if (e.key === 'Enter') {
       e.preventDefault()
       if (inputData === value && value !== '') {
-        dispatch({ type: 'SET_VALUE', field, value })
+        formDataDispatch({ type: 'SET_VALUE', field, value })
         e.currentTarget.value = ''
         setInputData('')
       }
     }
   }
 
-  const addTeamRole = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const value = e.currentTarget.value
+  const addValue = (field: ArrayFields) => {
+    formDataDispatch({ type: 'SET_VALUE', field, value: inputState[field] })
+    inputDispatch({ type: 'CLEAR_INPUT', name: field })
+  }
 
-    if (e.key === 'Enter' && value) {
-      e.preventDefault()
-
-      dispatch({ type: 'SET_TEAMROLE', teamRole: value })
-    }
+  const addTeamRole = (teamRole: string) => {
+    formDataDispatch({ type: 'SET_TEAMROLE', teamRole })
   }
 
   const valueList = (field: ArrayFields) => {
     return (
       <ul className="flex w-full flex-wrap items-center gap-3">
-        {state[field].map((value, index) => (
+        {formDataState[field].map((value, index) => (
           <li
             key={index}
             className="p y-2 flex h-auto items-center justify-center gap-2 rounded-md bg-base-300 px-2 "
           >
-            <button onClick={() => dispatch({ type: 'REMOVE_VALUE', field, value })} type="button">
+            <button
+              onClick={() => formDataDispatch({ type: 'REMOVE_VALUE', field, value })}
+              type="button"
+            >
               <Close style={{ fontSize: '14px' }} className="text-gray-500" />
             </button>
             <span className="text-gray-600">{value}</span>
@@ -71,12 +79,11 @@ const useAnalysisForm = () => {
       </ul>
     )
   }
-  console.log(state)
+
   const handleAnalyze = () => {
-    fetchAnalysisFunc(state)
+    fetchAnalysisFunc(formDataState)
   }
 
-  console.log(state)
   return {
     checkValuesSave,
     handleAddValue,
@@ -87,6 +94,9 @@ const useAnalysisForm = () => {
     loading,
     success,
     error,
+    handleChangeInput,
+    inputState,
+    addValue,
   }
 }
 
