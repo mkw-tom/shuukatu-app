@@ -6,6 +6,7 @@ import {
   AddCircle,
   AssignmentInd,
   Celebration,
+  CheckCircle,
   Delete,
   Edit,
   Group,
@@ -100,7 +101,6 @@ const TaskFLow = () => {
 
   const handleSelectTask = (task: FormInputTaskType) => {
     setSelectTask(task)
-    console.log(task.task, task.customId)
   }
 
   const openEditForm = () => {
@@ -138,14 +138,14 @@ const TaskFLow = () => {
                 className={`${task?.finished || task.current ? 'bg-info' : ''} ${index === 0 ? 'hidden' : ''}`}
               />
               <div className="timeline-middle">
-                {/* {task?.finished ? (
+                {task?.finished ? (
                   <CheckCircle className={`${task.finished ? 'text-info' : 'text-gray-400'}`} />
                 ) : (
                   <p
-                    className={`mx-1 size-5  rounded-full ${currentTask?.failed ? 'bg-error' : ''} ${task.current ? 'bg-info' : 'bg-gray-300'}`}
+                    className={`mx-1 size-5  rounded-full ${selectPost?.failed ? 'bg-error' : 'bg-info'} `}
                   ></p>
-                )} */}
-                <div className="mx-1">{taksStatusJudger(selectPost, task.customId)}</div>
+                )}
+                {/* <div className="mx-1">{taksStatusJudger(selectPost, task.customId)}</div> */}
               </div>
               <button
                 className={`sm:text-md timeline-end timeline-box flex h-8 cursor-pointer items-center gap-1 text-sm hover:bg-gray-300 sm:h-auto ${task === selectTask ? 'bg-gray-300' : ''}`}
