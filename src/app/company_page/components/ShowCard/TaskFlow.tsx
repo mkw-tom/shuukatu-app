@@ -101,7 +101,6 @@ const TaskFLow = () => {
 
   const handleSelectTask = (task: FormInputTaskType) => {
     setSelectTask(task)
-    console.log(task.task, task.customId)
   }
 
   const openEditForm = () => {

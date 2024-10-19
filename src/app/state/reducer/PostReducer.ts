@@ -30,12 +30,10 @@ export const postReducer = (state: PostType[], action: Action): PostType[] => {
     case 'UPDATE_TASK':
       return state.map((post) => {
         if (post.customId === action.postId) {
-          console.log('Updating task for post:', post) // デバッグ用
           return {
             ...post,
             taskFlow: post.taskFlow.map((task) => {
               if (task.customId === action.taskId) {
-                console.log('Updating task:', task) // デバッグ用
                 return { ...task, ...action.updateTask }
               }
               return task
