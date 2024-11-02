@@ -2,6 +2,7 @@ import Header from '@/components/layout/Header/Header'
 import NextAuthProvider from '@/lib/NextAuth/NextAuthProvider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Head from 'next/head'
 import './globals.css'
 import { AnalysisContextProvider } from './state/context/useAnalysisData'
 import { PostContextProvider } from './state/context/usePost'
@@ -21,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="jp">
-      <head>
+      <Head>
         <title>Entrix</title>
         <meta
           name="description"
@@ -45,7 +46,7 @@ export default function RootLayout({
 
         {/* Fonts */}
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-      </head>
+      </Head>
       <body className={inter.className}>
         <NextAuthProvider>
           <PostContextProvider>
