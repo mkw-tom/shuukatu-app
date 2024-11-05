@@ -44,7 +44,7 @@
 ## 画面
 
 - トップ
-![top](public/displayTopLogin.jpg)
+![top](public/displayTop.jpg)
 - ログイン
 ![login](public/displayTopLogin.jpg)
 - 企業管理
