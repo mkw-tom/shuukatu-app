@@ -40,3 +40,18 @@
 - 適した職業の共通項を導き出す
 - 能力スコアを算出し、レーダーチャートで確認
   <br/>
+
+## 画面
+
+- トップ
+![top](public/displayTopLogin.jpg)
+- ログイン
+![login](public/displayTopLogin.jpg)
+- 企業管理
+![manage](public/displayMain.jpg)
+![manage2](public/displayMain2.jpg)
+- チャート
+![chart](public/displayChart.jpg)
+- AI適職診断
+![analysis](public/displayAnalysis.jpg)
+![analysis2](public/displayAnalysisResult.jpg)
