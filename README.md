@@ -43,15 +43,15 @@
 
 ## 画面
 
-- トップ
+- #### トップ
 ![top](public/displayTop.jpg)
-- ログイン
+- #### ログイン
 ![login](public/displayTopLogin.jpg)
-- 企業管理
+- #### 企業管理
 ![manage](public/displayMain.jpg)
 ![manage2](public/displayMain2.jpg)
-- チャート
+- #### チャート
 ![chart](public/displayChart.jpg)
-- AI適職診断
+- #### AI適職診断
 ![analysis](public/displayAnalysis.jpg)
 ![analysis2](public/displayAnalysisResult.jpg)
